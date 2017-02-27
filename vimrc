@@ -8,3 +8,8 @@ set expandtab
 
 " Folding
 set foldcolumn=1
+augroup AutoSaveFolds
+    autocmd!
+    autocmd BufWinLeave * mkview
+    autocmd BufWinEnter * silent loadview
+augroup END
