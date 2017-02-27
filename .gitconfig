@@ -1,0 +1,8 @@
+[user]
+	name = ning
+	email = ningyuan.sg@gmail.com
+[alias]
+	logp = log --pretty=\"%Cred%h @ %cD - %Cgreen%cn%Creset : %s\"
+	lf = ls-files
+[core]
+	excludesfile = ~/.gitignore
