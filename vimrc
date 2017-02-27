@@ -12,4 +12,5 @@ augroup AutoSaveFolds
     autocmd!
     autocmd BufWinLeave * mkview
     autocmd BufWinEnter * silent loadview
+    autocmd BufWinEnter * normal zR
 augroup END
