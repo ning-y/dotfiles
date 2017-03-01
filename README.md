@@ -14,7 +14,7 @@ mklink \H "C:\Users\ning\.gitignore" .gitignore
 
 ## vim
 
-The location of the vim config files can be found using `$ vim --version` on both bash and cmd. Alternatively, start up vim and use the command `:version`. `$VIM` typically refers to `/etc/vim/vimrc/` (linux), or `C:\Program Files (x86)\Vim\` (Windows).
+The location of the vim config files can be found using `$ vim --version` on both bash and cmd. Alternatively, start up vim and use the command `:version`. `$VIM` typically refers to `/etc/vim/vimrc/` (linux), or `C:\Program Files (x86)\Vim\` (Windows). `$HOME` points to `~/` (linux), or `C:\Users\ning\`.
 
 ## git
 
