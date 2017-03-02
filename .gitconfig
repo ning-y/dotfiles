@@ -4,5 +4,6 @@
 [alias]
 	logp = log --pretty=\"%Cred%h @ %cD - %Cgreen%cn%Creset : %s\"
 	lf = ls-files
+    cv = commit -v
 [core]
 	excludesfile = ~/.gitignore

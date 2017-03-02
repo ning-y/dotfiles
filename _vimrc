@@ -3,6 +3,10 @@ syntax on
 
 " Display line numbers on the left
 set number
+set relativenumber
+
+" Status bar
+set ruler
 
 " Indent with 4 spaces
 set shiftwidth=4
