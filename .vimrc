@@ -1,6 +1,9 @@
 " Enable syntax highlighting
 syntax on
 
+" Use desert as default color scheme
+color desert
+
 " Display line numbers on the left
 set number
 set relativenumber
@@ -12,6 +15,7 @@ set ruler
 set shiftwidth=4
 set tabstop=4
 set expandtab
+set smartindent
 
 " Folding
 set foldcolumn=1
