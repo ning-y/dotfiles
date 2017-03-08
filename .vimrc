@@ -1,6 +1,9 @@
 " Enable syntax highlighting
 syntax on
 
+" Enable search highligting
+set hlsearch
+
 " Use desert as default color scheme
 color desert
 
