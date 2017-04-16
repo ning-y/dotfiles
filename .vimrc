@@ -1,7 +1,8 @@
 " Enable syntax highlighting
 syntax on
+autocmd BufNewFile,BufRead *.md setf markdown
 
-" Enable search highligting
+" Enable search highlighting
 set hlsearch
 
 " Use desert as default color scheme
