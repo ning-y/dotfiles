@@ -33,3 +33,5 @@ Bash first looks at $HOME/.bashrc for the user config file. To apply this `.bash
 ```
 source ~/github/config/.bashrc
 ```
+
+Tmux in bash for windows uses the config file at `/etc/bash.bashrc`. Therefore, use `source $HOME/.bashrc` (fully expanded) in that config file to apply both user and 'cloud' configs to tmux bash instances.
