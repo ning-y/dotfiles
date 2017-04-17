@@ -24,9 +24,9 @@ set smartindent
 " Folding
 set foldcolumn=1
 set foldmethod=manual
- augroup AutoSaveFolds
-     autocmd!
-     autocmd BufWinLeave * mkview
-     autocmd BufWinEnter * silent loadview
-     autocmd BufWinEnter * normal zR
- augroup END
+augroup AutoSaveFolds
+    autocmd!
+    autocmd BufWinLeave * mkview
+    autocmd BufWinEnter * silent loadview
+    autocmd BufWinEnter * normal zR
+augroup END
