@@ -1,11 +1,11 @@
 [user]
-	name = ning
-	email = ningyuan.sg@gmail.com
+    name = ning
+    email = ningyuan.sg@gmail.com
 [alias]
-	logp = log --pretty=\"%Cred%h @ %cD - %Cgreen%cn%Creset : %s\"
-	lf = ls-files
-	cv = commit -v
+    logp = log --pretty=\"%Cred%h @ %cD - %Cgreen%cn%Creset : %s\"
+    lf = ls-files
+    cv = commit -v
     nuke = reset --hard
 [core]
-	excludesfile = ~/.gitignore
-	editor = "vim"
+    excludesfile = ~/.gitignore
+    editor = "vim"
