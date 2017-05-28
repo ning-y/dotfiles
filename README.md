@@ -6,13 +6,13 @@ These are my config files.
 To sync up all config files, clone this repository and symlink or shortcut system config files to point to files within the cloned repository. `git pull` to update.
 
 ```
-ln .vimrc ~/.vimrc
-ln -s vim_templates .../.vim/templates
-ln .gitconfig ~/.gitconfig
-ln .gitignore ~/.gitignore
+ln -s .vimrc $(DIR)/.vimrc
+ln -s vim_templates $(DIR)/.vim/templates
+ln -s .gitconfig $(DIR)/.gitconfig
+ln -s .gitignore $(DIR)/.gitignore
 ```
 
-*Soft link generation `ln -s` must use fully expanded path names*.
+*Soft link generation `ln -s` must use fully expanded path names*. Use soft links over hard links.
 
 vim
 ---

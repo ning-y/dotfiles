@@ -22,6 +22,13 @@ set expandtab
 set smartindent
 set autoindent
 
+" Remaps 
+inoremap jj <Esc>
+inoremap ;; <Esc>/<++><Enter>:nohlsearch<Enter>"_c4l
+nnoremap ;; <Esc>/<++><Enter>:nohlsearch<Enter>"_c4l
+inoremap ;< <++>
+nnoremap ;< a<++><Esc>
+
 " Folding
 set foldcolumn=1
 set foldmethod=manual
