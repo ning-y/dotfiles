@@ -30,3 +30,8 @@ augroup AutoSaveFolds
     autocmd BufWinEnter * silent loadview
     autocmd BufWinEnter * normal zR
 augroup END
+
+" File Templates
+augroup templates
+    autocmd BufNewFile *.asm 0r ~/.vim/templates/skeleton.asm
+augroup END

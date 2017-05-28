@@ -5,30 +5,29 @@ These are my config files.
 
 To sync up all config files, clone this repository and symlink or shortcut system config files to point to files within the cloned repository. `git pull` to update.
 
-In windows: 
+```
+ln .vimrc ~/.vimrc
+ln -s vim_templates .../.vim/templates
+ln .gitconfig ~/.gitconfig
+ln .gitignore ~/.gitignore
+```
 
-```
-mklink \H "C:\Program Files(x86)\Vim\vimrc" vimrc
-mklink \H "C:\Users\ning\.gitconfig" .gitconfig
-mklink \H "C:\Users\ning\.gitignore" .gitignore
-```
+*Soft link generation `ln -s` must use fully expanded path names*.
 
 vim
 ---
 
-The location of the vim config files can be found using `$ vim --version` on both bash and cmd. Alternatively, start up vim and use the command `:version`. `$VIM` typically refers to `/etc/vim/vimrc/` (linux), or `C:\Program Files (x86)\Vim\` (Windows). `$HOME` points to `~/` (linux), or `C:\Users\ning\`.
+The location of the vim config files can be found using `$ vim --version` on both bash and cmd. Alternatively, start up vim and use the command `:version`.
 
 git
 ---
 
-The global gitconfig file is typically located at `~/.gitconfig`. For windows, this resolves to `C:\Users\ning\.gitconfig`.
-
-A global .gitignore is specified in this config, and is expected to be found at `~/.gitignore`.
+The global gitconfig file is typically located at `~/.gitconfig`. A global .gitignore is specified in this config, and is expected to be found at `~/.gitignore`.
 
 bash
 ----
 
-Bash first looks at $HOME/.bashrc for the user config file. To apply this `.bashrc` file in addition to the default config, use
+Bash first looks at $HOME/.bashrc for the user config file. To apply this `.bashrc` file in addition to the default config, insert at the end of $HOME/.bashrc:
 
 ```
 source ~/github/config/.bashrc
