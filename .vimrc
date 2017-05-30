@@ -42,4 +42,5 @@ augroup END
 " File Templates
 augroup templates
     autocmd BufNewFile *.asm 0r ~/.vim/templates/skeleton.asm
+    autocmd BufNewFile *.tex 0r ~/.vim/templates/skeleton.tex
 augroup END
