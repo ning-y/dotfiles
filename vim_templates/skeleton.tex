@@ -3,6 +3,11 @@
 \usepackage[backend=biber, style=numeric, sorting=none]{biblatex}
 \usepackage[a4paper, left=2.5cm, right=2.5cm, top=2.5cm, bottom=2.5cm]{geometry}
 \usepackage{hyperref}
+\usepackage{multicol}
+\usepackage{graphicx}
+\usepackage{tabularx}
+\usepackage{float}
+\graphicspath{ {<++>} }
 
 \addbibresource{<++>}
 \hypersetup{colorlinks, citecolor=black, filecolor=black, linkcolor=black, urlcolor=black}
@@ -12,6 +17,11 @@
 \title{<++>}
 \author{Ning Yuan}
 \maketitle
+
+\renewcommand{\abstractname}{<++>}
+\begin{abstract}
+<++>
+\end{abstract}
 
 \printbibliography
 \end{document}

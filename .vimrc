@@ -23,7 +23,7 @@ set smartindent
 set autoindent
 
 " Remaps 
-inoremap jj <Esc>
+inoremap jk <Esc>
 inoremap ;; <Esc>/<++><Enter>:nohlsearch<Enter>"_c4l
 nnoremap ;; /<++><Enter>:nohlsearch<Enter>"_c4l
 inoremap ;< <++>
