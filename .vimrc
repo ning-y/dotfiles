@@ -28,6 +28,7 @@ inoremap ;; <Esc>/<++><Enter>:nohlsearch<Enter>"_c4l
 nnoremap ;; /<++><Enter>:nohlsearch<Enter>"_c4l
 inoremap ;< <++>
 nnoremap ;< a<++><Esc>
+nnoremap <F2> :w<CR>
 
 " Folding
 set foldcolumn=1
@@ -43,4 +44,5 @@ augroup END
 augroup templates
     autocmd BufNewFile *.asm 0r ~/.vim/templates/skeleton.asm
     autocmd BufNewFile *.tex 0r ~/.vim/templates/skeleton.tex
+    autocmd BufNewfile *.tex nnoremap <F3> :w<CR>:!pdflatex '%:p'<CR>
 augroup END
