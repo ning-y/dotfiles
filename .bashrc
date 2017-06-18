@@ -2,6 +2,7 @@ alias lsa='ls -lAh'
 alias lst='ls -lAh -lt'
 alias cdg='cd ~/github'
 
+alias t='task'
 alias tl='task -BLOCKED'
 alias tla='task long'
 alias ts='task sync'
