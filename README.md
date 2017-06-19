@@ -3,40 +3,49 @@ config
 
 These are my config files. 
 
-To sync up all config files, clone this repository and symlink or shortcut system config files to point to files within the cloned repository. `git pull` to update.
+Set-Up
+------
+1. Vim
+
+Create a symbolic link to this repository's `.vim/` at `~/.vim`.
 
 ```
-ln -s .vimrc $(DIR)/.vimrc
-ln -s vim_templates $(DIR)/.vim/templates
-ln -s .gitconfig $(DIR)/.gitconfig
-ln -s .gitignore $(DIR)/.gitignore
+ln -s /home/ning/.vim /home/ning/github/config/.vim
 ```
 
-*Soft link generation `ln -s` must use fully expanded path names*. Use soft links over hard links.
+Use the `:scriptnames` command in Vim for a list of files sourced by Vim up to that point.
 
-vim
----
+2. Git 
 
-The location of the vim config files can be found using `$ vim --version` on both bash and cmd. Alternatively, start up vim and use the command `:version`.
+Include this `.gitconfig`, and set this `.gitignore` as `excludesfile` in the local `.gitconfig`.
 
-git
----
+```
+[include]
+    path = /home/ning/github/config/.gitconfig
+[core]
+	excludesfile = /home/ning/github/config/.gitignore
+```
 
-The global gitconfig file is typically located at `~/.gitconfig`. A global .gitignore is specified in this config, and is expected to be found at `~/.gitignore`.
+If the local `.gitconfig` file does not yet exist, run `git config --global core.excludesfile ~/github/config/.gitignore`.
 
-bash
-----
+3. Bash
 
-Bash first looks at $HOME/.bashrc for the user config file. To apply this `.bashrc` file in addition to the default config, insert at the end of $HOME/.bashrc:
+Include this `.bashrc` in the local version.
 
 ```
 source ~/github/config/.bashrc
 ```
 
-Tmux in bash for windows uses the config file at `/etc/bash.bashrc`. Therefore, use `source $HOME/.bashrc` (fully expanded) in that config file to apply both user and 'cloud' configs to tmux bash instances.
+For use with tmux, add the above line to the file at `/etc/bash.bashrc`.
 
-task
-----
+4. Taskwarrior
+
+Include this `.taskrc` in the local version.
+
 ```
-include /path/to/this/.taskrc
+include /home/ning/github/config/.taskrc
 ```
+
+Sync/Update
+-----------
+Simply `git pull`.
