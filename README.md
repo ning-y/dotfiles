@@ -10,7 +10,7 @@ Set-Up
 Create a symbolic link to this repository's `.vim/` at `~/.vim`.
 
 ```
-ln -s /home/ning/.vim /home/ning/github/config/.vim
+ln -s /home/ning/github/config/.vim /home/ning/.vim
 ```
 
 Use the `:scriptnames` command in Vim for a list of files sourced by Vim up to that point.
