@@ -44,5 +44,6 @@ augroup END
 augroup templates
     autocmd BufNewFile *.asm 0r ~/.vim/templates/skeleton.asm
     autocmd BufNewFile *.tex 0r ~/.vim/templates/skeleton.tex
+    autocmd BufNewFile *.html 0r ~/.vim/templates/skeleton.html
     autocmd BufNewfile *.tex nnoremap <F3> :w<CR>:!pdflatex '%:p'<CR>
 augroup END
