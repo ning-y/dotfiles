@@ -30,6 +30,12 @@ inoremap ;< <++>
 nnoremap ;< a<++><Esc>
 nnoremap <F2> :w<CR>
 
+" File-specific remaps
+augroup file_remaps
+    autocmd!
+    autocmd BufWinEnter *.tex nnoremap <F3> :w<CR>:!pdflatex '%:p'<CR>
+augroup END
+
 " Folding
 set foldcolumn=1
 set foldmethod=manual
@@ -42,8 +48,8 @@ augroup END
 
 " File Templates
 augroup templates
+    autocmd!
     autocmd BufNewFile *.asm 0r ~/.vim/templates/skeleton.asm
     autocmd BufNewFile *.tex 0r ~/.vim/templates/skeleton.tex
     autocmd BufNewFile *.html 0r ~/.vim/templates/skeleton.html
-    autocmd BufNewfile *.tex nnoremap <F3> :w<CR>:!pdflatex '%:p'<CR>
 augroup END
