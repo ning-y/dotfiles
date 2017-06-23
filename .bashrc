@@ -9,7 +9,7 @@ alias te='task edit'
 alias td='task done'
 alias ts='task sync'
 alias tw='task waiting'
-alias tA='clear && t && tw'
+alias tA='ts && clear && t && tw'
 trap ts EXIT
 
 export EDITOR=vim
