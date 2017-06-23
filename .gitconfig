@@ -8,3 +8,5 @@
     nuke = reset --hard
 [core]
     editor = "vim"
+[push]
+    default = current

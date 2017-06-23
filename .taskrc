@@ -23,6 +23,7 @@ report.next.columns=id,start.age,depends,project,tags,recur,scheduled.countdown,
 report.next.labels=ID,Active,Deps,Project,Tag,Recur,S,Due,Until,Description,Urg
 report.waiting.columns=id,start.active,entry.age,depends.indicator,project,tags,recur.indicator,wait.remaining,scheduled,due,until,description
 report.waiting.labels=ID,A,Age,D,Project,Tags,R,Remaining,Sched,Due,Until,Description
+alias.burndown=burndown.daily
 
 #=======#
 # THEME #
