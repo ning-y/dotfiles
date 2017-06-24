@@ -18,6 +18,7 @@ trap ts EXIT
 export PS1="\[\e[32m\]\u\[\e[m\]\[\e[32m\]@\[\e[m\]\[\e[32m\]\h\[\e[m\]:\[\e[33m\]\w\[\e[m\]\[\e[33m\] $\[\e[m\] "
 
 # MISC
+alias rm='rm -v'
 export EDITOR=vim
 alias update_config='git -C ~/github/config/ pull'
 
