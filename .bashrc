@@ -1,7 +1,9 @@
+# NAVIGATION
 alias lsa='ls -lAh'
 alias lst='ls -lAh -lt'
 alias cdg='cd ~/github'
 
+# TASKWARRIOR
 alias t='task'
 alias t+='task add'
 alias tm='task modify'
@@ -12,7 +14,12 @@ alias tw='task waiting'
 alias tA='ts && clear && t && tw'
 trap ts EXIT
 
-export EDITOR=vim
+# APPEARENCE
 export PS1="\[\e[32m\]\u\[\e[m\]\[\e[32m\]@\[\e[m\]\[\e[32m\]\h\[\e[m\]:\[\e[33m\]\w\[\e[m\]\[\e[33m\] $\[\e[m\] "
 
+# MISC
+export EDITOR=vim
+alias update_config='git -C ~/github/config/ pull'
+
+# START-UP COMMANDS
 ts && clear && t
