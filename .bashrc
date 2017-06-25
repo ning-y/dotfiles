@@ -19,8 +19,9 @@ export PS1="\[\e[32m\]\u\[\e[m\]\[\e[32m\]@\[\e[m\]\[\e[32m\]\h\[\e[m\]:\[\e[33m
 
 # MISC
 alias rm='rm -v'
+alias ZZ='exit'
+alias update_config='git -C ~/github/config/ pull && source ~/.bashrc'
 export EDITOR=vim
-alias update_config='git -C ~/github/config/ pull'
 
 # START-UP COMMANDS
 ts && clear && t
