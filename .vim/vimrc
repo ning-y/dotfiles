@@ -57,6 +57,13 @@ function Toggle_essay()
     endif
 endfunction
 
+" Encrypt
+nnoremap <F6> :call Encrypt()<CR>
+function Encrypt()
+    set cryptmethod=blowfish2
+    exec "X"
+endfunction
+
 " File templates
 augroup templates
     autocmd!
