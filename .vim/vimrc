@@ -42,16 +42,18 @@ augroup END
 " Essay mode
 nnoremap <F5> :call Toggle_essay()<CR>
 function Toggle_essay()
-    if &linebreak
-        setlocal columns&vim
+    if &l:linebreak
+        setlocal textwidth=999
         setlocal nolinebreak
-        unmap j
-        unmap k
+        normal! gggqG<C-o><C-o>
+        set nospell
+        echom "Essay: OFF"
     else
-        setlocal columns=60
+        setlocal textwidth=80
         setlocal linebreak
-        nnoremap j gj
-        nnoremap k gk
+        normal! gggqG<C-o><C-o>
+        setlocal spell spelllang=en_gb
+        echom "Essay: ON"
     endif
 endfunction
 
