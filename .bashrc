@@ -11,11 +11,12 @@ alias te='task edit'
 alias td='task done'
 alias ts='task sync'
 alias tw='task waiting'
+alias tq='task list +BLOCKED'
 alias tA='ts && clear && t && tw'
 trap ts EXIT
 
 # APPEARENCE
-export PS1="\[\033[38;5;7m\][\t]\[$(tput sgr0)\]\[\033[38;5;15m\] \[$(tput sgr0)\]\[\033[38;5;2m\]\u\[$(tput sgr0)\]\[\033[38;5;7m\]:\[$(tput sgr0)\]\[\033[38;5;3m\]\w\[$(tput sgr0)\]\[\033[38;5;15m\] \[$(tput sgr0)\]\[\033[38;5;7m\]\\$\[$(tput sgr0)\]\[\033[38;5;15m\] \[$(tput sgr0)\]"
+export PS1="\[\]\[\033[38;5;2m\]\u\[\]\[\033[38;5;7m\]:\[\]\[\033[38;5;3m\]\w\[\]\[\033[38;5;15m\] \[\]\[\033[38;5;7m\]\$\[\]\[\033[38;5;15m\] \[\]"
 
 # MISC
 alias rm='rm -v'
