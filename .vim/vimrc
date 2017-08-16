@@ -39,7 +39,19 @@ augroup AutoSaveFolds
     autocmd BufWinEnter * normal zR
 augroup END
 
-" Essay mode
+" Spellcheck mode <F4>
+nnoremap <F4> :call Toggle_spell()<CR>
+function Toggle_spell()
+    if &l:spell
+        set nospell
+        echom "Spell OFF"
+    else
+        set spell spelllang=en_gb
+        echom "Spell ON"
+    endif
+endfunction
+
+" Essay mode <F5>
 nnoremap <F5> :call Toggle_essay()<CR>
 function Toggle_essay()
     if &l:linebreak
@@ -57,7 +69,7 @@ function Toggle_essay()
     endif
 endfunction
 
-" Encrypt
+" Encrypt <F6>
 nnoremap <F6> :call Encrypt()<CR>
 function Encrypt()
     set cryptmethod=blowfish2

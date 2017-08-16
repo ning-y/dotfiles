@@ -6,6 +6,7 @@
     lf = ls-files
     cv = commit -v
     nuke = reset --hard
+    assume-unchanged = update-index --assume-unchanged
 [core]
     editor = "vim"
 [push]
