@@ -23,6 +23,3 @@ alias rm='rm -v'
 alias ZZ='exit'
 alias update_config='git -C ~/github/config/ pull && source ~/.bashrc'
 export EDITOR=vim
-
-# START-UP COMMANDS
-ts && clear && t
