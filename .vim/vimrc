@@ -82,4 +82,5 @@ augroup templates
     autocmd BufNewFile *.asm 0r ~/.vim/templates/skeleton.asm
     autocmd BufNewFile *.tex 0r ~/.vim/templates/skeleton.tex
     autocmd BufNewFile *.html 0r ~/.vim/templates/skeleton.html
+    autocmd BufNewFile *.md 0r ~/.vim/templates/skeleton.md
 augroup END
