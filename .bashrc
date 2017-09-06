@@ -21,5 +21,6 @@ export PS1="\[\]\[\033[38;5;2m\]\u\[\]\[\033[38;5;7m\]:\[\]\[\033[38;5;3m\]\w\[\
 # MISC
 alias rm='rm -v'
 alias ZZ='exit'
+alias ZZZ='exit; exit'  # force quit, ignore stopped jobs
 alias update_config='git -C ~/github/config/ pull && source ~/.bashrc'
 export EDITOR=vim
