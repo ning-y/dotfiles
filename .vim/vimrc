@@ -34,9 +34,9 @@ set foldcolumn=1
 set foldmethod=manual
 augroup AutoSaveFolds
     autocmd!
-    autocmd BufWinLeave * mkview
-    autocmd BufWinEnter * silent loadview
-    autocmd BufWinEnter * normal zR
+    autocmd BufWinLeave ?* mkview
+    autocmd BufWinEnter ?* silent loadview
+    autocmd BufWinEnter ?* normal zR
 augroup END
 
 " Spellcheck mode <F4>
