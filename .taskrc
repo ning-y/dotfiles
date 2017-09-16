@@ -16,6 +16,7 @@ dateformat=d-b_HN
 # OUTPUT SETTINGS #
 #=================#
 nag=
+due=3
 dateformat.report=d b
 dateformat.annotation=(d b)
 report.next.filter=status:pending limit:page +READY
