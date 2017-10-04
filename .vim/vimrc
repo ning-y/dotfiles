@@ -26,7 +26,8 @@ nnoremap <F2> :wa<CR>
 " File-specific remaps
 augroup file_remaps
     autocmd!
-    autocmd BufWinEnter *.tex nnoremap <F3> :w<CR>:!pdflatex '%:p'<CR>
+    autocmd BufWinEnter *.tex nnoremap <F3> :w<CR>:!pdflatex %:p<CR>
+    autocmd BufWinEnter *.md nnoremap <F3> :w<CR>:!pandoc %:p -o %:p:h/%:r.pdf<CR>
 augroup END
 
 " Folding
