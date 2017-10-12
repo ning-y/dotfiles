@@ -11,6 +11,7 @@ urgency.uda.priority.L.coefficient=-10
 # INPUT SETTINGS #
 #================#
 dateformat=d-b_HN
+default.due=eocw
 
 #=================#
 # OUTPUT SETTINGS #
@@ -20,8 +21,8 @@ due=3
 dateformat.report=d b
 dateformat.annotation=(d b)
 report.next.filter=status:pending limit:page +READY
-report.next.columns=id,start.age,depends,project,tags,recur,scheduled.countdown,due.relative,until.remaining,description,urgency
-report.next.labels=ID,Active,Deps,Project,Tag,Recur,S,Due,Until,Description,Urg
+report.next.columns=id,start.age,depends,project,tags,recur,scheduled.countdown,due.relative,until.remaining,description,priority
+report.next.labels=ID,Active,Deps,Project,Tag,Recur,S,Due,Until,Description,Prior
 report.waiting.columns=id,start.active,entry.age,depends.indicator,project,tags,recur.indicator,wait.remaining,scheduled,due,until,description
 report.waiting.labels=ID,A,Age,D,Project,Tags,R,Remaining,Sched,Due,Until,Description
 alias.burndown=burndown.daily
