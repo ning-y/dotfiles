@@ -10,7 +10,7 @@ urgency.uda.priority.L.coefficient=-10
 #================#
 # INPUT SETTINGS #
 #================#
-dateformat=d-b_HN
+dateformat=dbHN
 default.due=eocw
 
 #=================#
