@@ -13,7 +13,6 @@ alias ts='task sync'
 alias tw='task waiting'
 alias tq='task list +BLOCKED'
 alias tA='ts && clear && t && tw'
-trap ts EXIT
 
 # APPEARENCE
 export PS1="\[\]\[\033[38;5;2m\]\u\[\]\[\033[38;5;7m\]:\[\]\[\033[38;5;3m\]\w\[\]\[\033[38;5;15m\] \[\]\[\033[38;5;7m\]\$\[\]\[\033[38;5;15m\] \[\]"
