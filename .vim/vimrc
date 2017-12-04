@@ -85,3 +85,11 @@ augroup templates
     autocmd BufNewFile *.html 0r ~/.vim/templates/skeleton.html
     autocmd BufNewFile *.md 0r ~/.vim/templates/skeleton.md
 augroup END
+
+" vim-plug
+call plug#begin('~/.local/share/nvim/plugged')
+
+Plug 'xuhdev/vim-latex-live-preview', { 'for': 'tex' }
+let g:livepreview_previewer = 'mupdf'
+
+call plug#end()
