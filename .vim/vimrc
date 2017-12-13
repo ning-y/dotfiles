@@ -81,7 +81,8 @@ endfunction
 augroup templates
     autocmd!
     autocmd BufNewFile *.asm 0r ~/.vim/templates/skeleton.asm
-    autocmd BufNewFile *.tex 0r ~/.vim/templates/skeleton.tex
+    autocmd BufNewFile [^(min)]*\.tex 0r ~/.vim/templates/skeleton.tex
+    autocmd BufNewFile *.min.tex 0r ~/.vim/templates/skeleton.min.tex
     autocmd BufNewFile *.html 0r ~/.vim/templates/skeleton.html
     autocmd BufNewFile *.md 0r ~/.vim/templates/skeleton.md
 augroup END
