@@ -90,6 +90,7 @@ augroup END
 call plug#begin('~/.local/share/nvim/plugged')
 
 Plug 'xuhdev/vim-latex-live-preview', { 'for': 'tex' }
-let g:livepreview_previewer = 'mupdf'
+let g:livepreview_previewer = 'okular'
+set updatetime=1000
 
 call plug#end()
