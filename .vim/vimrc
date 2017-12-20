@@ -17,11 +17,6 @@ set autoindent
 
 " Remaps 
 inoremap jk <Esc>
-inoremap ;; <Esc>/<++><Enter>:nohlsearch<Enter>"_c4l
-nnoremap ;; /<++><Enter>:nohlsearch<Enter>"_c4l
-inoremap ;< <++>
-nnoremap ;< a<++><Esc>
-nnoremap <F2> :wa<CR>
 
 " File-specific remaps
 augroup file_remaps
