@@ -3,6 +3,7 @@
     email = ningyuan.sg@gmail.com
 [alias]
     logp = log --pretty=\"%Cred%h @ %cD - %Cgreen%cn%Creset : %s\"
+    graph = git log --graph --oneline --decorate
     lf = ls-files
     cv = commit -v
     nuke = reset --hard
