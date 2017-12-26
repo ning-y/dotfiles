@@ -2,13 +2,19 @@
     name = ning
     email = ningyuan.sg@gmail.com
 [alias]
-    logp = log --pretty=\"%Cred%h @ %cD - %Cgreen%cn%Creset : %s\"
-    graph = log --graph --oneline --decorate
+    # Commonly used
+    s = status -bs
     lf = ls-files
     cv = commit -v
+    # Logs & Misc
+    l = log --oneline --stat
+    graph = log --graph --oneline --decorate
+    # Utilities
     nuke = reset --hard
     assume-unchanged = update-index --assume-unchanged
 [core]
     editor = "vim"
-[push]
-    default = current
+[diff]
+	tool = vimdiff
+[difftool]
+	prompt = false
