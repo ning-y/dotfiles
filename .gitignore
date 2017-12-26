@@ -3,4 +3,3 @@
 old.*
 config.json
 __pycache__/
-*.ipynb
