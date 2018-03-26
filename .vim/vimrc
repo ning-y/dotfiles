@@ -47,47 +47,19 @@ function Toggle_spell()
     endif
 endfunction
 
-" Essay mode <F5>
-nnoremap <F5> :call Toggle_essay()<CR>
-function Toggle_essay()
-    if &l:linebreak
-        setlocal textwidth=999
-        setlocal nolinebreak
-        normal! gggqG<C-o><C-o>
-        set nospell
-        echom "Essay: OFF"
-    else
-        setlocal textwidth=80
-        setlocal linebreak
-        normal! gggqG<C-o><C-o>
-        setlocal spell spelllang=en_gb
-        echom "Essay: ON"
-    endif
-endfunction
-
-" Encrypt <F6>
-nnoremap <F6> :call Encrypt()<CR>
-function Encrypt()
-    set cryptmethod=blowfish2
-    exec "X"
-endfunction
-
 " File templates
 augroup templates
     autocmd!
-    autocmd BufNewFile *.asm 0r ~/.vim/templates/skeleton.asm
-    autocmd BufNewFile [^(min)]*\.tex 0r ~/.vim/templates/skeleton.tex
-    autocmd BufNewFile *.min.tex 0r ~/.vim/templates/skeleton.min.tex
-    autocmd BufNewFile *.html 0r ~/.vim/templates/skeleton.html
-    autocmd BufNewFile *.md 0r ~/.vim/templates/skeleton.md
+    autocmd BufNewFile *.tex  0r ~/.vim/templates/skeleton.tex
+    autocmd BufNewFile *.md   0r ~/.vim/templates/skeleton.md
 augroup END
 
 " vim-plug
 call plug#begin('~/.local/share/nvim/plugged')
 
 Plug 'xuhdev/vim-latex-live-preview', {'for': 'tex'}
-let g:livepreview_previewer = 'okular'
-set updatetime=1000
+    let g:livepreview_previewer = 'okular'
+    set updatetime=1000
 
 Plug 'leafgarland/typescript-vim', {'for': 'typescript'}
 
