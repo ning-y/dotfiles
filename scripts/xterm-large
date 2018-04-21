@@ -1,0 +1,7 @@
+#! /usr/bin/env bash
+
+main() {
+  xterm -fs 20
+}
+
+main

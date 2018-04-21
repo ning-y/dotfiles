@@ -1,0 +1,16 @@
+#! /usr/bin/env bash
+
+INSTALL_DIR='/usr/local/bin/'
+
+main() {
+    files=( * )  # array of files in this directory
+    for file in "${files[@]}"; do
+        if [[ "${file}" != "install" ]] ; then
+            full_path="$(pwd)/${file}"
+            echo "Linking ${full_path} to ${INSTALL_DIR} ..."
+            ln -s "${full_path}" "${INSTALL_DIR}"
+        fi
+    done
+}
+
+main
