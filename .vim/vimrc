@@ -6,7 +6,9 @@ set relativenumber
 set ruler
 set hlsearch
 set nolinebreak
-autocmd BufNewFile,BufRead *.md setf markdown
+set list
+set listchars=tab:›\ ,trail:⋅
+set tw=80
 
 " Indent with 4 spaces
 set shiftwidth=4
@@ -14,16 +16,6 @@ set tabstop=4
 set expandtab
 set smartindent
 set autoindent
-
-" Remaps 
-inoremap jk <Esc>
-
-" File-specific remaps
-augroup file_remaps
-    autocmd!
-    autocmd BufWinEnter *.tex nnoremap <F3> :w<CR>:!pdflatex %:p<CR>
-    autocmd BufWinEnter *.md nnoremap <F3> :w<CR>:!pandoc "%:p" -o "%:p:h/%:r.pdf"<CR>
-augroup END
 
 " Folding
 set foldcolumn=1
@@ -34,6 +26,20 @@ augroup AutoSaveFolds
     autocmd BufWinEnter ?* silent loadview
     autocmd BufWinEnter ?* normal zR
 augroup END
+
+" Remaps 
+inoremap jk <Esc>
+
+" File-specific stuff
+autocmd BufNewFile,BufRead *.md setf markdown
+
+" File-specific remaps
+augroup file_remaps
+    autocmd!
+    autocmd BufWinEnter *.tex nnoremap <F3> :w<CR>:!pdflatex %:p<CR>
+    autocmd BufWinEnter *.md nnoremap <F3> :w<CR>:!pandoc "%:p" -o "%:p:h/%:r.pdf"<CR>
+augroup END
+
 
 " Spellcheck mode <F4>
 nnoremap <F4> :call Toggle_spell()<CR>
