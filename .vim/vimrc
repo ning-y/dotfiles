@@ -29,6 +29,10 @@ augroup END
 
 " Remaps 
 inoremap jk <Esc>
+noremap <Up>    :resize +5 <CR>
+noremap <Down>  :resize -5 <CR>
+noremap <Left>  :vertical resize -5 <CR>
+noremap <Right> :vertical resize +5 <CR>
 
 " File-specific stuff
 autocmd BufNewFile,BufRead *.md setf markdown
