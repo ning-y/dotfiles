@@ -29,6 +29,7 @@ augroup END
 
 " Remaps 
 inoremap jk <Esc>
+nnoremap W :w<CR>
 noremap <Up>    :resize +5 <CR>
 noremap <Down>  :resize -5 <CR>
 noremap <Left>  :vertical resize -5 <CR>
