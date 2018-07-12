@@ -37,6 +37,7 @@ noremap <Right> :vertical resize +5 <CR>
 
 " File-specific stuff
 autocmd BufNewFile,BufRead *.md setf markdown
+autocmd Filetype typescript set shiftwidth=2 tabstop=2
 
 " File-specific remaps
 augroup file_remaps
@@ -73,5 +74,7 @@ Plug 'xuhdev/vim-latex-live-preview', {'for': 'tex'}
     set updatetime=1000
 
 Plug 'leafgarland/typescript-vim', {'for': 'typescript'}
+
+Plug 'elixir-editors/vim-elixir'
 
 call plug#end()
