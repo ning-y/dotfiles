@@ -2,16 +2,16 @@
     name = ning
     email = ningyuan.sg@gmail.com
 [alias]
-    # Commonly used
-    s = status -bs
-    lf = ls-files
-    cv = commit -v
-    # Logs & Misc
-    l = log --oneline --stat
+    alias = config --get-regexp alias
+    amend = commit --amend
+    amend-ne = commit --amend --no-edit
+    commit = commit -v
     graph = log --graph --oneline --decorate
-    # Utilities
+    log = log --oneline --stat
+    log-long = log
+    ls = ls-files
     nuke = reset --hard
-    assume-unchanged = update-index --assume-unchanged
+    s = status -bs
 [core]
     editor = "vim"
 [diff]
