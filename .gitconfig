@@ -5,10 +5,9 @@
     alias = config --get-regexp alias
     amend = commit --amend
     amend-ne = commit --amend --no-edit
-    commit = commit -v
+    cv = commit -v
     graph = log --graph --oneline --decorate
-    log = log --oneline --stat
-    log-long = log
+    l = log --oneline --stat
     ls = ls-files
     nuke = reset --hard
     s = status -bs
