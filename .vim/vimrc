@@ -30,6 +30,7 @@ augroup END
 " Remaps 
 inoremap jk <Esc>
 nnoremap W :w<CR>
+nnoremap - :w<CR>:make<CR>
 noremap <Up>    :resize +5 <CR>
 noremap <Down>  :resize -5 <CR>
 noremap <Left>  :vertical resize -5 <CR>
@@ -37,7 +38,7 @@ noremap <Right> :vertical resize +5 <CR>
 
 " File-specific stuff
 autocmd BufNewFile,BufRead *.md setf markdown
-autocmd Filetype typescript set shiftwidth=2 tabstop=2
+autocmd Filetype typescript,vimwiki set shiftwidth=2 tabstop=2
 
 " File-specific remaps
 augroup file_remaps
@@ -45,7 +46,6 @@ augroup file_remaps
     autocmd BufWinEnter *.tex nnoremap <F3> :w<CR>:!pdflatex %:p<CR>
     autocmd BufWinEnter *.md nnoremap <F3> :w<CR>:!pandoc "%:p" -o "%:p:h/%:r.pdf"<CR>
 augroup END
-
 
 " Spellcheck mode <F4>
 nnoremap <F4> :call Toggle_spell()<CR>
