@@ -6,6 +6,7 @@
     amend = commit --amend
     amend-ne = commit --amend --no-edit
     cv = commit -v
+    diffc = diff --cached
     graph = log --graph --oneline --decorate
     l = log --oneline --stat
     ls = ls-files
