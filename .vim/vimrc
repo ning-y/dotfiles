@@ -71,9 +71,7 @@ call plug#begin('~/.local/share/nvim/plugged')
 
 Plug 'vimwiki/vimwiki'
 
-Plug 'xuhdev/vim-latex-live-preview', {'for': 'tex'}
-    let g:livepreview_previewer = 'okular'
-    set updatetime=1000
+Plug 'lervag/vimtex'
 
 Plug 'leafgarland/typescript-vim', {'for': 'typescript'}
 
