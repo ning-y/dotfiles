@@ -5,6 +5,7 @@ alias cdg='cd ~/github'
 
 # TASKWARRIOR
 alias t='task'
+alias tt='task due:today'
 alias t+='task add'
 alias tm='task modify'
 alias te='task edit'
