@@ -64,9 +64,12 @@ autocmd Filetype html,markdown,tex,typescript,vimwiki set shiftwidth=2 tabstop=2
 augroup file_remaps
     autocmd!
 
-    autocmd BufWinEnter *.tex nnoremap <F3> :w<CR>:!pdflatex %:p<CR>
+    autocmd BufWinEnter Makefile set noexpandtab
+
     " %f -- filename; %m -- is modified flag; %= alignment separator
     autocmd BufWinEnter *.tex set statusline=\ %f\ %m%=wc:%{WordCount()}\ 
+    autocmd BufWinEnter *.tex nnoremap <F3> :w<CR>:!pdflatex %:p<CR>
+
     autocmd BufWinEnter *.md nnoremap <F3> :w<CR>:!pandoc "%:p" -o "%:p:h/%:r.pdf"<CR>
 augroup END
 
