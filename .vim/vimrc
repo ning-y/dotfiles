@@ -27,7 +27,7 @@ augroup AutoSaveFolds
     autocmd BufWinEnter ?* normal zR
 augroup END
 
-" Remaps 
+" Remaps
 inoremap jk <Esc>
 nnoremap W :w<CR>
 nnoremap - :w<CR>:make<CR>
@@ -36,6 +36,26 @@ noremap <Down>  :resize -5 <CR>
 noremap <Left>  :vertical resize -5 <CR>
 noremap <Right> :vertical resize +5 <CR>
 
+" netrw config
+let g:netrw_banner = 0  " hide netrw banner
+let g:netrw_liststyle = 3  " default to 'treeview'
+let g:netrw_browse_split = 3  " open files in new tab
+
+" statusline
+function WordCount()  " https://stackoverflow.com/a/4588161/
+   let s:old_status = v:statusmsg
+   let position = getpos(".")
+   exe ":silent normal g\<c-g>"
+   let stat = v:statusmsg
+   let s:word_count = 0
+   if stat != '--No lines in buffer--'
+     let s:word_count = str2nr(split(v:statusmsg)[11])
+     let v:statusmsg = s:old_status
+   end
+   call setpos('.', position)
+   return s:word_count 
+endfunction
+
 " File-specific stuff
 autocmd BufNewFile,BufRead *.md setf markdown
 autocmd Filetype html,markdown,tex,typescript,vimwiki set shiftwidth=2 tabstop=2
@@ -43,7 +63,10 @@ autocmd Filetype html,markdown,tex,typescript,vimwiki set shiftwidth=2 tabstop=2
 " File-specific remaps
 augroup file_remaps
     autocmd!
+
     autocmd BufWinEnter *.tex nnoremap <F3> :w<CR>:!pdflatex %:p<CR>
+    " %f -- filename; %m -- is modified flag; %= alignment separator
+    autocmd BufWinEnter *.tex set statusline=\ %f\ %m%=wc:%{WordCount()}\ 
     autocmd BufWinEnter *.md nnoremap <F3> :w<CR>:!pandoc "%:p" -o "%:p:h/%:r.pdf"<CR>
 augroup END
 
