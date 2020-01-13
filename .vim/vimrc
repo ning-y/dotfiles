@@ -69,6 +69,9 @@ augroup file_remaps
     " %f -- filename; %m -- is modified flag; %= alignment separator
     autocmd BufWinEnter *.tex set statusline=\ %f\ %m%=wc:%{WordCount()}\ 
     autocmd BufWinEnter *.tex nnoremap <F3> :w<CR>:!latexmk -pdf %:p<CR>
+    autocmd BufWinEnter *.tex set tw=0
+    autocmd BufWinEnter *.tex set linebreak
+    autocmd BufWinEnter *.tex set spell
 
     autocmd BufWinEnter *.md nnoremap <F3> :w<CR>:!pandoc "%:p" -o "%:p:h/%:r.pdf"<CR>
 augroup END
