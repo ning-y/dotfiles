@@ -1,8 +1,8 @@
 #=========#
 # URGENCY #
 #=========#
-urgency.blocking.coefficient=1
-urgency.project.coefficient=3
+urgency.blocking.coefficient=0
+urgency.project.coefficient=0
 default.priority=M
 urgency.uda.priority.M.coefficient=0
 urgency.uda.priority.L.coefficient=-10
