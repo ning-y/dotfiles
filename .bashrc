@@ -11,3 +11,8 @@ alias rm='rm -v'
 alias ZZ='exit'
 alias update_config='git -C ~/github/config/ pull && source ~/.bashrc'
 export EDITOR=vim
+
+# PROJECTOR
+alias project='xrandr --output eDP-1 --mode 1920x1080 --output DP-1 --mode 1920x1080 --same-as eDP-1'
+alias blank='xrandr --output eDP-1 --mode 1920x1080 --output DP-1 --mode 1920x1080 --right-of eDP-1'
+alias unproject='xrandr --output eDP-1 --mode 1920x1080 --output DP-1 --off'
