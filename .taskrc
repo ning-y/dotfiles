@@ -4,6 +4,7 @@
 urgency.blocking.coefficient=0
 urgency.project.coefficient=0
 default.priority=M
+urgency.uda.priority.H.coefficient=0
 urgency.uda.priority.M.coefficient=0
 urgency.uda.priority.L.coefficient=-10
 

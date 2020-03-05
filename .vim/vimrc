@@ -30,7 +30,7 @@ augroup END
 " Remaps
 inoremap jk <Esc>
 nnoremap W :w<CR>
-nnoremap - :w<CR>:make<CR>
+nnoremap - :w<CR>:make!<CR>
 noremap <Up>    :resize +5 <CR>
 noremap <Down>  :resize -5 <CR>
 noremap <Left>  :vertical resize -5 <CR>
@@ -114,10 +114,6 @@ vnoremap <silent> / :<C-U>
 
 " vim-plug
 call plug#begin('~/.local/share/nvim/plugged')
-
-Plug 'vimwiki/vimwiki'
-
-Plug 'lervag/vimtex'
 
 Plug 'leafgarland/typescript-vim', {'for': 'typescript'}
 
