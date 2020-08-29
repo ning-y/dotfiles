@@ -17,16 +17,6 @@ set expandtab
 set smartindent
 set autoindent
 
-" Folding
-set foldcolumn=1
-set foldmethod=manual
-augroup AutoSaveFolds
-    autocmd!
-    autocmd BufWinLeave ?* mkview
-    autocmd BufWinEnter ?* silent loadview
-    autocmd BufWinEnter ?* normal zR
-augroup END
-
 " Remaps
 inoremap jk <Esc>
 nnoremap W :w<CR>
@@ -114,9 +104,5 @@ vnoremap <silent> / :<C-U>
 
 " vim-plug
 call plug#begin('~/.local/share/nvim/plugged')
-
-Plug 'leafgarland/typescript-vim', {'for': 'typescript'}
-
-Plug 'elixir-editors/vim-elixir'
-
+  Plug 'vimwiki/vimwiki'
 call plug#end()
