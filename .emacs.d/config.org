@@ -1,0 +1,107 @@
+#+TITLE: emacs config
+
+* Aesthetics
+
+I'm using a white theme for now.
+
+#+BEGIN_SRC emacs-lisp
+(load-theme 'whiteboard)
+#+END_SRC
+
+By default, emacs shows the row but not column position of the cursor.
+To enable column position in the ruler,
+
+#+BEGIN_SRC emacs-lisp
+(setq column-number-mode t)
+#+END_SRC
+
+* General behaviour
+
+By default, emacs detects a sentence end when it sees a full stop followed by two spaces.
+I prefer to type only using one space after the full stop, so the next block overrides that default two-spaces behaviour.
+
+#+BEGIN_SRC emacs-lisp
+(setq sentence-end-double-space nil)
+#+END_SRC
+
+** Key bindings
+
+Navigate windows much easier with ~C-.~ and ~C-,~ rather than the awkward ~C-x o~.
+
+/TODO:/ Write ~C-,~ so that it calls the interactive function /other-window/ with count -1.
+/TODO:/ Learn why tilde, capital C, dash, comma, tilde, isn't being styled correctly.
+
+#+BEGIN_SRC emacs-lisp
+(global-set-key (kbd "C-.") #'other-window)
+; (global-set-key (kbd "C-,") #'previous-window)
+#+END_SRC
+
+* Org mode
+
+#+BEGIN_SRC emacs-lisp
+(require 'org)
+#+END_SRC
+
+Use inline-tasks.
+
+#+BEGIN_SRC emacs-lisp
+(require 'org-inlinetask)
+#+END_SRC
+
+/TODO:/ Document the following.
+
+#+BEGIN_SRC emacs-lisp
+(global-set-key "\C-cl" 'org-store-link)
+(global-set-key "\C-ca" 'org-agenda)
+(setq org-log-done t)
+(setq org-todo-keywords '((sequence "TODO" "IN PROGRESS" "DONE")))
+#+END_SRC
+
+** Aesthetics
+
+Org mode does not visual wrap by default, but that's the most sensible way to view prose when you type one-sentence-per-line.
+
+/TODO:/ Forbid visual wrapping in the middle of a word.
+/FIXME:/ The =text-mode-hook= doesn't seem to be working.
+#+BEGIN_SRC emacs-lisp
+(add-hook 'text-mode-hook #'visual-line-mode)
+#+END_SRC
+
+The default behaviour for collapsed subtrees is to produce a free space between that collapsed subtree and the next heading only if there are at least 2 empty lines after the end of a subtree.
+This is not how I'm used to typing---I usually only leave 1 empty line after each paragraph or section.
+
+#+BEGIN_SRC emacs-lisp
+(setq org-cycle-separator-lines 1)
+#+END_SRC
+
+Don't show images in their actual size!
+
+#+BEGIN_SRC emacs-lisp
+(setq org-image-actual-width nil)
+#+END_SRC
+
+** Agenda
+
+Define which files the agenda should draw tasks from.
+
+#+BEGIN_SRC emacs-lisp
+(setq org-agenda-files (quote (
+  "~/org/cs1101s.org"
+  "~/org/higher-education-research.org"
+  "~/org/usp-mentorship-programme.org"
+  "~/org/usr4002a.org"
+  "~/org/zb4171.org"
+  "~/org/zb4199.org"
+)))
+#+END_SRC
+
+In order: show 7 days, starting from the present day, not highlighting the weekends; don't show tasks if they are already done, and don't warn about deadlines beyond today in today's agenda.
+
+#+BEGIN_SRC emacs-lisp
+(setq org-agenda-span 7
+      org-agenda-start-on-weekday nil
+      org-agenda-weekend-days nil
+      org-agenda-skip-scheduled-if-done t
+      org-agenda-skip-deadline-if-done t
+      org-deadline-warning-days 0)
+#+END_SRC
