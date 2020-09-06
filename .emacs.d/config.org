@@ -92,9 +92,6 @@ Navigate windows much easier with ~C-.~ and ~C-,~ rather than the awkward ~C-x o
 ; (global-set-key (kbd "C-,") #'previous-window)
 #+END_SRC
 
-* LaTeX Tools
-
-
 
 * Org mode
 
@@ -107,6 +104,16 @@ Use inline-tasks.
 #+BEGIN_SRC emacs-lisp
 (require 'org-inlinetask)
 #+END_SRC
+
+Flyspell by default.
+~M-$~ to open suggestions.
+
+#+begin_src emacs-lisp
+(dolist (hook '(text-mode-hook))
+  (add-hook hook (lambda () (flyspell-mode 1))))
+(dolist (hook '(change-log-mode-hook log-edit-mode-hook))
+  (add-hook hook (lambda () (flyspell-mode -1))))
+#+end_src
 
 /TODO:/ Document the following.
 
@@ -132,12 +139,27 @@ Continue using ~< s TAB~ for easy templates[fn:: https://emacs.stackexchange.com
 
 /TODO:/ Set this as a default export option rather than a thing to be manually included.
 
-#+begin_src 
+#+begin_src emacs-lisp
 (tempo-define-template "org-export-css" ; template name, for documentation only
   '("#+INFOJS_OPT: view:t toc:t ltoc:t mouse:underline buttons:0 path:http://thomasf.github.io/solarized-css/org-info.min.js" n
-    "#+HTML_HEAD: <link rel=\"stylesheet\" type=\"text/css\" href=\"http://thomasf.github.io/solarized-css/solarized-light.min.css\" />")
+    "#+HTML_HEAD: <link rel=\"stylesheet\" type=\"text/css\" href=\"http://thomasf.github.io/solarized-css/solarized-light.min.css\" />" n
+    "#+HTML_HEAD: <style> p { text-align: justify; } </style>")
   "<css"
   "Insert properties for Solarized CSS"
+  'org-tempo-tags)
+#+end_src
+
+Quick template to insert images.
+~p~ will place the cursor at that position when ~tempo-interactive~  is ~nil~, which it is.
+To force a mini-buffer prompt, use ~P~ instead.
+
+#+begin_src emacs-lisp
+(tempo-define-template "org-insert-image"
+  '("#+ATTR_ORG: :width 700px" n
+    "#+ATTR_HTML: :width 100%" n
+    "[[" (p "Link to image: ") "]]")
+  "<ii"
+  "Insert image"
   'org-tempo-tags)
 #+end_src
 
@@ -184,6 +206,14 @@ In order: show 7 days, starting from the present day, not highlighting the weeke
       org-deadline-warning-days 0)
 #+END_SRC
 
+* Flycheck
+
+#+begin_src emacs-lisp
+(use-package flycheck
+  :ensure t
+  :init (global-flycheck-mode))
+#+end_src
+
 * Zetteldeft
 
 /deft-extensions/ determines which files in the /deft-directory/ should be considered as /deft/ (or /zetteldeft/) notes.
@@ -215,9 +245,7 @@ When a new file is created, automatically add a line to enter tags.
 
 Things to try or do:
 
-- Get a real-time spell checker! Lazy flycheck?
 - Remove the HTML export postamble on org mode files.
-- Write a quick-template (or whats-it-called) for [[http://thomasf.github.io/solarized-css/][this neat css/js addition to org-mode html exports]].
 - In the [[https://orgmode.org/manual/The-date_002ftime-prompt.html][org date/time prompt]]: map ~S-f~, ~S-b~ to day movement; ~S-n~, ~S-p~ to week movement; and ~M-S-n~, ~M-S-p~ to month movement.
 - Set an org-agenda custome command which shows all TODOs without a deadline or scheduled datetime[fn:: https://stackoverflow.com/questions/17003338/emacs-org-mode-how-to-find-all-todos-that-dont-have-a-deadline-specified].
 - [[https://melpa.org/#/transpose-frame][transpose-frame]], but rename the functions to be prefixed with ~frame-~.
