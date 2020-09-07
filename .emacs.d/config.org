@@ -261,12 +261,18 @@ When a new file is created, automatically add a line to enter tags.
 (setq zetteldeft-title-suffix "\n#+TAGS: ")
 #+END_SRC
 
+* magit
+
+#+begin_src emacs-lisp
+(use-package magit :ensure t)
+(global-set-key (kbd "C-x g") 'magit-status)
+#+end_src
+
 * TODOs
 
 Things to try or do:
 
-- Enable global ~whitespace-mode~, but configure ~whitespace-style~ so that newlines are not shown as ~$~.
-  That's way too distracting.
+- Set up [[https://github.com/odeke-em/drive][drive sync]].
 - Remove the HTML export postamble on org mode files.
 - In the [[https://orgmode.org/manual/The-date_002ftime-prompt.html][org date/time prompt]]: map ~S-f~, ~S-b~ to day movement; ~S-n~, ~S-p~ to week movement; and ~M-S-n~, ~M-S-p~ to month movement.
 - Set an org-agenda custome command which shows all TODOs without a deadline or scheduled datetime[fn:: https://stackoverflow.com/questions/17003338/emacs-org-mode-how-to-find-all-todos-that-dont-have-a-deadline-specified].
