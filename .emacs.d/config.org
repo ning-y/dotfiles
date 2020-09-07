@@ -34,6 +34,15 @@ To enable column position in the ruler,
 (setq column-number-mode t)
 #+END_SRC
 
+** Graphical emacs
+
+Don't show the menu and tool bars.
+
+#+begin_src emacs-lisp
+(menu-bar-mode -1)
+(tool-bar-mode -1)
+#+end_src
+
 ** mixed-pitch
 
 A minor mode that allows for variable-width fonts.
@@ -256,13 +265,14 @@ When a new file is created, automatically add a line to enter tags.
 
 Things to try or do:
 
+- Enable global ~whitespace-mode~, but configure ~whitespace-style~ so that newlines are not shown as ~$~.
+  That's way too distracting.
 - Remove the HTML export postamble on org mode files.
 - In the [[https://orgmode.org/manual/The-date_002ftime-prompt.html][org date/time prompt]]: map ~S-f~, ~S-b~ to day movement; ~S-n~, ~S-p~ to week movement; and ~M-S-n~, ~M-S-p~ to month movement.
 - Set an org-agenda custome command which shows all TODOs without a deadline or scheduled datetime[fn:: https://stackoverflow.com/questions/17003338/emacs-org-mode-how-to-find-all-todos-that-dont-have-a-deadline-specified].
 - [[https://melpa.org/#/transpose-frame][transpose-frame]], but rename the functions to be prefixed with ~frame-~.
 - [[https://github.com/waymondo/frog-jump-buffer][frog-jump-buffer]]
 - [[https://github.com/200ok-ch/organice][organice]]
-- [[https://gitlab.com/jabranham/mixed-pitch][mixed-pitch]]
 - [[https://github.com/abo-abo/org-download][org-download]]
 
 * What's Bad About emacs?
