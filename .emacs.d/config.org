@@ -152,7 +152,8 @@ I opt instead to use the older /org-tempo/ behaviour which uses a much quicker ~
 Continue using ~< s TAB~ for easy templates[fn:: https://emacs.stackexchange.com/a/46992/30033].
 
 #+begin_src emacs-lisp
-(require 'org-tempo)
+(unless (version< (org-version) "9.2")
+  (require 'org-tempo))
 #+end_src
 
 *** Custom Structure Templates
@@ -160,13 +161,14 @@ Continue using ~< s TAB~ for easy templates[fn:: https://emacs.stackexchange.com
 /TODO:/ Set this as a default export option rather than a thing to be manually included.
 
 #+begin_src emacs-lisp
-(tempo-define-template "org-export-css" ; template name, for documentation only
-  '("#+INFOJS_OPT: view:t toc:t ltoc:t mouse:underline buttons:0 path:http://thomasf.github.io/solarized-css/org-info.min.js" n
-    "#+HTML_HEAD: <link rel=\"stylesheet\" type=\"text/css\" href=\"http://thomasf.github.io/solarized-css/solarized-light.min.css\" />" n
-    "#+HTML_HEAD: <style> p { text-align: justify; } </style>")
-  "<css"
-  "Insert properties for Solarized CSS"
-  'org-tempo-tags)
+(unless (version< (org-version) "9.2")
+  (tempo-define-template "org-export-css" ; template name, for documentation only
+    '("#+INFOJS_OPT: view:t toc:t ltoc:t mouse:underline buttons:0 path:http://thomasf.github.io/solarized-css/org-info.min.js" n
+      "#+HTML_HEAD: <link rel=\"stylesheet\" type=\"text/css\" href=\"http://thomasf.github.io/solarized-css/solarized-light.min.css\" />" n
+      "#+HTML_HEAD: <style> p { text-align: justify; } </style>")
+    "<css"
+    "Insert properties for Solarized CSS"
+    'org-tempo-tags))
 #+end_src
 
 Quick template to insert images.
@@ -174,13 +176,14 @@ Quick template to insert images.
 To force a mini-buffer prompt, use ~P~ instead.
 
 #+begin_src emacs-lisp
-(tempo-define-template "org-insert-image"
-  '("#+ATTR_ORG: :width 700px" n
-    "#+ATTR_HTML: :width 100%" n
-    "[[" (p "Link to image: ") "]]")
-  "<ii"
-  "Insert image"
-  'org-tempo-tags)
+(unless (version< (org-version) "9.2")
+  (tempo-define-template "org-insert-image"
+    '("#+ATTR_ORG: :width 700px" n
+      "#+ATTR_HTML: :width 100%" n
+      "[[" (p "Link to image: ") "]]")
+    "<ii"
+    "Insert image"
+    'org-tempo-tags))
 #+end_src
 
 ** Aesthetics
