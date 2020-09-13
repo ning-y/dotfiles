@@ -8,6 +8,8 @@ Here, I use /http/ rather than /https/, because otherwise there is a problem in 
 
 (add-to-list 'package-archives
   '("MELPA" . "http://melpa.org/packages/"))
+(add-to-list 'package-archives 
+  '("org" . "https://orgmode.org/elpa/") t)
 (package-initialize)
 (package-refresh-contents)
 
@@ -119,10 +121,11 @@ Navigate windows much easier with ~C-.~ and ~C-,~ rather than the awkward ~C-x o
 (require 'org)
 #+END_SRC
 
-Use inline-tasks.
+Enable the ~:RESET_CHECK_BOXES:~ property.[fn:: https://stackoverflow.com/q/20164918/6910451]
 
 #+BEGIN_SRC emacs-lisp
-(require 'org-inlinetask)
+(use-package org-checklist
+  :ensure org-plus-contrib)
 #+END_SRC
 
 Flyspell by default.
