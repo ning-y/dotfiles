@@ -82,6 +82,14 @@ Insert a _z_​ero-​_w_​idth _s_​pace.
   (insert-char #x200b))
 #+END_SRC
 
+Insert a section sign (§).
+
+#+begin_src emacs-lisp
+(defun my-sec ()
+  (interactive)
+  (insert-char #xa7))
+#+end_src
+
 Except for the current buffer, kill all other buffers.
 
 #+BEGIN_SRC emacs-lisp
