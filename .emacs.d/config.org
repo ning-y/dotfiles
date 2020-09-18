@@ -304,6 +304,14 @@ Packages which don't require a lengthy configuration.
   :config (which-key-mode))
 #+end_src
 
+** ess
+
+#+begin_src emacs-lisp
+(use-package ess
+  :ensure t
+  :init (require 'ess-r-mode))
+#+end_src
+
 * TODOs
 
 Things to try or do:
