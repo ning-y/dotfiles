@@ -18,17 +18,11 @@ Here, I use /http/ rather than /https/, because otherwise there is a problem in 
 (require 'use-package)
 #+END_SRC
 
-* Configurations for Basic Behaviour
+* Configurations for Emacs Itself
 
-** Never Ask Me to Type "yes"/​"no", Only "y"/"n"
+** Aesthetics
 
-#+begin_src emacs-lisp
-(defalias 'yes-or-no-p 'y-or-n-p)
-#+end_src
-
-* Aesthetics
-
-I'm using a light theme for now.
+*** Use the ~spacemacs-light~ theme
 
 #+BEGIN_SRC emacs-lisp
 (use-package spacemacs-common
@@ -37,43 +31,38 @@ I'm using a light theme for now.
   :init (load-theme 'spacemacs-light t))
 #+END_SRC
 
-By default, emacs shows the row but not column position of the cursor.
-To enable column position in the ruler,
+***  Show column number in the mode line
 
 #+BEGIN_SRC emacs-lisp
 (setq column-number-mode t)
 #+END_SRC
 
-** Graphical emacs
-
-Don't show the menu and tool bars.
+*** Don't show menu and tool bars in graphical Emacs
 
 #+begin_src emacs-lisp
 (menu-bar-mode -1)
 (tool-bar-mode -1)
 #+end_src
 
-** mixed-pitch
+** Behaviour
 
-A minor mode that allows for variable-width fonts.
+*** Never ask me to type "yes"/​"no", only "y"/"n"
 
 #+begin_src emacs-lisp
-(use-package mixed-pitch
-  :ensure t
-  :hook
-  (org-mode . mixed-pitch-mode))
+(defalias 'yes-or-no-p 'y-or-n-p)
 #+end_src
 
-* General behaviour
+*** Only one, not two spaces follow a period, at a sentence's end
 
-By default, emacs detects a sentence end when it sees a full stop followed by two spaces.
-I prefer to type only using one space after the full stop, so the next block overrides that default two-spaces behaviour.
+This affects how sentence-based movements work, e.g. ~M-f~ and ~M-b~.
 
 #+BEGIN_SRC emacs-lisp
 (setq sentence-end-double-space nil)
 #+END_SRC
 
-~*scratch*~ starts in /org-mode/.
+*** Start the ~*scratch*~ buffer in org mode
+
+I just don't use emacs lisp that often.
 
 #+BEGIN_SRC emacs-lisp
 (setq initial-major-mode 'org-mode)
@@ -118,19 +107,6 @@ Load this config file.
       (expand-file-name "config.org" user-emacs-directory)))
 #+END_SRC
 
-** Key bindings
-
-Navigate windows much easier with ~C-.~ and ~C-,~ rather than the awkward ~C-x o~.
-
-/TODO:/ Write ~C-,~ so that it calls the interactive function /other-window/ with count -1.
-/TODO:/ Learn why tilde, capital C, dash, comma, tilde, isn't being styled correctly.
-
-#+BEGIN_SRC emacs-lisp
-(global-set-key (kbd "C-.") #'other-window)
-; (global-set-key (kbd "C-,") #'previous-window)
-#+END_SRC
-
-
 * Org mode
 
 #+BEGIN_SRC emacs-lisp
@@ -172,6 +148,19 @@ Babel languages.
 (setq org-log-done t)
 (setq org-todo-keywords '((sequence "TODO" "IN PROGRESS" "DONE")))
 #+END_SRC
+
+** mixed-pitch
+
+A minor mode that allows for variable-width fonts.
+
+#+begin_src emacs-lisp
+(use-package mixed-pitch
+  :ensure t
+  :hook
+  (org-mode . mixed-pitch-mode))
+#+end_src
+
+
 
 ** Structure Templates
 
