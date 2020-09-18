@@ -18,6 +18,14 @@ Here, I use /http/ rather than /https/, because otherwise there is a problem in 
 (require 'use-package)
 #+END_SRC
 
+* Configurations for Basic Behaviour
+
+** Never Ask Me to Type "yes"/​"no", Only "y"/"n"
+
+#+begin_src emacs-lisp
+(defalias 'yes-or-no-p 'y-or-n-p)
+#+end_src
+
 * Aesthetics
 
 I'm using a light theme for now.
