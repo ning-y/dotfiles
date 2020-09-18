@@ -247,14 +247,6 @@ In order: show 7 days, starting from the present day, not highlighting the weeke
       org-deadline-warning-days 0)
 #+END_SRC
 
-* Flycheck
-
-#+begin_src emacs-lisp
-(use-package flycheck
-  :ensure t
-  :init (global-flycheck-mode))
-#+end_src
-
 * Zetteldeft
 
 /deft-extensions/ determines which files in the /deft-directory/ should be considered as /deft/ (or /zetteldeft/) notes.
