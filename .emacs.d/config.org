@@ -146,6 +146,16 @@ Flyspell by default.
   (add-hook hook (lambda () (flyspell-mode -1))))
 #+end_src
 
+Babel languages.
+
+#+begin_src emacs-lisp
+(org-babel-do-load-languages 'org-babel-load-languages
+  (append org-babel-load-languages
+    '((R . t)
+      (python . t))))
+(setq org-babel-python-command "python3")
+#+end_src
+
 /TODO:/ Document the following.
 
 #+BEGIN_SRC emacs-lisp
