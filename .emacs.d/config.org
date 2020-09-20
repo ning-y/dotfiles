@@ -149,6 +149,12 @@ Babel languages.
 (setq org-todo-keywords '((sequence "TODO" "IN PROGRESS" "DONE")))
 #+END_SRC
 
+** Asynchronous src block execution
+
+#+begin_src emacs-lisp
+(use-package ob-async :ensure t)
+#+end_src
+
 ** mixed-pitch
 
 A minor mode that allows for variable-width fonts.
