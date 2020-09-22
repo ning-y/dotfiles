@@ -44,6 +44,16 @@ Here, I use /http/ rather than /https/, because otherwise there is a problem in 
 (tool-bar-mode -1)
 #+end_src
 
+*** Show tab characters and highlight trailing spaces
+
+#+begin_src emacs-lisp
+(global-whitespace-mode 1)
+(setq whitespace-style '(face trailing tabs tab-mark))
+#+end_src
+
+#+RESULTS:
+| face | trailing | tabs | tab-mark |
+
 ** Behaviour
 
 *** Never ask me to type "yes"/​"no", only "y"/"n"
