@@ -8,7 +8,7 @@ Here, I use /http/ rather than /https/, because otherwise there is a problem in 
 
 (add-to-list 'package-archives
   '("MELPA" . "http://melpa.org/packages/"))
-(add-to-list 'package-archives 
+(add-to-list 'package-archives
   '("org" . "https://orgmode.org/elpa/") t)
 (package-initialize)
 (package-refresh-contents)
@@ -117,7 +117,7 @@ Load this config file.
       (expand-file-name "config.org" user-emacs-directory)))
 #+END_SRC
 
-* Org mode
+* Configurations for Org mode
 
 #+BEGIN_SRC emacs-lisp
 (require 'org)
@@ -263,6 +263,26 @@ In order: show 7 days, starting from the present day, not highlighting the weeke
       org-deadline-warning-days 0)
 #+END_SRC
 
+* Configurations for R
+
+** ess
+
+#+begin_src emacs-lisp
+(use-package ess
+  :ensure t
+  :init (require 'ess-r-mode))
+#+end_src
+
+Out of the box, indentation is 4 spaces.
+I prefer 2.
+
+#+begin_src emacs-lisp
+(setq ess-default-style 'DEFAULT
+      ess-indent-level 2)
+#+end_src
+
+Note that the ~'DEFAULT~ is not literally the default, but otherwise ESS will not respect ~ess-indent-level~[fn::https://stackoverflow.com/a/17610845/6910451].
+
 * Zetteldeft
 
 /deft-extensions/ determines which files in the /deft-directory/ should be considered as /deft/ (or /zetteldeft/) notes.
@@ -307,14 +327,6 @@ Packages which don't require a lengthy configuration.
 (use-package which-key
   :ensure t
   :config (which-key-mode))
-#+end_src
-
-** ess
-
-#+begin_src emacs-lisp
-(use-package ess
-  :ensure t
-  :init (require 'ess-r-mode))
 #+end_src
 
 * TODOs
