@@ -70,15 +70,6 @@ This affects how sentence-based movements work, e.g. ~M-f~ and ~M-b~.
 (setq sentence-end-double-space nil)
 #+END_SRC
 
-*** Start the ~*scratch*~ buffer in org mode
-
-I just don't use emacs lisp that often.
-
-#+BEGIN_SRC emacs-lisp
-(setq initial-major-mode 'org-mode)
-(setq initial-scratch-message nil)
-#+END_SRC
-
 ** Custom functions
 
 Insert a _z_​ero-​_w_​idth _s_​pace.
@@ -263,9 +254,9 @@ In order: show 7 days, starting from the present day, not highlighting the weeke
       org-deadline-warning-days 0)
 #+END_SRC
 
-* Configurations for R
+* Configurations for programming in R
 
-** ess
+** Initialise ess
 
 #+begin_src emacs-lisp
 (use-package ess
@@ -282,6 +273,18 @@ I prefer 2.
 #+end_src
 
 Note that the ~'DEFAULT~ is not literally the default, but otherwise ESS will not respect ~ess-indent-level~[fn::https://stackoverflow.com/a/17610845/6910451].
+
+* Configurations for assorted packages
+
+Packages which don't require a lengthy configuration.
+
+** Initialise which-key
+
+#+begin_src emacs-lisp
+(use-package which-key
+  :ensure t
+  :config (which-key-mode))
+#+end_src
 
 * Zetteldeft
 
@@ -315,18 +318,6 @@ When a new file is created, automatically add a line to enter tags.
 #+begin_src emacs-lisp
 (use-package magit :ensure t)
 (global-set-key (kbd "C-x g") 'magit-status)
-#+end_src
-
-* Assorted Packages
-
-Packages which don't require a lengthy configuration.
-
-** which-key
-
-#+begin_src emacs-lisp
-(use-package which-key
-  :ensure t
-  :config (which-key-mode))
 #+end_src
 
 * TODOs
