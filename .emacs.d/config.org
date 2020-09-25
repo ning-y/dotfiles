@@ -70,6 +70,14 @@ This affects how sentence-based movements work, e.g. ~M-f~ and ~M-b~.
 (setq sentence-end-double-space nil)
 #+END_SRC
 
+*** Eagerly save bookmarks whenever they are created
+
+The default behaviour is to only save when Emacs is killed, or upon ~M-x bookmark-save~.
+
+#+begin_src emacs-lisp
+(setq bookmark-save-flag 1)
+#+end_src
+
 ** Custom functions
 
 Insert a _z_​ero-​_w_​idth _s_​pace.
