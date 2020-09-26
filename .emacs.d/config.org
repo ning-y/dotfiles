@@ -31,6 +31,12 @@ Here, I use /http/ rather than /https/, because otherwise there is a problem in 
   :init (load-theme 'spacemacs-light t))
 #+END_SRC
 
+*** Set column width as 80 rather than 70
+
+#+begin_src emacs-lisp
+(setq fill-column 80)
+#+end_src
+
 ***  Show column number in the mode line
 
 #+BEGIN_SRC emacs-lisp
@@ -39,42 +45,42 @@ Here, I use /http/ rather than /https/, because otherwise there is a problem in 
 
 *** Don't show menu and tool bars in graphical Emacs
 
-#+begin_src emacs-lisp
+    #+begin_src emacs-lisp
 (menu-bar-mode -1)
 (tool-bar-mode -1)
-#+end_src
+    #+end_src
 
 *** Show tab characters and highlight trailing spaces
 
-#+begin_src emacs-lisp
+    #+begin_src emacs-lisp
 (global-whitespace-mode 1)
 (setq whitespace-style '(face trailing tabs tab-mark))
-#+end_src
+    #+end_src
 
-#+RESULTS:
-| face | trailing | tabs | tab-mark |
+    #+RESULTS:
+    | face | trailing | tabs | tab-mark |
 
 ** Behaviour
 
 *** Never ask me to type "yes"/​"no", only "y"/"n"
 
-#+begin_src emacs-lisp
+    #+begin_src emacs-lisp
 (defalias 'yes-or-no-p 'y-or-n-p)
-#+end_src
+    #+end_src
 
 *** Only one, not two spaces follow a period, at a sentence's end
 
-This affects how sentence-based movements work, e.g. ~M-f~ and ~M-b~.
+    This affects how sentence-based movements work, e.g. ~M-f~ and ~M-b~.
 
-#+BEGIN_SRC emacs-lisp
+    #+BEGIN_SRC emacs-lisp
 (setq sentence-end-double-space nil)
-#+END_SRC
+    #+END_SRC
 
 *** Eagerly save bookmarks whenever they are created
 
-The default behaviour is to only save when Emacs is killed, or upon ~M-x bookmark-save~.
+    The default behaviour is to only save when Emacs is killed, or upon ~M-x bookmark-save~.
 
-#+begin_src emacs-lisp
+    #+begin_src emacs-lisp
 (setq bookmark-save-flag 1)
 #+end_src
 
