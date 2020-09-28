@@ -151,7 +151,8 @@ Babel languages.
 (org-babel-do-load-languages 'org-babel-load-languages
   (append org-babel-load-languages
     '((R . t)
-      (python . t))))
+      (python . t)
+      (shell . t))))
 (setq org-babel-python-command "python3")
 #+end_src
 
