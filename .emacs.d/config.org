@@ -148,6 +148,51 @@ Insert greek alphabets.
     (otherwise nil)))
 #+end_src
 
+Generate smol text.
+Saves to clipboard by default.[fn:: https://stackoverflow.com/a/2178989/6910451]
+
+#+begin_src emacs-lisp
+(defun my-smol-string ()
+  (interactive)
+  (let ((string (read-string "Text: ")))
+    (with-temp-buffer
+      (insert (kill-new (mapconcat 'my-smol-char-string string "")))
+      (clipboard-kill-region (point-min) (point-max)))))
+
+(defun my-smol-char-string (char) (char-to-string (my-smol-char-hex char)))
+
+(defun my-smol-char-hex (char)
+  (pcase (downcase (char-to-string char))  ; mapconcat passes chars
+    ("a" #x1D43)
+    ("b" #x1D47)
+    ("c" #x1D9C)
+    ("d" #x1D48)
+    ("e" #x1D49)
+    ("f" #x1DA0)
+    ("g" #x1D4D)
+    ("h" #x02B0)
+    ("i" #x1DA6)
+    ("j" #x02B2)
+    ("k" #x1D4F)
+    ("l" #x02E1)
+    ("m" #x1D50)
+    ("n" #x207f)
+    ("o" #x1D52)
+    ("p" #x1D56)
+    ("q" #x7520)
+    ("r" #x02B3)
+    ("s" #x02E2)
+    ("t" #x1D57)
+    ("u" #x1D58)
+    ("v" #x1D5B)
+    ("w" #x02B7)
+    ("x" #x02E3)
+    ("y" #x02B8)
+    ("z" #x1DBB)
+    (otherwise #x20)  ; the space character
+))
+#+end_src
+
 Except for the current buffer, kill all other buffers.
 
 #+BEGIN_SRC emacs-lisp
