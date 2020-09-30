@@ -102,14 +102,60 @@ Insert a section sign (§).
   (insert-char #xa7))
 #+end_src
 
+Insert greek alphabets.
+
+#+begin_src emacs-lisp
+(defun my-greek ()
+  (interactive)
+  (insert-char (my-greek-utf8 (my-greek-prompt))))
+
+(defun my-greek-prompt ()
+  (completing-read "Greek letter: " '(
+      "Alpha" "alpha" "Beta" "beta" "Gamma" "gamma" "Delta" "delta"
+      "Epsilon" "epsilon" "Zeta" "zeta" "Eta" "eta" "Theta" "theta"
+      "Iota" "iota" "Kappa" "kappa" "Lambda" "lambda" "Mu" "mu" "Nu" "nu"
+      "Xi" "xi" "Omicron" "omnicron" "Pi" "pi" "Rho" "rho" "Sigma" "sigma"
+      "Tau" "tau" "Upsilon" "upsilon" "Phi" "phi" "Chi" "chi" "Psi" "psi"
+      "Omega" "omega"
+  ) nil t))
+
+(defun my-greek-utf8 (letter)
+  (pcase letter
+    ("alpha" #x3B1)   ("Alpha" #x391)
+    ("beta" #x3B2)    ("Beta" #x392)
+    ("gamma" #x3B3)   ("Gamma" #x393)
+    ("delta" #x3B4)   ("Delta" #x394)
+    ("epsilon" #x3B5) ("Epsilon" #x395)
+    ("zeta" #x3B6)    ("Zeta" #x396)
+    ("eta" #x3B7)     ("Eta" #x397)
+    ("theta" #x3B8)   ("Theta" #x398)
+    ("iota" #x3B9)    ("Iota" #x399)
+    ("kappa" #x3BA)   ("Kappa" #x39A)
+    ("lambda" #x3BB)  ("Lambda" #x39B)
+    ("mu" #x3BC)      ("Mu" #x39C)
+    ("nu" #x3BD)      ("Nu" #x39D)
+    ("xi" #x3BE)      ("Xi" #x39E)
+    ("omicron" #x3BF) ("Omicron" #x39F)
+    ("pi" #x3B0)      ("Pi" #x3A0)
+    ("rho" #x3B1)     ("Rho" #x3A1)
+    ("sigma" #x3B3)   ("Sigma" #x3A3)
+    ("tau" #x3B4)     ("Tau" #x3A4)
+    ("upsilon" #x3B5) ("Upsilon" #x3A5)
+    ("phi" #x3B6)     ("Phi" #x3A6)
+    ("chi" #x3B7)     ("Chi" #x3A7)
+    ("psi" #x3B8)     ("Psi" #x3A8)
+    ("omega" #xBA9)   ("Omega" #x3A9)
+    (otherwise nil)))
+#+end_src
+
 Except for the current buffer, kill all other buffers.
 
 #+BEGIN_SRC emacs-lisp
 (defun my-kill-other-buffers ()
   "Kill all other buffers."
   (interactive)
-  (mapc 'kill-buffer 
-        (delq (current-buffer) 
+  (mapc 'kill-buffer
+        (delq (current-buffer)
               (remove-if-not 'buffer-file-name (buffer-list)))))
 #+END_SRC
 
