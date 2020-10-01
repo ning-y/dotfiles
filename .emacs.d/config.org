@@ -349,10 +349,10 @@ Read tasks from the Zetteldeft directory.
 )))
 #+END_SRC
 
-In order: show 7 days, starting from the present day, not highlighting the weekends; don't show tasks if they are already done, and don't warn about deadlines beyond today in today's agenda.
+In order: show 21 days, starting from the present day, not highlighting the weekends; don't show tasks if they are already done, and don't warn about deadlines beyond today in today's agenda.
 
 #+BEGIN_SRC emacs-lisp
-(setq org-agenda-span 7
+(setq org-agenda-span 21
       org-agenda-start-on-weekday nil
       org-agenda-weekend-days nil
       org-agenda-skip-scheduled-if-done t
@@ -438,8 +438,5 @@ Things to try or do:
 - [[https://github.com/waymondo/frog-jump-buffer][frog-jump-buffer]]
 - [[https://github.com/200ok-ch/organice][organice]]
 - [[https://github.com/abo-abo/org-download][org-download]]
-
-* What's Bad About emacs?
-
-- There is no way to escape square brackets in org mode links[fn:: https://stackoverflow.com/questions/27284913/how-to-escape-square-bracket-in-org-mode-links].
-  This is more of a "what's so bad about org mode".
+- [[https://gitlab.com/xuhdev/dired-quick-sort][dired-quick-sort]]
+- Get ~dabbrev-expand~ to search all /visible/ buffers.
