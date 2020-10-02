@@ -384,12 +384,27 @@ Note that the ~'DEFAULT~ is not literally the default, but otherwise ESS will no
 
 Packages which don't require a lengthy configuration.
 
-** Initialise which-key
+** Load which-key
 
 #+begin_src emacs-lisp
 (use-package which-key
   :ensure t
   :config (which-key-mode))
+#+end_src
+
+** Load pdf-tools
+
+#+begin_src emacs-lisp
+(use-package tablist :ensure t)  ; dependency
+(use-package pdf-tools :ensure t)
+(pdf-tools-install)
+#+end_src
+
+** Load magit
+
+#+begin_src emacs-lisp
+(use-package magit :ensure t)
+(global-set-key (kbd "C-x g") 'magit-status)
 #+end_src
 
 * Zetteldeft
@@ -418,13 +433,6 @@ When a new file is created, automatically add a line to enter tags.
 #+BEGIN_SRC emacs-lisp
 (setq zetteldeft-title-suffix "\n#+TAGS: ")
 #+END_SRC
-
-* magit
-
-#+begin_src emacs-lisp
-(use-package magit :ensure t)
-(global-set-key (kbd "C-x g") 'magit-status)
-#+end_src
 
 * TODOs
 
