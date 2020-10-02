@@ -163,33 +163,15 @@ Saves to clipboard by default.[fn:: https://stackoverflow.com/a/2178989/6910451]
 
 (defun my-smol-char-hex (char)
   (pcase (downcase (char-to-string char))  ; mapconcat passes chars
-    ("a" #x1D43)
-    ("b" #x1D47)
-    ("c" #x1D9C)
-    ("d" #x1D48)
-    ("e" #x1D49)
-    ("f" #x1DA0)
-    ("g" #x1D4D)
-    ("h" #x02B0)
-    ("i" #x1DA6)
-    ("j" #x02B2)
-    ("k" #x1D4F)
-    ("l" #x02E1)
-    ("m" #x1D50)
-    ("n" #x207f)
-    ("o" #x1D52)
-    ("p" #x1D56)
-    ("q" #x7520)
-    ("r" #x02B3)
-    ("s" #x02E2)
-    ("t" #x1D57)
-    ("u" #x1D58)
-    ("v" #x1D5B)
-    ("w" #x02B7)
-    ("x" #x02E3)
-    ("y" #x02B8)
-    ("z" #x1DBB)
-    (otherwise #x20)  ; the space character
+    ("a" #x1D43) ("b" #x1D47) ("c" #x1D9C)
+    ("d" #x1D48) ("e" #x1D49) ("f" #x1DA0)
+    ("g" #x1D4D) ("h" #x02B0) ("i" #x1DA6)
+    ("j" #x02B2) ("k" #x1D4F) ("l" #x02E1)
+    ("m" #x1D50) ("n" #x207f) ("o" #x1D52)
+    ("p" #x1D56) ("q" #x7520) ("r" #x02B3)
+    ("s" #x02E2) ("t" #x1D57) ("u" #x1D58)
+    ("v" #x1D5B) ("w" #x02B7) ("x" #x02E3)
+    ("y" #x02B8) ("z" #x1DBB) (otherwise #x20)  ; the space character
 ))
 #+end_src
 
@@ -359,6 +341,20 @@ In order: show 21 days, starting from the present day, not highlighting the week
       org-agenda-skip-deadline-if-done t
       org-deadline-warning-days 0)
 #+END_SRC
+
+* Configurations for writing in LaTeX
+
+** Load auctex
+
+#+begin_src emacs-lisp
+(use-package tex :ensure auctex)
+#+end_src
+
+** Load latex-preview-pane
+
+#+begin_src emacs-lisp
+(use-package latex-preview-pane :ensure t)
+#+end_src
 
 * Configurations for programming in R
 
