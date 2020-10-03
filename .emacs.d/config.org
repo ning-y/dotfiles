@@ -87,6 +87,7 @@ Here, I use /http/ rather than /https/, because otherwise there is a problem in 
 *** ~RET~ in dired uses xdg-open for most file types
 
 I copied this from the comments of [[https://emacs.stackexchange.com/a/39044/30033][this StackExchange answer]].
+~unsupported-mime-types~ are MIME types not supported by Emacs.
 
 #+begin_src emacs-lisp
 (defvar unsupported-mime-types
@@ -113,6 +114,8 @@ I copied this from the comments of [[https://emacs.stackexchange.com/a/39044/300
 : dired-find-file-dwim
 
 ** Custom functions
+
+*** Insert or manipulate strings
 
 Insert a _z_​ero-​_w_​idth _s_​pace.
 
@@ -201,6 +204,17 @@ Saves to clipboard by default.[fn:: https://stackoverflow.com/a/2178989/6910451]
     ("v" #x1D5B) ("w" #x02B7) ("x" #x02E3)
     ("y" #x02B8) ("z" #x1DBB) (otherwise #x20)  ; the space character
 ))
+#+end_src
+
+*** Other functions
+
+Sync to Google Drive (requires prior set-up of ~rclone~).
+
+#+begin_src emacs-lisp
+(defun my-sync ()
+  "Sync the zetteldeft notes directory to Google Drive via rclone."
+  (interactive)
+  (async-shell-command "rclone sync ~/notes remote:notes && echo rclone OK"))
 #+end_src
 
 Except for the current buffer, kill all other buffers.
@@ -462,7 +476,6 @@ When a new file is created, automatically add a line to enter tags.
 
 Things to try or do:
 
-- Set up [[https://github.com/odeke-em/drive][drive sync]].
 - Remove the HTML export postamble on org mode files.
 - In the [[https://orgmode.org/manual/The-date_002ftime-prompt.html][org date/time prompt]]: map ~S-f~, ~S-b~ to day movement; ~S-n~, ~S-p~ to week movement; and ~M-S-n~, ~M-S-p~ to month movement.
 - Set an org-agenda custome command which shows all TODOs without a deadline or scheduled datetime[fn:: https://stackoverflow.com/questions/17003338/emacs-org-mode-how-to-find-all-todos-that-dont-have-a-deadline-specified].
