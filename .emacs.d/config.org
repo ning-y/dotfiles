@@ -68,6 +68,12 @@ Here, I use /http/ rather than /https/, because otherwise there is a problem in 
 (defalias 'yes-or-no-p 'y-or-n-p)
     #+end_src
 
+*** Don't ask when reverting PDF buffers
+
+#+begin_src emacs-lisp
+(setq revert-without-query '("pdf$"))
+#+end_src
+
 *** Only one, not two spaces follow a period, at a sentence's end
 
     This affects how sentence-based movements work, e.g. ~M-f~ and ~M-b~.
@@ -296,8 +302,6 @@ A minor mode that allows for variable-width fonts.
   :hook
   (org-mode . mixed-pitch-mode))
 #+end_src
-
-
 
 ** Structure Templates
 
