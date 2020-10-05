@@ -384,6 +384,21 @@ In order: show 21 days, starting from the present day, not highlighting the week
       org-deadline-warning-days 0)
 #+END_SRC
 
+** Custom functions
+
+After inserting a new image, I would usually have to ~org-toggle-inline-images~ twice to get it to display inline.
+
+#+begin_src emacs-lisp
+(defun org-toggle-inline-images-twice ()
+  "Executes org-toggle-inline-images twice."
+  (interactive)
+  (org-toggle-inline-images)
+  (org-toggle-inline-images))
+(add-hook 'org-mode-hook
+  (lambda ()
+    (local-set-key (kbd "C-c C-x M-v") 'org-toggle-inline-images-twice)))
+#+end_src
+
 * Configurations for writing in LaTeX
 
 ** Load auctex
@@ -476,6 +491,7 @@ When a new file is created, automatically add a line to enter tags.
 
 Things to try or do:
 
+- Set a directory for backup files so they don't clutter working directories.
 - Remove the HTML export postamble on org mode files.
 - In the [[https://orgmode.org/manual/The-date_002ftime-prompt.html][org date/time prompt]]: map ~S-f~, ~S-b~ to day movement; ~S-n~, ~S-p~ to week movement; and ~M-S-n~, ~M-S-p~ to month movement.
 - Set an org-agenda custome command which shows all TODOs without a deadline or scheduled datetime[fn:: https://stackoverflow.com/questions/17003338/emacs-org-mode-how-to-find-all-todos-that-dont-have-a-deadline-specified].
