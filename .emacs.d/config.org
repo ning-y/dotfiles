@@ -243,6 +243,31 @@ Load this config file.
       (expand-file-name "config.org" user-emacs-directory)))
 #+END_SRC
 
+* Configurations for Ivy and friends
+
+#+begin_src emacs-lisp
+(use-package ivy
+  :ensure t
+  :bind (("C-x <up>" . ivy-switch-view)
+         ("C-x <down>" . ivy-push-view))
+  :custom  (ivy-use-virtual-buffers t)
+  :config (ivy-mode))
+
+(use-package counsel
+  :ensure t
+  :after ivy
+  :config (counsel-mode))
+
+(use-package swiper
+  :ensure t
+  :after ivy
+  :bind (("C-s" . swiper)
+         ("C-r" . swiper)))
+#+end_src
+
+#+RESULTS:
+: swiper
+
 * Configurations for Org mode
 
 #+BEGIN_SRC emacs-lisp
@@ -409,6 +434,14 @@ After inserting a new image, I would usually have to ~org-toggle-inline-images~ 
 
 #+begin_src emacs-lisp
 (use-package tex :ensure auctex)
+#+end_src
+
+** Use latexmk with auctex
+
+#+begin_src emacs-lisp
+(use-package auctex-latexmk
+  :ensure t
+  :config (auctex-latexmk-setup))
 #+end_src
 
 ** Load latex-preview-pane
