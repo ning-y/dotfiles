@@ -248,15 +248,21 @@ Load this config file.
 #+begin_src emacs-lisp
 (use-package ivy
   :ensure t
+  :defer 0.1
   :bind (("C-x <up>" . ivy-switch-view)
          ("C-x <down>" . ivy-push-view))
   :custom  (ivy-use-virtual-buffers t)
   :config (ivy-mode))
+#+end_src
 
+~:defer 0.1~ ensures that ~ivy~ loads, if it hasn't already been loaded after 0.1 seconds.
+With that argument, ~counsel~ and ~swiper~ will not be loaded at start-up, until their first invocation.
+
+#+begin_src emacs-lisp
 (use-package counsel
   :ensure t
   :after ivy
-  :config (counsel-mode))
+  :config (counsel-mode 1))
 
 (use-package swiper
   :ensure t
@@ -264,9 +270,6 @@ Load this config file.
   :bind (("C-s" . swiper)
          ("C-r" . swiper)))
 #+end_src
-
-#+RESULTS:
-: swiper
 
 * Configurations for Org mode
 
@@ -530,6 +533,7 @@ When a new file is created, automatically add a line to enter tags.
 
 Things to try or do:
 
+- Map ~C-u C-k~ to kill-visual-line but without adding to the kill ring.
 - Set a directory for backup files so they don't clutter working directories.
 - Remove the HTML export postamble on org mode files.
 - In the [[https://orgmode.org/manual/The-date_002ftime-prompt.html][org date/time prompt]]: map ~S-f~, ~S-b~ to day movement; ~S-n~, ~S-p~ to week movement; and ~M-S-n~, ~M-S-p~ to month movement.
