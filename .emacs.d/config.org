@@ -119,6 +119,17 @@ I copied this from the comments of [[https://emacs.stackexchange.com/a/39044/300
 #+RESULTS:
 : dired-find-file-dwim
 
+*** Resize windows easily
+
+Taken from the emacswiki:
+
+#+begin_src emacs-lisp
+(global-set-key (kbd "C-s-<left>") 'shrink-window-horizontally)
+(global-set-key (kbd "C-s-<right>") 'enlarge-window-horizontally)
+(global-set-key (kbd "C-s-<down>") 'shrink-window)
+(global-set-key (kbd "C-s-<up>") 'enlarge-window)
+#+end_src
+
 ** Custom functions
 
 *** Insert or manipulate strings
