@@ -259,7 +259,7 @@ Load this config file.
 #+begin_src emacs-lisp
 (use-package ivy
   :ensure t
-  :defer 0.1
+  :demand
   :bind (("C-x <up>" . ivy-switch-view)
          ("C-x <down>" . ivy-push-view))
   :custom  (ivy-use-virtual-buffers t)
@@ -392,13 +392,6 @@ Org mode does not visual wrap by default, but that's the most sensible way to vi
 /FIXME:/ The =text-mode-hook= doesn't seem to be working.
 #+BEGIN_SRC emacs-lisp
 (add-hook 'text-mode-hook #'visual-line-mode)
-#+END_SRC
-
-The default behaviour for collapsed subtrees is to produce a free space between that collapsed subtree and the next heading only if there are at least 2 empty lines after the end of a subtree.
-This is not how I'm used to typing---I usually only leave 1 empty line after each paragraph or section.
-
-#+BEGIN_SRC emacs-lisp
-(setq org-cycle-separator-lines 1)
 #+END_SRC
 
 Don't show images in their actual size!
