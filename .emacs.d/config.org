@@ -76,18 +76,24 @@ Here, I use /http/ rather than /https/, because otherwise there is a problem in 
 
 *** Only one, not two spaces follow a period, at a sentence's end
 
-    This affects how sentence-based movements work, e.g. ~M-f~ and ~M-b~.
+This affects how sentence-based movements work, e.g. ~M-f~ and ~M-b~.
 
-    #+BEGIN_SRC emacs-lisp
+#+begin_src emacs-lisp
 (setq sentence-end-double-space nil)
-    #+END_SRC
+#+end_src
 
 *** Eagerly save bookmarks whenever they are created
 
     The default behaviour is to only save when Emacs is killed, or upon ~M-x bookmark-save~.
 
-    #+begin_src emacs-lisp
+#+begin_src emacs-lisp
 (setq bookmark-save-flag 1)
+#+end_src
+
+*** Show human-readable file sizes in dired
+
+#+begin_src emacs-lisp
+(setq dired-listing-switches "-alh")
 #+end_src
 
 *** ~RET~ in dired uses xdg-open for most file types
