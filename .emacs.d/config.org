@@ -322,14 +322,36 @@ Babel languages.
 (setq org-babel-python-command "python3")
 #+end_src
 
+Open ~org-agenda~ in the current, rather than other window (default).
+
+#+begin_src emacs-lisp
+(setq org-agenda-window-setup 'current-window)
+#+end_src
+
 /TODO:/ Document the following.
 
 #+BEGIN_SRC emacs-lisp
-(global-set-key "\C-cl" 'org-store-link)
-(global-set-key "\C-ca" 'org-agenda)
 (setq org-log-done t)
 (setq org-todo-keywords '((sequence "TODO" "DONE")))
 #+END_SRC
+
+*** ~C-c a~ switches to the agenda buffer if it exists
+
+Otherwise, it creates the buffer, then switches to it.
+Using a prefix argument just calls ~org-agenda~.
+
+#+begin_src emacs-lisp
+(defun ning-agenda (dummy)
+  (interactive "P")
+  (if dummy
+    (org-agenda)
+    (if (get-buffer "*Org Agenda*")
+      (switch-to-buffer "*Org Agenda*")
+      (org-agenda-list)))
+)
+
+(global-set-key (kbd "C-c a") 'ning-agenda)
+#+end_src
 
 ** Asynchronous src block execution
 
