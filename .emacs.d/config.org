@@ -95,6 +95,12 @@ This affects how sentence-based movements work, e.g. ~M-f~ and ~M-b~.
 (setq bookmark-save-flag 1)
 #+end_src
 
+*** Infer default target directory in dired
+
+#+begin_src emacs-lisp
+(setq dired-dwim-target t)
+#+end_src
+
 *** Show human-readable file sizes in dired
 
 #+begin_src emacs-lisp
