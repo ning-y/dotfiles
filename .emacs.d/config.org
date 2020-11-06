@@ -61,7 +61,6 @@ Here, I use /http/ rather than /https/, because otherwise there is a problem in 
     | face | trailing | tabs | tab-mark |
 
 ** Behaviour
-
 *** Never ask me to type "yes"/​"no", only "y"/"n"
 
     #+begin_src emacs-lisp
@@ -80,6 +79,12 @@ This affects how sentence-based movements work, e.g. ~M-f~ and ~M-b~.
 
 #+begin_src emacs-lisp
 (setq sentence-end-double-space nil)
+#+end_src
+
+*** Do not use tabs
+
+#+begin_src emacs-lisp
+(setq-default indent-tabs-mode nil)
 #+end_src
 
 *** Eagerly save bookmarks whenever they are created
