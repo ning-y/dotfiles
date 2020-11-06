@@ -492,10 +492,16 @@ After inserting a new image, I would usually have to ~org-toggle-inline-images~ 
     (setq auctex-latexmk-inherit-TeX-PDF-mode t))
 #+end_src
 
-** Load latex-preview-pane
+* Configurations for writing in markdown
 
 #+begin_src emacs-lisp
-(use-package latex-preview-pane :ensure t)
+(use-package markdown-mode
+  :ensure t
+  :commands (markdown-mode gfm-mode)
+  :mode (("README\\.md\\'" . gfm-mode)
+         ("\\.md\\'" . markdown-mode)
+         ("\\.markdown\\'" . markdown-mode))
+  :init (setq markdown-command "multimarkdown"))
 #+end_src
 
 * Configurations for programming in R
