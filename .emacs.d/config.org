@@ -358,8 +358,9 @@ Using a prefix argument just calls ~org-agenda~.
     (org-agenda)
     (if (get-buffer "*Org Agenda*")
       (switch-to-buffer "*Org Agenda*")
-      (org-agenda-list)))
-)
+      (progn
+        (message "Building *Org Agenda* buffer...")
+        (org-agenda-list)))))
 
 (global-set-key (kbd "C-c a") 'ning-agenda)
 #+end_src
