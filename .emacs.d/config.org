@@ -333,12 +333,6 @@ Babel languages.
 (setq org-babel-python-command "python3")
 #+end_src
 
-Open ~org-agenda~ in the current, rather than other window (default).
-
-#+begin_src emacs-lisp
-(setq org-agenda-window-setup 'current-window)
-#+end_src
-
 /TODO:/ Document the following.
 
 #+BEGIN_SRC emacs-lisp
@@ -346,23 +340,7 @@ Open ~org-agenda~ in the current, rather than other window (default).
 (setq org-todo-keywords '((sequence "TODO" "DONE")))
 #+END_SRC
 
-*** ~C-c a~ switches to the agenda buffer if it exists
 
-Otherwise, it creates the buffer, then switches to it.
-Using a prefix argument just calls ~org-agenda~.
-
-#+begin_src emacs-lisp
-(defun ning-agenda (dummy)
-  (interactive "P")
-  (if dummy
-    (org-agenda)
-    (if (get-buffer "*Org Agenda*")
-      (switch-to-buffer "*Org Agenda*")
-      (progn
-        (message "Building *Org Agenda* buffer...")
-        (org-agenda-list)))))
-
-(global-set-key (kbd "C-c a") 'ning-agenda)
 #+end_src
 
 ** Asynchronous src block execution
@@ -460,6 +438,38 @@ In order: show 21 days, starting from the present day, not highlighting the week
       org-deadline-warning-days 0)
 #+END_SRC
 
+Open ~org-agenda~ in the current, rather than other window (default).
+
+#+begin_src emacs-lisp
+(setq org-agenda-window-setup 'current-window)
+#+end_src
+
+Simplify the TODOs in the agenda:
+
+#+begin_src emacs-lisp
+(add-to-list 'org-agenda-prefix-format
+  '(agenda . "  "))
+#+end_src
+
+*** ~C-c a~ switches to the agenda buffer if it exists
+
+Otherwise, it creates the buffer, then switches to it.
+Using a prefix argument just calls ~org-agenda~.
+
+#+begin_src emacs-lisp
+(defun ning-agenda (dummy)
+  (interactive "P")
+  (if dummy
+    (org-agenda)
+    (if (get-buffer "*Org Agenda*")
+      (switch-to-buffer "*Org Agenda*")
+      (progn
+        (message "Building *Org Agenda* buffer...")
+        (org-agenda-list)))))
+
+(global-set-key (kbd "C-c a") 'ning-agenda)
+#+end_src
+
 ** Custom functions
 
 After inserting a new image, I would usually have to ~org-toggle-inline-images~ twice to get it to display inline.
@@ -552,7 +562,7 @@ Packages which don't require a lengthy configuration.
 (global-set-key (kbd "C-x g") 'magit-status)
 #+end_src
 
-* Zetteldeft
+* Configurations for Zetteldeft
 
 /deft-extensions/ determines which files in the /deft-directory/ should be considered as /deft/ (or /zetteldeft/) notes.
 /deft-default-extension/ determines the default extension of new /deft/ (or /detteldeft/) notes.
