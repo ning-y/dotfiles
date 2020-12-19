@@ -19,7 +19,6 @@ Here, I use /http/ rather than /https/, because otherwise there is a problem in 
 #+END_SRC
 
 * Configurations for vanilla Emacs
-
 ** Aesthetics
 
 *** Use the ~spacemacs-light~ theme
@@ -91,6 +90,14 @@ Conveniently, emacs is smart enough to make an exception for Makefiles.
 #+begin_src emacs-lisp
 (setq-default tab-width 4)
 #+end_src
+
+*** Don't change the indentation of the first line after RET
+
+#+begin_src emacs-lisp
+(setq-default electric-indent-inhibit t)
+#+end_src
+
+See: https://emacs.stackexchange.com/questions/20896/change-the-behaviour-of-ret-with-electric-indent-to-only-indent-the-new-line.
 
 *** Eagerly save bookmarks whenever they are created
 
@@ -308,9 +315,12 @@ With that argument, ~counsel~ and ~swiper~ will not be loaded at start-up, until
   :ensure t
   :config
     (setq ivy-posframe-display-functions-alist
-      '((t      . ivy-posframe-display)
-        (swiper . ivy-display-function-fallback)))
+      '((t              . ivy-posframe-display)
+        ; functions which should not use posframes
+        (swiper         . ivy-display-function-fallback)
+        (dired-do-chmod . ivy-display-function-fallback)))
     (setq ivy-posframe-border-width 2)
+    (put 'ivy-posframe 'face-alias 'default)  ; otherwise, ugly bg colour
     (ivy-posframe-mode 1))
 #+end_src
 
@@ -550,31 +560,11 @@ I prefer 2.
 
 Note that the ~'DEFAULT~ is not literally the default, but otherwise ESS will not respect ~ess-indent-level~[fn::https://stackoverflow.com/a/17610845/6910451].
 
-* Configurations for assorted packages
-
-Packages which don't require a lengthy configuration.
-
-** Load which-key
+* Configurations for other file types
+** JavaScript
 
 #+begin_src emacs-lisp
-(use-package which-key
-  :ensure t
-  :config (which-key-mode))
-#+end_src
-
-** Load pdf-tools
-
-#+begin_src emacs-lisp
-(use-package tablist :ensure t)  ; dependency
-(use-package pdf-tools :ensure t)
-(pdf-tools-install)
-#+end_src
-
-** Load magit
-
-#+begin_src emacs-lisp
-(use-package magit :ensure t)
-(global-set-key (kbd "C-x g") 'magit-status)
+(setq js-indent-level 2)
 #+end_src
 
 * Configurations for Zetteldeft
@@ -603,6 +593,33 @@ When a new file is created, automatically add a line to enter tags.
 #+BEGIN_SRC emacs-lisp
 (setq zetteldeft-title-suffix "\n#+TAGS: ")
 #+END_SRC
+
+* Configurations for other packages
+
+Packages which don't require a lengthy configuration.
+
+** Load which-key
+
+#+begin_src emacs-lisp
+(use-package which-key
+  :ensure t
+  :config (which-key-mode))
+#+end_src
+
+** Load pdf-tools
+
+#+begin_src emacs-lisp
+(use-package tablist :ensure t)  ; dependency
+(use-package pdf-tools :ensure t)
+(pdf-tools-install)
+#+end_src
+
+** Load magit
+
+#+begin_src emacs-lisp
+(use-package magit :ensure t)
+(global-set-key (kbd "C-x g") 'magit-status)
+#+end_src
 
 * TODOs
 
