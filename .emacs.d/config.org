@@ -57,6 +57,12 @@ Here, I use /http/ rather than /https/, because otherwise there is a problem in 
     #+end_src
 
 ** Behaviour
+*** Place backup files in a dedicated directory
+
+#+begin_src emacs-lisp
+(setq backup-directory-alist '(("." . "~/emacs-backups")))
+#+end_src
+
 *** Never ask me to type "yes"/​"no", only "y"/"n"
 
     #+begin_src emacs-lisp
@@ -626,7 +632,6 @@ Packages which don't require a lengthy configuration.
 Things to try or do:
 
 - Map ~C-u C-k~ to kill-visual-line but without adding to the kill ring.
-- Set a directory for backup files so they don't clutter working directories.
 - Remove the HTML export postamble on org mode files.
 - In the [[https://orgmode.org/manual/The-date_002ftime-prompt.html][org date/time prompt]]: map ~S-f~, ~S-b~ to day movement; ~S-n~, ~S-p~ to week movement; and ~M-S-n~, ~M-S-p~ to month movement.
 - Set an org-agenda custome command which shows all TODOs without a deadline or scheduled datetime[fn:: https://stackoverflow.com/questions/17003338/emacs-org-mode-how-to-find-all-todos-that-dont-have-a-deadline-specified].
