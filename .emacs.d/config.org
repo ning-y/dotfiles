@@ -7,7 +7,7 @@ Here, I use /http/ rather than /https/, because otherwise there is a problem in 
 (require 'package)
 
 (add-to-list 'package-archives
-  '("MELPA" . "http://melpa.org/packages/"))
+  '("MELPA" . "https://melpa.org/packages/"))
 (add-to-list 'package-archives
   '("org" . "https://orgmode.org/elpa/") t)
 (package-initialize)
@@ -163,7 +163,6 @@ Taken from the emacswiki:
 #+end_src
 
 ** Custom functions
-
 *** Insert or manipulate strings
 
 Insert a _z_​ero-​_w_​idth _s_​pace.
@@ -625,6 +624,15 @@ Packages which don't require a lengthy configuration.
 #+begin_src emacs-lisp
 (use-package magit :ensure t)
 (global-set-key (kbd "C-x g") 'magit-status)
+#+end_src
+
+** Load treemacs
+
+#+begin_src emacs-lisp
+(use-package treemacs
+  :ensure t
+  :defer t
+  :bind (:map global-map ("C-x t t" . treemacs)))
 #+end_src
 
 * TODOs
