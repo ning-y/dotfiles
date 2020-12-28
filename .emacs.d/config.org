@@ -57,6 +57,12 @@ Here, I use /http/ rather than /https/, because otherwise there is a problem in 
     #+end_src
 
 ** Behaviour
+*** ~C-x O~ executes ~window-swap-states~
+
+#+begin_src
+(global-set-key (kbd "C-x O") 'window-swap-states)
+#+end_src
+
 *** Place backup files in a dedicated directory
 
 #+begin_src emacs-lisp
