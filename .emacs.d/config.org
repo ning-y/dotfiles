@@ -119,44 +119,6 @@ See: https://emacs.stackexchange.com/questions/20896/change-the-behaviour-of-ret
 (setq bookmark-save-flag 1)
 #+end_src
 
-*** Infer default target directory in dired
-
-#+begin_src emacs-lisp
-(setq dired-dwim-target t)
-#+end_src
-
-*** Show human-readable file sizes in dired
-
-#+begin_src emacs-lisp
-(setq dired-listing-switches "-alh")
-#+end_src
-
-*** ~RET~ in dired uses xdg-open for most file types
-
-I copied this from the comments of [[https://emacs.stackexchange.com/a/39044/30033][this StackExchange answer]].
-~unsupported-mime-types~ are MIME types not supported by Emacs.
-
-#+begin_src emacs-lisp
-(defvar unsupported-mime-types
-  '("video/mp4"))
-
-(load "subr-x")
-
-(defun get-mimetype (filepath)
-  (string-trim
-   (shell-command-to-string (concat "file -b --mime-type " filepath))))
-
-(defun dired-find-file-dwim ()
-  (interactive)
-  (let ((file (dired-get-filename nil t)))
-    (if (member (get-mimetype file) unsupported-mime-types)
-      (call-process "xdg-open" nil 0 nil file)
-      (find-file file))))
-
-(with-eval-after-load 'dired
-  (define-key dired-mode-map (kbd "RET") #'dired-find-file-dwim))
-#+end_src
-
 *** Resize windows easily
 
 Taken from the emacswiki:
@@ -609,6 +571,45 @@ When a new file is created, automatically add a line to enter tags.
 * Configurations for other packages
 
 Packages which don't require a lengthy configuration.
+
+** Configure dired
+*** Infer default target directory
+
+#+begin_src emacs-lisp
+(setq dired-dwim-target t)
+#+end_src
+
+*** Show human-readable file sizes
+
+#+begin_src emacs-lisp
+(setq dired-listing-switches "-alh")
+#+end_src
+
+*** ~RET~ uses xdg-open for most file types
+
+I copied this from the comments of [[https://emacs.stackexchange.com/a/39044/30033][this StackExchange answer]].
+~unsupported-mime-types~ are MIME types not supported by Emacs.
+
+#+begin_src emacs-lisp
+(defvar unsupported-mime-types
+  '("video/mp4"))
+
+(load "subr-x")
+
+(defun get-mimetype (filepath)
+  (string-trim
+   (shell-command-to-string (concat "file -b --mime-type " filepath))))
+
+(defun dired-find-file-dwim ()
+  (interactive)
+  (let ((file (dired-get-filename nil t)))
+    (if (member (get-mimetype file) unsupported-mime-types)
+      (call-process "xdg-open" nil 0 nil file)
+      (find-file file))))
+
+(with-eval-after-load 'dired
+  (define-key dired-mode-map (kbd "RET") #'dired-find-file-dwim))
+#+end_src
 
 ** Load which-key
 
