@@ -633,7 +633,9 @@ Packages which don't require a lengthy configuration.
 (use-package treemacs
   :ensure t
   :defer t
-  :bind (:map global-map ("C-x t t" . treemacs)))
+  :bind (:map global-map
+    ("C-x t t" . treemacs)
+    ("C-x T"   . treemacs-select-window)))
 #+end_src
 
 * TODOs
