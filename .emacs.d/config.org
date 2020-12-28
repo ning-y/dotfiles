@@ -320,10 +320,11 @@ With that argument, ~counsel~ and ~swiper~ will not be loaded at start-up, until
   :ensure t
   :config
     (setq ivy-posframe-display-functions-alist
-      '((t              . ivy-posframe-display)
+      '((t               . ivy-posframe-display)
         ; functions which should not use posframes
-        (swiper         . ivy-display-function-fallback)
-        (dired-do-chmod . ivy-display-function-fallback)))
+        (swiper          . ivy-display-function-fallback)
+        (dired-do-chmod  . ivy-display-function-fallback)
+        (org-insert-link . ivy-display-function-fallback)))
     (setq ivy-posframe-border-width 2)
     (put 'ivy-posframe 'face-alias 'default)  ; otherwise, ugly bg colour
     (ivy-posframe-mode 1))
