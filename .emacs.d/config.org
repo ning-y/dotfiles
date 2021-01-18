@@ -339,9 +339,6 @@ Babel languages.
 (setq org-todo-keywords '((sequence "TODO" "DONE")))
 #+END_SRC
 
-
-#+end_src
-
 ** Asynchronous src block execution
 
 #+begin_src emacs-lisp
@@ -485,7 +482,6 @@ After inserting a new image, I would usually have to ~org-toggle-inline-images~ 
 #+end_src
 
 * Configurations for writing in LaTeX
-
 ** Load auctex
 
 #+begin_src emacs-lisp
@@ -644,6 +640,12 @@ I copied this from the comments of [[https://emacs.stackexchange.com/a/39044/300
     ("C-x t t" . treemacs)
     ("C-x T"   . treemacs-select-window)))
 #+end_src
+
+** Load define-word
+
+#+begin_quote
+(use-package define-word :ensure t)
+#+end_quote
 
 * TODOs
 
