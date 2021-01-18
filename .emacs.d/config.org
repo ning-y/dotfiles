@@ -16,6 +16,7 @@ Here, I use /http/ rather than /https/, because otherwise there is a problem in 
 (unless (package-installed-p 'use-package)
   (package-install 'use-package))
 (require 'use-package)
+(use-package diminish :ensure t)
 #+END_SRC
 
 * Configurations for vanilla Emacs
@@ -53,6 +54,7 @@ Here, I use /http/ rather than /https/, because otherwise there is a problem in 
 
     #+begin_src emacs-lisp
 (global-whitespace-mode 1)
+(diminish 'global-whitespace-mode)
 (setq whitespace-style '(face trailing tabs tab-mark))
     #+end_src
 
@@ -257,6 +259,7 @@ Load this config file.
 
 #+begin_src emacs-lisp
 (use-package ivy
+  :diminish ivy-mode
   :ensure t
   :demand
   :bind (("C-x <up>" . ivy-switch-view)
@@ -270,6 +273,7 @@ With that argument, ~counsel~ and ~swiper~ will not be loaded at start-up, until
 
 #+begin_src emacs-lisp
 (use-package counsel
+  :diminish counsel-mode
   :ensure t
   :after ivy
   :config (counsel-mode 1))
@@ -286,6 +290,7 @@ With that argument, ~counsel~ and ~swiper~ will not be loaded at start-up, until
 #+begin_src emacs-lisp
 (use-package ivy-posframe
   :ensure t
+  :diminish ivy-posframe-mode
   :config
     (setq ivy-posframe-display-functions-alist
       '((t               . ivy-posframe-display)
@@ -611,6 +616,7 @@ I copied this from the comments of [[https://emacs.stackexchange.com/a/39044/300
 
 #+begin_src emacs-lisp
 (use-package which-key
+  :diminish which-key-mode
   :ensure t
   :config (which-key-mode))
 #+end_src
