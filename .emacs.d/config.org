@@ -343,6 +343,8 @@ Babel languages.
 #+BEGIN_SRC emacs-lisp
 (setq org-log-done t)
 (setq org-todo-keywords '("TODO" "|" "DONE" "CANCELLED" "DONE"))
+(setq org-todo-keyword-faces '(
+  ("CANCELLED" . (:foreground "dim gray" :background "gainsboro" :weight bold))))
 #+END_SRC
 
 ** Asynchronous src block execution
