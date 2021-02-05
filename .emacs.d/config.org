@@ -656,14 +656,6 @@ I copied this from the comments of [[https://emacs.stackexchange.com/a/39044/300
 (use-package define-word :ensure t)
 #+end_quote
 
-** Load telega
-
-NB compile tdlib first!
-
-#+begin_src emacs-lisp
-(use-package telega :ensure t)
-#+end_src
-
 * TODOs
 
 Things to try or do:
