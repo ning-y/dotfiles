@@ -53,11 +53,19 @@ Here, I use /http/ rather than /https/, because otherwise there is a problem in 
 
 *** Show tab characters and highlight trailing spaces
 
+Defining a new ~global-minor-mode~ allows the exclusion of certain major modes from ~whitespace-mode~[fn::https://emacs.stackexchange.com/a/40624/30033].
+
     #+begin_src emacs-lisp
-(global-whitespace-mode 1)
-(diminish 'global-whitespace-mode)
+(define-global-minor-mode my-global-whitespace-mode whitespace-mode
+  (lambda ()
+    (unless (derived-mode-p 'telega-root-mode 'telega-chat-mode)
+      (whitespace-mode))))
+(my-global-whitespace-mode 1)
+(diminish 'my-global-whitespace-mode)
 (setq whitespace-style '(face trailing tabs tab-mark))
     #+end_src
+
+The ~telega~ modes are from the /telega/ package, which is not included in this configuration.
 
 ** Behaviour
 *** ~C-x O~ executes ~window-swap-states~
