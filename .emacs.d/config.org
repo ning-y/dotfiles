@@ -58,7 +58,9 @@ Defining a new ~global-minor-mode~ allows the exclusion of certain major modes f
     #+begin_src emacs-lisp
 (define-global-minor-mode my-global-whitespace-mode whitespace-mode
   (lambda ()
-    (unless (derived-mode-p 'telega-root-mode 'telega-chat-mode)
+    (unless (derived-mode-p 'telega-root-mode 'telega-chat-mode
+                            'inferior-ess-r-mode 'shell-mode 'calendar-mode
+                            'term-mode)
       (whitespace-mode))))
 (my-global-whitespace-mode 1)
 (diminish 'my-global-whitespace-mode)
