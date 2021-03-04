@@ -565,7 +565,7 @@ Note that the ~'DEFAULT~ is not literally the default, but otherwise ESS will no
   :ensure t
   :config (setq deft-directory "~/notes"
                 deft-extensions '("org")
-		deft-default-extension "org"
+                deft-default-extension "org"
                 deft-use-filename-as-title t))
 #+END_SRC
 
@@ -581,6 +581,19 @@ When a new file is created, automatically add a line to enter tags.
 #+BEGIN_SRC emacs-lisp
 (setq zetteldeft-title-suffix "\n#+TAGS: ")
 #+END_SRC
+
+** Jump to journal with ~C-c j~
+
+Use the journal to capture quick thoughts or ideas, instead of org-capture.
+
+#+begin_src emacs-lisp
+(defun my-goto-journal ()
+  (interactive)
+  (find-file "~/notes/2021-01-11-2039 Spring 2021 Journal.org")
+  (end-of-buffer))
+
+(global-set-key (kbd "C-c j") 'my-goto-journal)
+#+end_src
 
 * Configurations for other packages
 
