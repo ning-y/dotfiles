@@ -549,6 +549,12 @@ I prefer 2.
 
 Note that the ~'DEFAULT~ is not literally the default, but otherwise ESS will not respect ~ess-indent-level~[fn::https://stackoverflow.com/a/17610845/6910451].
 
+* Configurations for programming in python
+
+#+begin_src
+(setq python-shell-interpreter "/usr/local/bin/python3")
+#+end_src
+
 * Configurations for other file types
 ** JavaScript
 
