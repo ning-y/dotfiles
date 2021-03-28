@@ -317,6 +317,7 @@ With that argument, ~counsel~ and ~swiper~ will not be loaded at start-up, until
 * Configurations for Org mode
 
 #+BEGIN_SRC emacs-lisp
+(setq org-list-allow-alphabetical t)
 (require 'org)
 #+END_SRC
 
