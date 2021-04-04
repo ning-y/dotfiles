@@ -604,7 +604,7 @@ Use the journal to capture quick thoughts or ideas, instead of org-capture.
 #+begin_src emacs-lisp
 (defun my-goto-journal ()
   (interactive)
-  (find-file "~/notes/2021-01-11-2039 Spring 2021 Journal.org")
+  (find-file "~/notes/2021-04-01-1209 April 2021 Journal.org")
   (end-of-buffer))
 
 (global-set-key (kbd "C-c j") 'my-goto-journal)
