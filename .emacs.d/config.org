@@ -353,10 +353,18 @@ Babel languages.
 
 #+BEGIN_SRC emacs-lisp
 (setq org-log-done t)
-(setq org-todo-keywords '("TODO" "|" "DONE" "CANCELLED" "DONE"))
+(setq org-todo-keywords '("TODO" "|" "DONE" "CANCELLED"))
 (setq org-todo-keyword-faces '(
   ("CANCELLED" . (:foreground "dim gray" :background "gainsboro" :weight bold))))
 #+END_SRC
+
+** Enable some commands to act on all headlines in active region
+
+#+begin_src emacs-lisp
+(setq org-loop-over-headlines-in-active-region t)
+#+end_src
+
+Now, to toggle TODO states for all headlines in a region, use ~C-c C-t~ (~S-<right>~ will not work).
 
 ** Asynchronous src block execution
 
