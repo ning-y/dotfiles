@@ -60,7 +60,7 @@ Defining a new ~global-minor-mode~ allows the exclusion of certain major modes f
   (lambda ()
     (unless (derived-mode-p 'telega-root-mode 'telega-chat-mode
                             'inferior-ess-r-mode 'shell-mode 'calendar-mode
-                            'term-mode)
+                            'term-mode 'minibuffer-inactive-mode)
       (whitespace-mode))))
 (my-global-whitespace-mode 1)
 (diminish 'my-global-whitespace-mode)
@@ -266,54 +266,6 @@ Load this config file.
       (expand-file-name "config.org" user-emacs-directory)))
 #+END_SRC
 
-* Configurations for Ivy and friends
-
-#+begin_src emacs-lisp
-(use-package ivy
-  :diminish ivy-mode
-  :ensure t
-  :demand
-  :bind (("C-x <up>" . ivy-switch-view)
-         ("C-x <down>" . ivy-push-view))
-  :custom  (ivy-use-virtual-buffers t)
-  :config (ivy-mode))
-#+end_src
-
-~:defer 0.1~ ensures that ~ivy~ loads, if it hasn't already been loaded after 0.1 seconds.
-With that argument, ~counsel~ and ~swiper~ will not be loaded at start-up, until their first invocation.
-
-#+begin_src emacs-lisp
-(use-package counsel
-  :diminish counsel-mode
-  :ensure t
-  :after ivy
-  :config (counsel-mode 1))
-
-(use-package swiper
-  :ensure t
-  :after ivy
-  :bind (("C-s" . swiper)
-         ("C-r" . swiper)))
-#+end_src
-
-** ivy-posframe
-
-#+begin_src emacs-lisp
-(use-package ivy-posframe
-  :ensure t
-  :diminish ivy-posframe-mode
-  :config
-    (setq ivy-posframe-display-functions-alist
-      '((t               . ivy-posframe-display)
-        ; functions which should not use posframes
-        (swiper          . ivy-display-function-fallback)
-        (dired-do-chmod  . ivy-display-function-fallback)
-        (org-insert-link . ivy-display-function-fallback)))
-    (setq ivy-posframe-border-width 2)
-    (put 'ivy-posframe 'face-alias 'default)  ; otherwise, ugly bg colour
-    (ivy-posframe-mode 1))
-#+end_src
-
 * Configurations for Org mode
 
 #+BEGIN_SRC emacs-lisp
@@ -507,6 +459,54 @@ After inserting a new image, I would usually have to ~org-toggle-inline-images~ 
 (add-hook 'org-mode-hook
   (lambda ()
     (local-set-key (kbd "C-c C-x M-v") 'org-toggle-inline-images-twice)))
+#+end_src
+
+* Configurations for Ivy and friends
+
+#+begin_src emacs-lisp
+(use-package ivy
+  :diminish ivy-mode
+  :ensure t
+  :demand
+  :bind (("C-x <up>" . ivy-switch-view)
+         ("C-x <down>" . ivy-push-view))
+  :custom  (ivy-use-virtual-buffers t)
+  :config (ivy-mode))
+#+end_src
+
+~:defer 0.1~ ensures that ~ivy~ loads, if it hasn't already been loaded after 0.1 seconds.
+With that argument, ~counsel~ and ~swiper~ will not be loaded at start-up, until their first invocation.
+
+#+begin_src emacs-lisp
+(use-package counsel
+  :diminish counsel-mode
+  :ensure t
+  :after ivy
+  :config (counsel-mode 1))
+
+(use-package swiper
+  :ensure t
+  :after ivy
+  :bind (("C-s" . swiper)
+         ("C-r" . swiper)))
+#+end_src
+
+** ivy-posframe
+
+#+begin_src emacs-lisp
+(use-package ivy-posframe
+  :ensure t
+  :diminish ivy-posframe-mode
+  :config
+    (setq ivy-posframe-display-functions-alist
+      '((t               . ivy-posframe-display)
+        ; functions which should not use posframes
+        (swiper          . ivy-display-function-fallback)
+        (dired-do-chmod  . ivy-display-function-fallback)
+        (org-insert-link . ivy-display-function-fallback)))
+    (setq ivy-posframe-border-width 2)
+    (put 'ivy-posframe 'face-alias 'default)  ; otherwise, ugly bg colour
+    (ivy-posframe-mode 1))
 #+end_src
 
 * Configurations for writing in LaTeX
