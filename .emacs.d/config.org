@@ -446,6 +446,12 @@ Using a prefix argument just calls ~org-agenda~.
 (global-set-key (kbd "C-c a") 'ning-agenda)
 #+end_src
 
+** Export to beamer
+
+#+begin_src emacs-lisp
+(require 'ox-beamer)
+#+end_src
+
 ** Custom functions
 
 After inserting a new image, I would usually have to ~org-toggle-inline-images~ twice to get it to display inline.
