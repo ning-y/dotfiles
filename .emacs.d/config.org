@@ -403,13 +403,15 @@ Read tasks from the Zetteldeft directory.
 )))
 #+END_SRC
 
-In order: show 21 days, starting from the present day, not highlighting the weekends, don't warn about deadlines beyond today in today's agenda, and show done tasks.
+In order: show 21 days, starting from the present day, not highlighting the weekends, don't warn about deadlines beyond today in today's agenda, and show done tasks (in a "log mode" view, but not in the "list" view).
 
 #+BEGIN_SRC emacs-lisp
 (setq org-agenda-span 21
       org-agenda-start-on-weekday nil
       org-agenda-weekend-days nil
       org-deadline-warning-days 0
+      org-agenda-skip-scheduled-if-done t
+      org-agenda-skip-deadline-if-done t
       org-agenda-start-with-log-mode '(closed))
 #+END_SRC
 
