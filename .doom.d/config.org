@@ -1,0 +1,170 @@
+* Appearance
+:PROPERTIES:
+:ID:       d7a0cbe6-6c76-400d-b061-115604e4908e
+:END:
+
+#+begin_src emacs-lisp
+(setq doom-theme 'doom-tomorrow-day)
+#+end_src
+
+Themes I quite like:
+
+- ~doom-fairy-floss~ is a light purple-based theme
+- ~doom-flatwhite~ is a light biege-based theme
+- ~doom-nordlight~ is a light blue-based theme
+- ~doom-opera-light~ is a light gray-based theme
+
+* Behaviour
+** /dired/ ~RET~ uses xdg-open
+:PROPERTIES:
+:ID:       e37a7ba9-5869-43c6-a134-12ec9e75cde2
+:END:
+
+#+begin_src emacs-lisp
+(defvar unsupported-mime-types
+  '("video/mp4"))
+
+(load "subr-x")
+
+(defun get-mimetype (filepath)
+  (string-trim
+   (shell-command-to-string (concat "file -b --mime-type " filepath))))
+
+(defun dired-find-file-dwim ()
+  (interactive)
+  (let ((file (dired-get-filename nil t)))
+    (if (member (get-mimetype file) unsupported-mime-types)
+      (call-process "xdg-open" nil 0 nil file)
+      (find-file file))))
+
+(with-eval-after-load 'dired
+  (define-key dired-mode-map (kbd "RET") #'dired-find-file-dwim))
+#+end_src
+
+* Note-taking with Org-roam
+:PROPERTIES:
+:ID:       52bc4886-496f-472c-a273-851511e0a3d4
+:END:
+
+At the time of writing, Doom Emacs modules have not yet updated to Org-roam v2.
+So, I will have to do that plus the configuration myself.
+Thankfully, Jethro himself uses Doom Emacs at GitHub:jethrokuan/dots.
+
+#+begin_src emacs-lisp
+(use-package! org-roam
+  :init
+  (map! :leader
+        :prefix "r"
+        :desc "org-roam" "l" #'org-roam-buffer-toggle
+        :desc "org-roam-node-insert" "i" #'org-roam-node-insert
+        :desc "org-roam-node-find" "f" #'org-roam-node-find
+        :desc "org-roam-capture" "c" #'org-roam-capture
+        :desc "org-roam-tag-add" "t" #'org-roam-tag-add
+        :desc "org-roam-alias-add" "a" #'org-roam-alias-add
+        :desc "org-roam-node-random" "?" #'org-roam-node-random)
+  (setq org-roam-directory (file-truename "~/org/roam")
+        org-id-link-to-org-use-id t
+        org-roam-v2-ack t)
+  (add-to-list 'display-buffer-alist
+               '(("\\*org-roam\\*"
+                  (display-buffer-in-direction)
+                  (direction . right)
+                  (window-width . 0.33)
+                  (window-height . fit-window-to-buffer))))
+  :config
+  (org-roam-setup))
+#+end_src
+
+** Use Deft to search Org-roam notes
+:PROPERTIES:
+:ID:       15a57748-c59d-4005-8629-c706337e4542
+:END:
+
+The default Deft buffer shows on the left-hand side the head of the file, and on the right the last modified time.
+However, the head of Org-roam files are not informative at all, because they hold the ~:PROPERTIES:~ tag.
+So, show the filename at the left-hand side instead.
+
+#+begin_src emacs-lisp
+(setq deft-directory "~/org/roam"
+      deft-use-filename-as-title t
+      deft-strip-summary-regexp "\\(^:[[:upper:]]*:.*\\|^#\\+title: \\)")
+#+end_src
+
+** Set Org-agenda to search Org-roam notes
+:PROPERTIES:
+:ID:       5bfbb4f4-b7b8-43ef-82a2-c5eb85c4682e
+:END:
+
+#+begin_src emacs-lisp
+(setq org-agenda-files '("~/org/roam/"))
+#+end_src
+
+* Task management with Org-agenda
+:PROPERTIES:
+:ID:       94a80c46-03e0-4f0d-a4c7-e6e8a55a00e0
+:END:
+
+Doom Emacs defines a whole bunch of ~TODO~ states, many of which I do not use.
+Simplify the list:
+
+#+begin_src emacs-lisp
+(setq org-todo-keywords
+      '((sequence
+         ; Each keyword can optionally specify a character for fast state
+         ; selection... For example, "WAIT(w)" says that the WAIT state can be
+         ; selected with the "w" key.
+         "TODO(t)"
+         ; If one of the "keywords" is the vertical bar, "|", the remaining
+         ; keywords signify that no further action is necessary.
+         "|"
+         "DONE(d)"
+         ; Each keyword may also specify if a timestamp or a note should be
+         ; recorded when entering or leaving the state, by adding additional
+         ; characters in the parenthesis after the keyword... "@" means to add
+         ; a note (with time)
+         "CANCELLED(c)")))
+#+end_src
+
+My tasks come from Org-roam files, which are quite verbose.
+So, omit filenames from the Org-agenda view.
+
+#+begin_src emacs-lisp
+(with-eval-after-load 'org-agenda
+  (add-to-list 'org-agenda-prefix-format '(agenda . "  ")))
+(setq org-agenda-span 7)
+#+end_src
+
+By default, tasks with incomplete task subtrees are dimmed in the agenda view.
+I conceptualize my subtrees more as a list of steps rather than a list of subtasks, so disable that dimming.
+
+#+begin_src emacs-lisp
+(setq org-agenda-dim-blocked-tasks nil)
+#+end_src
+
+** Showing completed tasks
+:PROPERTIES:
+:ID:       fee3f692-2b91-4ec6-bba6-c49b626cd868
+:END:
+
+Looking at completed tasks (~DONE~) helps with my mood.
+In particular, I would like to view completed tasks starting from yesterday.
+
+#+begin_src emacs-lisp
+(setq org-agenda-start-day "-1d")
+#+end_src
+
+It would be nice to also visualize when each task was completed.
+
+#+begin_src emacs-lisp
+(setq
+    ; Otherwise, marking a task as done gives it a timestamp without time
+    org-log-done "time"
+    ; "In Logbook mode, entries that were marked as done while logging was on
+    ; (see the variable org-log-done) are shown in the agenda, as are entries
+    ; that have been clocked on that day."
+    org-agenda-start-with-log-mode '(closed)
+    ; Without org-agenda-skip-* variables set to t, DONE entries will still
+    ; appear below the "Logbook" section of a day.
+    org-agenda-skip-scheduled-if-done t
+    org-agenda-skip-deadline-if-done t)
+#+end_src
