@@ -99,6 +99,17 @@ So, show the filename at the left-hand side instead.
 (setq org-agenda-files '("~/org/roam/"))
 #+end_src
 
+* Easy image insertion with Org-download
+:PROPERTIES:
+:ID:       6dc51b5f-5bff-46a6-90ad-587b1f89749b
+:END:
+
+#+begin_src emacs-lisp
+(use-package! org-download
+  :config
+  (setq-default org-download-image-dir "~/org/files"))
+#+end_src
+
 * Task management with Org-agenda
 :PROPERTIES:
 :ID:       94a80c46-03e0-4f0d-a4c7-e6e8a55a00e0
