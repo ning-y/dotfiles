@@ -112,8 +112,7 @@ So, show the filename at the left-hand side instead.
 (defun ning/pull ()
   "Sync the ~/org directory to Google Drive via rclone."
   (interactive)
-  (async-shell-command "rclone sync --progress remote:org ~/org")
-  (org-roam-setup))
+  (async-shell-command "rclone sync --progress remote:org ~/org"))
 (defun ning/sync ()
   "Sync ~/org by pushing then pulling to and from Google Drive via rclone"
   (interactive)
