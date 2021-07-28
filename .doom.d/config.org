@@ -104,23 +104,23 @@ So, show the filename at the left-hand side instead.
 :ID:       d7020545-f73b-44f3-b524-eb8bade4f062
 :END:
 
+It seems like rclone will copy over a file at the destination as long as that file at source is different, even if the modified time of destination is later than source.
+So, to prevent overwriting changes, it is best to only have one emacs open across all my machines.
+Then, I will pull from Google Drive on start-up and push on exit --- Doom Emacs starts really fast, anyways.
+
 #+begin_src emacs-lisp
 (defun ning/push ()
-  "Copy the ~/org directory to Google Drive via rclone."
-  (interactive)
-  (async-shell-command "rclone copy --progress ~/org remote:org"))
-(defun ning/pull ()
-  "Copy the ~/org directory from Google Drive via rclone."
-  (interactive)
-  (async-shell-command "rclone copy --progress remote:org ~/org"))
-(defun ning/force-push ()
-  "Mirror the ~/org directory to Google Drive via rclone."
+  "Sync the ~/org directory to Google Drive via rclone."
   (interactive)
   (async-shell-command "rclone sync --progress ~/org remote:org"))
-(defun ning/force-pull ()
-  "Mirror the ~/org directory from Google Drive via rclone."
+(defun ning/pull ()
+  "Sync the ~/org directory from Google Drive via rclone."
   (interactive)
   (async-shell-command "rclone sync --progress remote:org ~/org"))
+(defun ning/push-synchronous ()
+  "Sync the ~/org directory to Google Drive via rclone in the foreground"
+  (interactive)
+  (shell-command "rclone sync --progress ~/org remote:org"))
 #+end_src
 
 * Easy image insertion with Org-download
@@ -203,4 +203,22 @@ It would be nice to also visualize when each task was completed.
     ; appear below the "Logbook" section of a day.
     org-agenda-skip-scheduled-if-done t
     org-agenda-skip-deadline-if-done t)
+#+end_src
+
+* Start-up commands
+:PROPERTIES:
+:ID:       64addb97-c483-4bc1-bacd-7305f2c8a53f
+:END:
+
+#+begin_src emacs-lisp
+(ning/pull)
+#+end_src
+
+* Exit commands
+:PROPERTIES:
+:ID:       4265145c-097b-49ca-8564-b99f61a4b693
+:END:
+
+#+begin_src emacs-lisp
+(add-hook 'kill-emacs-hook 'ning/push-synchronous)
 #+end_src
