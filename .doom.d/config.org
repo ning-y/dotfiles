@@ -99,6 +99,22 @@ So, show the filename at the left-hand side instead.
 (setq org-agenda-files '("~/org/roam/"))
 #+end_src
 
+* Sync notes with rclone
+:PROPERTIES:
+:ID:       d7020545-f73b-44f3-b524-eb8bade4f062
+:END:
+
+#+begin_src emacs-lisp
+(defun ning/push ()
+  "Sync the ~/org/ directory to Google Drive via rclone."
+  (interactive)
+  (async-shell-command "rclone sync --progress ~/notes remote:notes"))
+(defun ning/pull ()
+  "Sync the ~/org/ directory to Google Drive via rclone."
+  (interactive)
+  (async-shell-command "rclone sync --progress remote:notes ~/notes"))
+#+end_src
+
 * Easy image insertion with Org-download
 :PROPERTIES:
 :ID:       6dc51b5f-5bff-46a6-90ad-587b1f89749b
