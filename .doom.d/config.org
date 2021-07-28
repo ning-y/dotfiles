@@ -117,8 +117,9 @@ So, show the filename at the left-hand side instead.
 (defun ning/sync ()
   "Sync ~/org by pushing then pulling to and from Google Drive via rclone"
   (interactive)
-  (ning/pull)
-  (ning/push))
+  (async-shell-command (concat
+                        "rclone sync --progress remote:org ~/org && "
+                        "rclone sync --progress ~/org remote:org")))
 (run-with-idle-timer
  ; In case I stop editing on the same time on different machines, I need to
  ; prevent race conditions.
