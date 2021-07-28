@@ -108,11 +108,11 @@ So, show the filename at the left-hand side instead.
 (defun ning/push ()
   "Sync the ~/org/ directory to Google Drive via rclone."
   (interactive)
-  (async-shell-command "rclone sync --progress ~/notes remote:notes"))
+  (async-shell-command "rclone sync --progress ~/org remote:org"))
 (defun ning/pull ()
   "Sync the ~/org/ directory to Google Drive via rclone."
   (interactive)
-  (async-shell-command "rclone sync --progress remote:notes ~/notes"))
+  (async-shell-command "rclone sync --progress remote:org ~/org"))
 #+end_src
 
 * Easy image insertion with Org-download
