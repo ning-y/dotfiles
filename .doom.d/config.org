@@ -113,19 +113,14 @@ So, show the filename at the left-hand side instead.
   "Sync the ~/org directory to Google Drive via rclone."
   (interactive)
   (async-shell-command "rclone sync --progress remote:org ~/org"))
-(defun ning/sync ()
-  "Sync ~/org by pushing then pulling to and from Google Drive via rclone"
-  (interactive)
-  (async-shell-command (concat
-                        "rclone sync --progress remote:org ~/org && "
-                        "rclone sync --progress ~/org remote:org")))
+
 (run-with-idle-timer
  ; In case I stop editing on the same time on different machines, I need to
  ; prevent race conditions.
  (cond ((string= (system-name) "molecularonco-Precision-7920-Tower") (* 5 60))
        ((string= (system-name) "xps13") (* 10 60))
        (t 666))
- t 'ning/sync)
+ t 'ning/push)
 #+end_src
 
 * Easy image insertion with Org-download
