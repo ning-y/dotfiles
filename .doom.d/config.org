@@ -53,11 +53,15 @@ Thankfully, Jethro himself uses Doom Emacs at GitHub:jethrokuan/dots.
 #+begin_src emacs-lisp
 (use-package! org-roam
   :init
+  (defun org-roam-file-find ()
+    (interactive)
+    (org-roam-node-find nil nil '(lambda (node) (= (org-roam-node-level node) 0))))
   (map! :leader
         :prefix "r"
         :desc "org-roam" "l" #'org-roam-buffer-toggle
         :desc "org-roam-node-insert" "i" #'org-roam-node-insert
-        :desc "org-roam-node-find" "f" #'org-roam-node-find
+        :desc "org-roam-file-find" "f" #'org-roam-file-find
+        :desc "org-roam-node-find" "F" #'org-roam-node-find
         :desc "org-roam-capture" "c" #'org-roam-capture
         :desc "org-roam-tag-add" "t" #'org-roam-tag-add
         :desc "org-roam-alias-add" "a" #'org-roam-alias-add
