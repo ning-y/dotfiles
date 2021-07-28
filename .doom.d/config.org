@@ -123,7 +123,8 @@ So, show the filename at the left-hand side instead.
  ; In case I stop editing on the same time on different machines, I need to
  ; prevent race conditions.
  (cond ((string= (system-name) "molecularonco-Precision-7920-Tower") (* 5 60))
-       ((string= (system-name) "xps13" (* 10 60))))
+       ((string= (system-name) "xps13") (* 10 60))
+       (t 666))
  t 'ning/sync)
 #+end_src
 
@@ -135,7 +136,8 @@ So, show the filename at the left-hand side instead.
 #+begin_src emacs-lisp
 (use-package! org-download
   :config
-  (setq-default org-download-image-dir "~/org/files"))
+  (setq-default org-download-image-dir "~/org/files"
+                org-download-heading-level nil))
 #+end_src
 
 * Task management with Org-agenda
