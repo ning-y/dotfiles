@@ -106,13 +106,25 @@ So, show the filename at the left-hand side instead.
 
 #+begin_src emacs-lisp
 (defun ning/push ()
-  "Sync the ~/org/ directory to Google Drive via rclone."
+  "Sync the ~/org directory to Google Drive via rclone."
   (interactive)
   (async-shell-command "rclone sync --progress ~/org remote:org"))
 (defun ning/pull ()
-  "Sync the ~/org/ directory to Google Drive via rclone."
+  "Sync the ~/org directory to Google Drive via rclone."
   (interactive)
-  (async-shell-command "rclone sync --progress remote:org ~/org"))
+  (async-shell-command "rclone sync --progress remote:org ~/org")
+  (org-roam-setup))
+(defun ning/sync ()
+  "Sync ~/org by pushing then pulling to and from Google Drive via rclone"
+  (interactive)
+  (ning/pull)
+  (ning/push))
+(run-with-idle-timer
+ ; In case I stop editing on the same time on different machines, I need to
+ ; prevent race conditions.
+ (cond ((string= (system-name) "molecularonco-Precision-7920-Tower") (* 5 60))
+       ((string= (system-name) "xps13" (* 10 60))))
+ t 'ning/sync)
 #+end_src
 
 * Easy image insertion with Org-download
