@@ -1,3 +1,10 @@
+:PROPERTIES:
+:ID:       6b70dbe3-3ce5-4ae4-bee0-db218fbfa337
+:END:
+#+begin_src emacs-lisp
+;;; -*- lexical-binding: t; -*-
+#+end_src
+
 * Appearance
 :PROPERTIES:
 :ID:       d7a0cbe6-6c76-400d-b061-115604e4908e
@@ -113,22 +120,41 @@ So, to prevent overwriting changes, it is best to only have one emacs open acros
 Then, I will pull from Google Drive on start-up and push on exit --- Doom Emacs starts really fast, anyways.
 
 #+begin_src emacs-lisp
+(defun ning/get-rclone-sentinel (should-org-roam-setup-flag)
+  "Internal. Get a sentinel function for ning/push and ning/pull."
+  (lambda (proc event)
+    (if (string= event "finished\n")
+        (message (concat (process-name proc) " done"))
+      (message
+       (propertize (concat (process-name proc) "failed")
+                   'face '(:foreground "red"))))
+    (if should-org-roam-setup-flag (org-roam-setup) nil)))
+
 (defun ning/push ()
   "Sync the ~/org directory to Google Drive via rclone."
   (interactive)
-  (start-process "rclone-push" "*rclone*" "rclone"
-                 "sync" "--progress" (expand-file-name "~/org") "remote:org"))
+  (set-process-sentinel
+   (start-process "rclone-push" "*rclone*" "rclone"
+                  "sync" "--progress" (expand-file-name "~/org") "remote:org")
+   (ning/get-rclone-sentinel nil)))
+
 (defun ning/pull ()
   "Sync the ~/org directory from Google Drive via rclone."
   (interactive)
   (if (y-or-n-p "Pull from Google Drive? (WARNING: will overwrite ~/org/)")
-      (start-process "rclone-pull" "*rclone*" "rclone"
-                     "sync" "--progress" "remote:org" (expand-file-name "~/org"))
+      (set-process-sentinel
+       (start-process "rclone-pull" "*rclone*" "rclone"
+                      "sync" "--progress" "remote:org" (expand-file-name "~/org"))
+       (ning/get-rclone-sentinel t))
     nil))
+
 (defun ning/push-synchronous ()
   "Sync the ~/org directory to Google Drive via rclone in the foreground"
   (interactive)
-  (shell-command "rclone sync --progress ~/org remote:org"))
+  (delete-other-windows)
+  (switch-to-buffer "*rclone*")
+  (call-process "rclone" nil "*rclone*" t
+                "sync" "--progress" (expand-file-name "~/org") "remote:org"))
 #+end_src
 
 * Easy image insertion with Org-download
@@ -220,6 +246,7 @@ It would be nice to also visualize when each task was completed.
 
 #+begin_src emacs-lisp
 (defun ning/refsnp-word-at-point ()
+  "Open the NCBI RefSNP page for the word at point (which hopefully, is a RefSNP number)"
   (interactive)
   (browse-url-xdg-open
    (concat "https://www.ncbi.nlm.nih.gov/snp/"
