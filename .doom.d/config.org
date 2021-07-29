@@ -14,7 +14,7 @@ Themes I quite like:
 - ~doom-nordlight~ is a light blue-based theme
 - ~doom-opera-light~ is a light gray-based theme
 
-* Behaviour
+* Behavior
 ** /dired/ ~RET~ uses xdg-open
 :PROPERTIES:
 :ID:       e37a7ba9-5869-43c6-a134-12ec9e75cde2
@@ -211,6 +211,19 @@ It would be nice to also visualize when each task was completed.
     ; appear below the "Logbook" section of a day.
     org-agenda-skip-scheduled-if-done t
     org-agenda-skip-deadline-if-done t)
+#+end_src
+
+* Search databases for word at point
+:PROPERTIES:
+:ID:       b18337f4-dd0f-4381-b35e-b970a36e4f09
+:END:
+
+#+begin_src emacs-lisp
+(defun ning/refsnp-word-at-point ()
+  (interactive)
+  (browse-url-xdg-open
+   (concat "https://www.ncbi.nlm.nih.gov/snp/"
+           (thing-at-point 'word 'no-properties))))
 #+end_src
 
 * Start-up commands
