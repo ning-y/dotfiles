@@ -112,11 +112,15 @@ Then, I will pull from Google Drive on start-up and push on exit --- Doom Emacs 
 (defun ning/push ()
   "Sync the ~/org directory to Google Drive via rclone."
   (interactive)
-  (async-shell-command "rclone sync --progress ~/org remote:org"))
+  (start-process "rclone-push" "*rclone*" "rclone"
+                 "sync" "--progress" (expand-file-name "~/org") "remote:org"))
 (defun ning/pull ()
   "Sync the ~/org directory from Google Drive via rclone."
   (interactive)
-  (async-shell-command "rclone sync --progress remote:org ~/org"))
+  (if (y-or-n-p "Pull from Google Drive? (WARNING: will overwrite ~/org/)")
+      (start-process "rclone-pull" "*rclone*" "rclone"
+                     "sync" "--progress" "remote:org" (expand-file-name "~/org"))
+    nil))
 (defun ning/push-synchronous ()
   "Sync the ~/org directory to Google Drive via rclone in the foreground"
   (interactive)
