@@ -123,12 +123,12 @@ Then, I will pull from Google Drive on start-up and push on exit --- Doom Emacs 
 (defun ning/get-rclone-sentinel (should-org-roam-setup-flag)
   "Internal. Get a sentinel function for ning/push and ning/pull."
   (lambda (proc event)
+    (if should-org-roam-setup-flag (org-roam-setup) nil)
     (if (string= event "finished\n")
         (message (concat (process-name proc) " done"))
       (message
        (propertize (concat (process-name proc) "failed")
-                   'face '(:foreground "red"))))
-    (if should-org-roam-setup-flag (org-roam-setup) nil)))
+                   'face '(:foreground "red"))))))
 
 (defun ning/push ()
   "Sync the ~/org directory to Google Drive via rclone."
