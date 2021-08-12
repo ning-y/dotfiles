@@ -110,6 +110,23 @@ So, show the filename at the left-hand side instead.
 (setq org-agenda-files '("~/org/roam/"))
 #+end_src
 
+** Org-roam-ui
+:PROPERTIES:
+:ID:       1536a96b-f528-4e27-b2e7-ec640762e6e4
+:END:
+
+#+begin_src emacs-lisp
+(use-package! websocket
+    :after org-roam)
+(use-package! org-roam-ui
+    :after org-roam
+    :config (setq org-roam-ui-open-on-start t))
+(defun ning/org-roam-ui-browse ()
+  "Open org-roam-ui in the browser."
+  (interactive)
+  (browse-url-xdg-open "http://127.0.0.1:35901/"))
+#+end_src
+
 * Sync notes with rclone
 :PROPERTIES:
 :ID:       d7020545-f73b-44f3-b524-eb8bade4f062
