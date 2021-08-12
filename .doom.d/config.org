@@ -183,7 +183,7 @@ Then, I will pull from Google Drive on start-up and push on exit --- Doom Emacs 
 (use-package! org-download
   :config
   (setq-default org-download-image-dir "~/org/files"
-                org-download-heading-level nil))
+                org-download-heading-lvl nil))
 #+end_src
 
 * Task management with Org-agenda
