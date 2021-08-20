@@ -80,11 +80,14 @@ Themes I quite like:
         doom-dashboard-widget-footer))
 #+end_src
 
-* Behavior
-** /dired/ ~RET~ uses xdg-open
+* Minor configurations
+
+** For dired
 :PROPERTIES:
 :ID:       e37a7ba9-5869-43c6-a134-12ec9e75cde2
 :END:
+
+RET uses xdg-open.
 
 #+begin_src emacs-lisp
 (defvar unsupported-mime-types
@@ -105,6 +108,17 @@ Themes I quite like:
 
 (with-eval-after-load 'dired
   (define-key dired-mode-map (kbd "RET") #'dired-find-file-dwim))
+#+end_src
+
+** For company
+:PROPERTIES:
+:ID:       8b3f7042-bc33-4458-8621-a21b4fc3de42
+:END:
+
+Don't auto-complete in org-mode.
+
+#+begin_src emacs-lisp
+(setq company-global-modes (append company-global-modes '(org-mode)))
 #+end_src
 
 * Note-taking with Org-roam
