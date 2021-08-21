@@ -81,7 +81,6 @@ Themes I quite like:
 #+end_src
 
 * Minor configurations
-
 ** For dired
 :PROPERTIES:
 :ID:       e37a7ba9-5869-43c6-a134-12ec9e75cde2
@@ -119,6 +118,19 @@ Don't auto-complete in org-mode.
 
 #+begin_src emacs-lisp
 (setq company-global-modes (append company-global-modes '(org-mode)))
+#+end_src
+
+** For page-break-lines
+:PROPERTIES:
+:ID:       b999a2fd-092c-4391-8db7-b9c0cbee71ce
+:END:
+
+#+begin_src emacs-lisp
+(global-page-break-lines-mode)
+(setq page-break-lines-modes
+      (append page-break-lines-modes
+              '(
+                snakemake-mode)))
 #+end_src
 
 * Note-taking with Org-roam
@@ -159,7 +171,7 @@ Thankfully, Jethro himself uses Doom Emacs at GitHub:jethrokuan/dots.
                   (window-width . 0.33)
                   (window-height . fit-window-to-buffer))))
   :config
-  (org-roam-setup))
+  (org-roam-db-autosync-enable))
 #+end_src
 
 ** Use Deft to search Org-roam notes
