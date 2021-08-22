@@ -232,7 +232,7 @@ Then, I will pull from Google Drive on start-up and push on exit --- Doom Emacs 
     (if (string= event "finished\n")
         (message (concat (process-name proc) " done"))
       (message
-       (propertize (concat (process-name proc) "failed")
+       (propertize (concat (process-name proc) " failed")
                    'face '(:foreground "red"))))))
 
 (defun ning/push ()
