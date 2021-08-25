@@ -186,7 +186,9 @@ So, show the filename at the left-hand side instead.
 #+begin_src emacs-lisp
 (setq deft-directory "~/org/roam"
       deft-use-filename-as-title t
-      deft-strip-summary-regexp "\\(^:[[:upper:]]*:.*\\|^#\\+title: \\)")
+      deft-strip-summary-regexp "\\(^:[[:upper:]]*:.*\\|^#\\+.+$\\)"
+      ; Find org-dailies
+      deft-recursive t)
 #+end_src
 
 ** Set Org-agenda to search Org-roam notes
