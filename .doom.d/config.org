@@ -334,6 +334,8 @@ It would be nice to also visualize when each task was completed.
 
 #+begin_src emacs-lisp
 (setq
+    org-agenda-skip-deadline-prewarning-if-scheduled t
+    org-deadline-warning-days 0
     ; Otherwise, marking a task as done gives it a timestamp without time
     org-log-done "time"
     ; "In Logbook mode, entries that were marked as done while logging was on
