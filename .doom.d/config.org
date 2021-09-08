@@ -81,6 +81,17 @@ Themes I quite like:
 #+end_src
 
 * Minor configurations
+** For org-mode
+:PROPERTIES:
+:ID:       ae2762e5-453b-4daf-b850-45ca6fe17675
+:END:
+
+Collapse code chunks by default.
+
+#+begin_src emacs-lisp
+(setq org-hide-block-startup t)
+#+end_src
+
 ** For dired
 :PROPERTIES:
 :ID:       e37a7ba9-5869-43c6-a134-12ec9e75cde2
@@ -333,7 +344,7 @@ In particular, I would like to view completed tasks starting from yesterday.
 It would be nice to also visualize when each task was completed.
 
 #+begin_src emacs-lisp
-(setq
+((setq var )
     org-agenda-skip-deadline-prewarning-if-scheduled t
     org-deadline-warning-days 0
     ; Otherwise, marking a task as done gives it a timestamp without time
