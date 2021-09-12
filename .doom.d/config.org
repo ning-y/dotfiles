@@ -87,9 +87,11 @@ Themes I quite like:
 :END:
 
 Collapse code chunks by default.
+Both variables need to be set ([[https://web.archive.org/web/20210912005440/https://orgmode.org/list/87wntgaz5u.fsf@kyleam.com/]["Re: "#+STARTUP: hideblocks" has no effect?"]])
 
 #+begin_src emacs-lisp
-(setq org-hide-block-startup t)
+(setq org-hide-block-startup t
+      org-startup-folded 'nofold)
 #+end_src
 
 ** For dired
