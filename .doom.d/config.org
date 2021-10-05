@@ -297,6 +297,21 @@ Then, I will pull from Google Drive on start-up and push on exit --- Doom Emacs 
                 "sync" "--progress" (expand-file-name "~/org") "remote:org"))
 #+end_src
 
+* Encrypt with org-crypt
+
+See: https://orgmode.org/manual/Org-Crypt.html
+
+#+begin_src
+(require 'org-crypt')
+(org-crypt-use-before-save-magic)
+(setq org-tags-exclude-from-inheritance '("crypt"))
+(setq org-crypt-key nil)
+
+;; To turn it off only locally, you can insert this:
+;;
+;; # -*- buffer-auto-save-file-name: nil; -*-
+#+end_src
+
 * Easy image insertion with Org-download
 :PROPERTIES:
 :ID:       6dc51b5f-5bff-46a6-90ad-587b1f89749b
