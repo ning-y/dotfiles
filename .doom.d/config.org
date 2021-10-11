@@ -94,6 +94,12 @@ Both variables need to be set ([[https://web.archive.org/web/20210912005440/http
       org-startup-folded 'nofold)
 #+end_src
 
+Shrink tables on start-up.
+
+#+begin_src emacs-lisp
+(setq org-startup-align-all-tables t)
+#+end_src
+
 ** For dired
 :PROPERTIES:
 :ID:       e37a7ba9-5869-43c6-a134-12ec9e75cde2
