@@ -235,8 +235,10 @@ Also add [[https://github.com/jrblevin/deft/issues/75#issuecomment-905031872][a 
 :ID:       5bfbb4f4-b7b8-43ef-82a2-c5eb85c4682e
 :END:
 
+I keep notes with tasks in a separate subdirectory to speed up ~Org-agenda~.
+
 #+begin_src emacs-lisp
-(setq org-agenda-files '("~/org/roam/"))
+(setq org-agenda-files '("~/org/roam/tasks"))
 #+end_src
 
 ** Org-roam-ui
