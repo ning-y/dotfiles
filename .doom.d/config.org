@@ -230,17 +230,6 @@ Also add [[https://github.com/jrblevin/deft/issues/75#issuecomment-905031872][a 
               "\\)"))
 #+end_src
 
-** Set Org-agenda to search Org-roam notes
-:PROPERTIES:
-:ID:       5bfbb4f4-b7b8-43ef-82a2-c5eb85c4682e
-:END:
-
-I keep notes with tasks in a separate subdirectory to speed up ~Org-agenda~.
-
-#+begin_src emacs-lisp
-(setq org-agenda-files '("~/org/roam/tasks"))
-#+end_src
-
 ** Org-roam-ui
 :PROPERTIES:
 :ID:       1536a96b-f528-4e27-b2e7-ec640762e6e4
@@ -258,18 +247,14 @@ I keep notes with tasks in a separate subdirectory to speed up ~Org-agenda~.
   (browse-url-xdg-open "http://127.0.0.1:35901/"))
 #+end_src
 
-* Sync notes with rclone
+* Sync notes with unison
 :PROPERTIES:
 :ID:       d7020545-f73b-44f3-b524-eb8bade4f062
 :END:
 
-It seems like rclone will copy over a file at the destination as long as that file at source is different, even if the modified time of destination is later than source.
-So, to prevent overwriting changes, it is best to only have one emacs open across all my machines.
-Then, I will pull from Google Drive on start-up and push on exit --- Doom Emacs starts really fast, anyways.
-
 #+begin_src emacs-lisp
-(defun ning/get-rclone-sentinel (should-org-roam-setup-flag)
-  "Internal. Get a sentinel function for ning/push and ning/pull."
+(defun ning/get-unison-sentinel (should-org-roam-setup-flag)
+  "Internal. Get a sentinel function."
   (lambda (proc event)
     (if should-org-roam-setup-flag (org-roam-setup) nil)
     (if (string= event "finished\n")
@@ -278,31 +263,21 @@ Then, I will pull from Google Drive on start-up and push on exit --- Doom Emacs 
        (propertize (concat (process-name proc) " failed")
                    'face '(:foreground "red"))))))
 
-(defun ning/push ()
-  "Sync the ~/org directory to Google Drive via rclone."
+(defun ning/sync ()
+  "Sync the ~/org directory to ssh:meowmeow"
   (interactive)
   (set-process-sentinel
-   (start-process "rclone-push" "*rclone*" "rclone"
-                  "sync" "--progress" (expand-file-name "~/org") "remote:org")
-   (ning/get-rclone-sentinel nil)))
+   (start-process "Sync with unison" "*unison*"
+                  "unison" "-batch" (expand-file-name "~/org/") "ssh://meowmeow//org")
+   (ning/get-unison-sentinel t)))
 
-(defun ning/pull ()
-  "Sync the ~/org directory from Google Drive via rclone."
-  (interactive)
-  (if (y-or-n-p "Pull from Google Drive? (WARNING: will overwrite ~/org/)")
-      (set-process-sentinel
-       (start-process "rclone-pull" "*rclone*" "rclone"
-                      "sync" "--progress" "remote:org" (expand-file-name "~/org"))
-       (ning/get-rclone-sentinel t))
-    nil))
-
-(defun ning/push-synchronous ()
-  "Sync the ~/org directory to Google Drive via rclone in the foreground"
+(defun ning/sync-synchronous ()
+  "Sync the ~/org directory to ssh:meowmeow in the foreground"
   (interactive)
   (delete-other-windows)
-  (switch-to-buffer "*rclone*")
-  (call-process "rclone" nil "*rclone*" t
-                "sync" "--progress" (expand-file-name "~/org") "remote:org"))
+  (switch-to-buffer "*unison*")
+  (call-process "unison" nil "*unison*" t
+                "-batch" (expand-file-name "~/org") "ssh://meowmeow//org"))
 #+end_src
 
 * Encrypt with org-crypt
@@ -335,6 +310,23 @@ See: https://orgmode.org/manual/Org-Crypt.html
 * Task management with Org-agenda
 :PROPERTIES:
 :ID:       94a80c46-03e0-4f0d-a4c7-e6e8a55a00e0
+:END:
+
+** Set Org-agenda to search Org-roam notes
+:PROPERTIES:
+:ID:       5bfbb4f4-b7b8-43ef-82a2-c5eb85c4682e
+:END:
+
+I keep notes with tasks in a separate subdirectory to speed up ~Org-agenda~.
+
+#+begin_src emacs-lisp
+(setq org-agenda-files '("~/org/roam/tasks"))
+#+end_src
+
+
+** Visuals
+:PROPERTIES:
+:ID:       d8e0acba-e9eb-4f34-8062-9faa907d0356
 :END:
 
 Doom Emacs defines a whole bunch of ~TODO~ states, many of which I do not use.
@@ -373,11 +365,6 @@ I conceptualize my subtrees more as a list of steps rather than a list of subtas
 #+begin_src emacs-lisp
 (setq org-agenda-dim-blocked-tasks nil)
 #+end_src
-
-** Showing completed tasks
-:PROPERTIES:
-:ID:       fee3f692-2b91-4ec6-bba6-c49b626cd868
-:END:
 
 Looking at completed tasks (~DONE~) helps with my mood.
 In particular, I would like to view completed tasks starting from yesterday.
@@ -443,7 +430,7 @@ It would be nice to also visualize when each task was completed.
 :END:
 
 #+begin_src emacs-lisp
-(ning/pull)
+(ning/sync)
 #+end_src
 
 * Exit commands
@@ -452,5 +439,5 @@ It would be nice to also visualize when each task was completed.
 :END:
 
 #+begin_src emacs-lisp
-(add-hook 'kill-emacs-hook 'ning/push-synchronous)
+(add-hook 'kill-emacs-hook 'ning/sync-synchronous)
 #+end_src
