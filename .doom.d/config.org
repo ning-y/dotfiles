@@ -424,16 +424,30 @@ It would be nice to also visualize when each task was completed.
            (url-hexify-string (buffer-substring start end)))))
 #+end_src
 
-* Start-up commands
+* Start-up, idle, and exit commands
 :PROPERTIES:
 :ID:       64addb97-c483-4bc1-bacd-7305f2c8a53f
+:END:
+
+** Start-up
+:PROPERTIES:
+:ID:       14975582-b8fd-49c8-961f-f8424d2c722a
 :END:
 
 #+begin_src emacs-lisp
 (ning/sync)
 #+end_src
 
-* Exit commands
+** Idle
+:PROPERTIES:
+:ID:       abb2b332-c217-4cbe-8304-957269954b79
+:END:
+
+#+begin_src emacs-lisp
+(run-with-idle-timer 60 nil 'ning/sync)
+#+end_src
+
+** Exit
 :PROPERTIES:
 :ID:       4265145c-097b-49ca-8564-b99f61a4b693
 :END:
