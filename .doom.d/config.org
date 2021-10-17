@@ -94,10 +94,11 @@ Both variables need to be set ([[https://web.archive.org/web/20210912005440/http
       org-startup-folded 'nofold)
 #+end_src
 
-Shrink tables on start-up.
+Align and shrink tables on start-up.
 
 #+begin_src emacs-lisp
-(setq org-startup-align-all-tables t)
+(setq org-startup-align-all-tables t
+      org-startup-shrink-all-tables t)
 #+end_src
 
 ** For dired
