@@ -274,8 +274,7 @@ Also add [[https://github.com/jrblevin/deft/issues/75#issuecomment-905031872][a 
   (make-process
    :name "ning/sync (unison)"
    :buffer "*unison*"
-   :command '(
-              "unison" "-batch" "/home/ning/org" "ssh://meowmeow//org")
+   :command `("unison" "-batch" ,(expand-file-name "~/org") "ssh://meowmeow//org")
    ; Unison breaks lines with carriage returns only, no matter the host OS.
    :coding 'undecided-mac
    :sentinel (ning/get-unison-sentinel t)))
@@ -286,7 +285,7 @@ Also add [[https://github.com/jrblevin/deft/issues/75#issuecomment-905031872][a 
   (delete-other-windows)
   (switch-to-buffer "*unison*")
   (let ((coding-system-for-read 'undecided-mac))
-    (call-process "unison" nil "*unison*" t "-batch" "/home/ning/org" "ssh://meowmeow//org")))
+    (call-process "unison" nil "*unison*" t "-batch" (expand-file-name "~/org") "ssh://meowmeow//org")))
 #+end_src
 
 * Encrypt with org-crypt
