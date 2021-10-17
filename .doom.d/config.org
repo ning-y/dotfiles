@@ -263,21 +263,30 @@ Also add [[https://github.com/jrblevin/deft/issues/75#issuecomment-905031872][a 
        (propertize (concat (process-name proc) " failed")
                    'face '(:foreground "red"))))))
 
-(defun ning/sync ()
-  "Sync the ~/org directory to ssh:meowmeow"
+(defun ning/sync-show-unison-log ()
+  "Switch to the unison log buffer"
   (interactive)
-  (set-process-sentinel
-   (start-process "Sync with unison" "*unison*"
-                  "unison" "-batch" (expand-file-name "~/org/") "ssh://meowmeow//org")
-   (ning/get-unison-sentinel t)))
+  (switch-to-buffer "*unison*"))
+
+(defun ning/sync ()
+  "Sync the ~/org directory to ssh:meowmeow. Returns the process."
+  (interactive)
+  (make-process
+   :name "ning/sync (unison)"
+   :buffer "*unison*"
+   :command '(
+              "unison" "-batch" "/home/ning/org" "ssh://meowmeow//org")
+   ; Unison breaks lines with carriage returns only, no matter the host OS.
+   :coding 'undecided-mac
+   :sentinel (ning/get-unison-sentinel t)))
 
 (defun ning/sync-synchronous ()
-  "Sync the ~/org directory to ssh:meowmeow in the foreground"
+  "Sync the ~/org directory to ssh:meowmeow. Returns the process."
   (interactive)
   (delete-other-windows)
   (switch-to-buffer "*unison*")
-  (call-process "unison" nil "*unison*" t
-                "-batch" (expand-file-name "~/org") "ssh://meowmeow//org"))
+  (let ((coding-system-for-read 'undecided-mac))
+    (call-process "unison" nil "*unison*" t "-batch" "/home/ning/org" "ssh://meowmeow//org")))
 #+end_src
 
 * Encrypt with org-crypt
@@ -444,7 +453,7 @@ It would be nice to also visualize when each task was completed.
 :END:
 
 #+begin_src emacs-lisp
-(run-with-idle-timer 60 nil 'ning/sync)
+(run-with-idle-timer 60 t 'ning/sync)
 #+end_src
 
 ** Exit
@@ -453,5 +462,5 @@ It would be nice to also visualize when each task was completed.
 :END:
 
 #+begin_src emacs-lisp
-(add-hook 'kill-emacs-hook 'ning/sync-synchronous)
+(add-hook 'kill-emacs-hook (lambda () (ning/sync-synchronous) (sleep-for 1)))
 #+end_src
