@@ -145,11 +145,11 @@ Don't auto-complete in org-mode.
 :END:
 
 #+begin_src emacs-lisp
-(global-page-break-lines-mode)
-(setq page-break-lines-modes
-      (append page-break-lines-modes
-              '(
-                snakemake-mode)))
+; (global-page-break-lines-mode)
+(after! page-break-lines-mode
+  (setq page-break-lines-modes
+        (append page-break-lines-modes
+                '(snakemake-mode))))
 #+end_src
 
 * Note-taking with Org-roam
@@ -271,6 +271,11 @@ Also add [[https://github.com/jrblevin/deft/issues/75#issuecomment-905031872][a 
 (defun ning/sync ()
   "Sync the ~/org directory to ssh:meowmeow. Returns the process."
   (interactive)
+  ; Delimit different runs with a page break.
+  (when (get-buffer "*unison*")
+    (with-current-buffer "*unison*"
+      (insert "")
+      (page-break-lines-mode 1)))
   (make-process
    :name "ning/sync (unison)"
    :buffer "*unison*"
@@ -284,6 +289,8 @@ Also add [[https://github.com/jrblevin/deft/issues/75#issuecomment-905031872][a 
   (interactive)
   (delete-other-windows)
   (switch-to-buffer "*unison*")
+  (insert "")
+  (page-break-lines-mode 1)
   (let ((coding-system-for-read 'undecided-mac))
     (call-process "unison" nil "*unison*" t "-batch" (expand-file-name "~/org") "ssh://meowmeow//org")))
 #+end_src
