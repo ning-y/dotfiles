@@ -273,10 +273,10 @@ Also add [[https://github.com/jrblevin/deft/issues/75#issuecomment-905031872][a 
   "Sync the ~/org directory to ssh:meowmeow. Returns the process."
   (interactive)
   ; Delimit different runs with a page break.
-  (when (get-buffer "*unison*")
-    (with-current-buffer "*unison*"
-      (insert "")
-      (page-break-lines-mode 1)))
+  (with-current-buffer (get-buffer-create "*unison*")
+    (end-of-buffer)
+    (insert "")
+    (page-break-lines-mode 1))
   (make-process
    :name "ning/sync (unison)"
    :buffer "*unison*"
@@ -289,7 +289,8 @@ Also add [[https://github.com/jrblevin/deft/issues/75#issuecomment-905031872][a 
   "Sync the ~/org directory to ssh:meowmeow. Returns the process."
   (interactive)
   (delete-other-windows)
-  (switch-to-buffer "*unison*")
+  (switch-to-buffer (get-buffer-create "*unison*"))
+  (end-of-buffer)
   (insert "")
   (page-break-lines-mode 1)
   (let ((coding-system-for-read 'undecided-mac))
@@ -451,7 +452,7 @@ It would be nice to also visualize when each task was completed.
 :END:
 
 #+begin_src emacs-lisp
-(ning/sync)
+(after! org-roam (ning/sync))
 #+end_src
 
 ** Idle
