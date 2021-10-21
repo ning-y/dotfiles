@@ -10,10 +10,6 @@
 :ID:       c5e5d2ae-4e6e-4710-9855-d8eeebdca7df
 :END:
 
-:PROPERTIES:
-:ID:       d7a0cbe6-6c76-400d-b061-115604e4908e
-:END:
-
 #+begin_src emacs-lisp
 (setq doom-theme 'doom-tomorrow-day)
 #+end_src
@@ -24,6 +20,8 @@ Themes I quite like:
 - ~doom-flatwhite~ is a light biege-based theme
 - ~doom-nordlight~ is a light blue-based theme
 - ~doom-opera-light~ is a light gray-based theme
+
+nano-theme is okay except that but (org) links don't show up well.
 
 * Dashboard
 :PROPERTIES:
@@ -254,14 +252,18 @@ Also add [[https://github.com/jrblevin/deft/issues/75#issuecomment-905031872][a 
 :END:
 
 #+begin_src emacs-lisp
+(defun ning/get-time-string ()
+  "Get a string, trimmed for white-spaces, like 1.43pm."
+  (downcase (string-trim (format-time-string "%l.%M%p"))))
+
 (defun ning/get-unison-sentinel (should-org-roam-setup-flag)
   "Internal. Get a sentinel function."
   (lambda (proc event)
     (if should-org-roam-setup-flag (org-roam-setup) nil)
     (if (string= event "finished\n")
-        (message (concat (process-name proc) " done"))
+        (message (concat (process-name proc) " done at " (ning/get-time-string)))
       (message
-       (propertize (concat (process-name proc) " failed")
+       (propertize (concat (process-name proc) " failed at " (ning/get-time-string))
                    'face '(:foreground "red"))))))
 
 (defun ning/sync-show-unison-log ()
@@ -278,7 +280,7 @@ Also add [[https://github.com/jrblevin/deft/issues/75#issuecomment-905031872][a 
     (insert "")
     (page-break-lines-mode 1))
   (make-process
-   :name "ning/sync (unison)"
+   :name "ning/sync"
    :buffer "*unison*"
    :command `("unison" "-batch" ,(expand-file-name "~/org") "ssh://meowmeow//org")
    ; Unison breaks lines with carriage returns only, no matter the host OS.
