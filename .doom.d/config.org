@@ -251,6 +251,8 @@ Also add [[https://github.com/jrblevin/deft/issues/75#issuecomment-905031872][a 
 :ID:       d7020545-f73b-44f3-b524-eb8bade4f062
 :END:
 
+I had previously done this with rclone with Google Drive, but rclone cannot handle conflicts well --- out of the box, it only syncs whole directories at a time, always overwriting changes.
+
 #+begin_src emacs-lisp
 (defun ning/get-time-string ()
   "Get a string, trimmed for white-spaces, like 1.43pm."
@@ -277,7 +279,7 @@ Also add [[https://github.com/jrblevin/deft/issues/75#issuecomment-905031872][a 
   ; Delimit different runs with a page break.
   (with-current-buffer (get-buffer-create "*unison*")
     (end-of-buffer)
-    (insert "")
+    (insert (concat "\n==" (current-time-string) "==\n"))
     (page-break-lines-mode 1))
   (make-process
    :name "ning/sync"
@@ -293,10 +295,39 @@ Also add [[https://github.com/jrblevin/deft/issues/75#issuecomment-905031872][a 
   (delete-other-windows)
   (switch-to-buffer (get-buffer-create "*unison*"))
   (end-of-buffer)
-  (insert "")
+  (insert (concat "\n==" (current-time-string) "==\n"))
   (page-break-lines-mode 1)
   (let ((coding-system-for-read 'undecided-mac))
     (call-process "unison" nil "*unison*" t "-batch" (expand-file-name "~/org") "ssh://meowmeow//org")))
+#+end_src
+
+Sync on start-up.
+
+#+begin_src emacs-lisp
+(after! org-roam (ning/sync))
+#+end_src
+
+Sync on idle.
+
+#+begin_src emacs-lisp
+(run-with-idle-timer 60 t 'ning/sync)
+#+end_src
+
+Sync on return from idle.
+
+#+begin_src emacs-lisp
+(defvar ning/has-idled-past-sync-threshold nil)
+(run-with-idle-timer 300 t (lambda () (setq ning/has-idled-past-sync-threshold t)))
+(add-hook 'post-command-hook
+          (lambda () (when ning/has-idled-past-sync-threshold
+                       (ning/sync)
+                       (setq ning/has-idled-past-sync-threshold nil))))
+#+end_src
+
+Sync on exit.
+
+#+begin_src emacs-lisp
+(add-hook 'kill-emacs-hook (lambda () (ning/sync-synchronous) (sleep-for 1)))
 #+end_src
 
 * Encrypt with org-crypt
@@ -443,34 +474,3 @@ It would be nice to also visualize when each task was completed.
            (url-hexify-string (buffer-substring start end)))))
 #+end_src
 
-* Start-up, idle, and exit commands
-:PROPERTIES:
-:ID:       64addb97-c483-4bc1-bacd-7305f2c8a53f
-:END:
-
-** Start-up
-:PROPERTIES:
-:ID:       14975582-b8fd-49c8-961f-f8424d2c722a
-:END:
-
-#+begin_src emacs-lisp
-(after! org-roam (ning/sync))
-#+end_src
-
-** Idle
-:PROPERTIES:
-:ID:       abb2b332-c217-4cbe-8304-957269954b79
-:END:
-
-#+begin_src emacs-lisp
-(run-with-idle-timer 60 t 'ning/sync)
-#+end_src
-
-** Exit
-:PROPERTIES:
-:ID:       4265145c-097b-49ca-8564-b99f61a4b693
-:END:
-
-#+begin_src emacs-lisp
-(add-hook 'kill-emacs-hook (lambda () (ning/sync-synchronous) (sleep-for 1)))
-#+end_src
