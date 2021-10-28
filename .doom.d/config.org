@@ -11,7 +11,7 @@
 :END:
 
 #+begin_src emacs-lisp
-(setq doom-theme 'doom-tomorrow-day)
+(setq doom-theme 'doom-tomorrow-night)
 #+end_src
 
 Themes I quite like:
