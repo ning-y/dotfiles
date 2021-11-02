@@ -79,6 +79,12 @@ nano-theme is okay except that but (org) links don't show up well.
 #+end_src
 
 * Minor configurations
+** Enable downcase-region
+
+#+begin_src emacs-lisp
+(put 'downcase-region 'disabled nil)
+#+end_src
+
 ** For org-mode
 :PROPERTIES:
 :ID:       ae2762e5-453b-4daf-b850-45ca6fe17675
