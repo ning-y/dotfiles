@@ -144,19 +144,6 @@ Don't auto-complete in org-mode.
 (setq company-global-modes (append company-global-modes '(org-mode)))
 #+end_src
 
-** For page-break-lines
-:PROPERTIES:
-:ID:       b999a2fd-092c-4391-8db7-b9c0cbee71ce
-:END:
-
-#+begin_src emacs-lisp
-; (global-page-break-lines-mode)
-(after! page-break-lines-mode
-  (setq page-break-lines-modes
-        (append page-break-lines-modes
-                '(snakemake-mode))))
-#+end_src
-
 * Note-taking with Org-roam
 :PROPERTIES:
 :ID:       52bc4886-496f-472c-a273-851511e0a3d4
