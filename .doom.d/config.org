@@ -11,17 +11,10 @@
 :END:
 
 #+begin_src emacs-lisp
-(setq doom-theme 'doom-tomorrow-night)
+(setq doom-theme 'doom-flatwhite)
 #+end_src
 
-Themes I quite like:
-
-- ~doom-fairy-floss~ is a light purple-based theme
-- ~doom-flatwhite~ is a light biege-based theme
-- ~doom-nordlight~ is a light blue-based theme
-- ~doom-opera-light~ is a light gray-based theme
-
-nano-theme is okay except that but (org) links don't show up well.
+Browse https://github.com/hlissner/emacs-doom-themes for more.
 
 * Dashboard
 :PROPERTIES:
