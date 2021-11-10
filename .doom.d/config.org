@@ -386,7 +386,7 @@ Simplify the list:
          "CANCELLED(c)")))
 #+end_src
 
-My tasks come from Org-roam files, which are quite verbose.
+My tasks come from Org-roam files, which have verbose filenames.
 So, omit filenames from the Org-agenda view.
 
 #+begin_src emacs-lisp
