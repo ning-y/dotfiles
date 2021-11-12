@@ -167,7 +167,8 @@ Thankfully, Jethro himself uses Doom Emacs at GitHub:jethrokuan/dots.
         :desc "org-roam-dailies-goto-previous-note" "," #'org-roam-dailies-goto-previous-note)
   (setq org-roam-directory (file-truename "~/org/roam")
         org-id-link-to-org-use-id t
-        org-roam-v2-ack t)
+        org-roam-v2-ack t
+        +org-roam-open-buffer-on-find-file nil)
   (add-to-list 'display-buffer-alist
                '(("\\*org-roam\\*"
                   (display-buffer-in-direction)
