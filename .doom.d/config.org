@@ -360,8 +360,7 @@ I keep notes with tasks in a separate subdirectory to speed up ~Org-agenda~.
 (setq org-agenda-files '("~/org/roam/tasks"))
 #+end_src
 
-
-** Visuals
+** Todo keywords
 :PROPERTIES:
 :ID:       d8e0acba-e9eb-4f34-8062-9faa907d0356
 :END:
@@ -371,61 +370,55 @@ Simplify the list:
 
 #+begin_src emacs-lisp
 (setq org-todo-keywords
-      '((sequence
-         ; Each keyword can optionally specify a character for fast state
-         ; selection... For example, "WAIT(w)" says that the WAIT state can be
-         ; selected with the "w" key.
-         "TODO(t)"
-         ; If one of the "keywords" is the vertical bar, "|", the remaining
-         ; keywords signify that no further action is necessary.
-         "|"
-         "DONE(d)"
-         ; Each keyword may also specify if a timestamp or a note should be
-         ; recorded when entering or leaving the state, by adding additional
-         ; characters in the parenthesis after the keyword... "@" means to add
-         ; a note (with time)
-         "CANCELLED(c)")))
+      '((sequence "TODO(t)" "|" "CANCELLED(c)" "DONE(d)")))
 #+end_src
 
-My tasks come from Org-roam files, which have verbose filenames.
-So, omit filenames from the Org-agenda view.
+When a task is done, mark it with a ~CLOSED~ timestamp.
+
+#+begin_src emacs-lisp
+(setq org-log-done "time")
+#+end_src
+
+** Agenda view
+
+The default prefix for org-agenda items includes their file names, but org-roam file names are incredibly verbose.
+So, prefix each agenda item with just an indentation.
 
 #+begin_src emacs-lisp
 (with-eval-after-load 'org-agenda
-  (add-to-list 'org-agenda-prefix-format '(agenda . "  ")))
-(setq org-agenda-span 7)
+    (add-to-list 'org-agenda-prefix-format '(agenda . "  ")))
 #+end_src
 
-By default, tasks with incomplete task subtrees are dimmed in the agenda view.
-I conceptualize my subtrees more as a list of steps rather than a list of subtasks, so disable that dimming.
+Show tasks starting from yesterday, up to six days from today.
+
+#+begin_src emacs-lisp
+(setq org-agenda-start-day "-1d"
+      org-agenda-span 8)
+#+end_src
+
+Don't dim tasks blocked by subtasks: for me, subtasks represents steps to complete the parent task.
+I do not think of them as tasks by themselves.
 
 #+begin_src emacs-lisp
 (setq org-agenda-dim-blocked-tasks nil)
 #+end_src
 
-Looking at completed tasks (~DONE~) helps with my mood.
-In particular, I would like to view completed tasks starting from yesterday.
+org-agenda warns about upcoming deadlines by showing them in today's agenda.
+That crowds the daily agenda, in my opinion.
 
 #+begin_src emacs-lisp
-(setq org-agenda-start-day "-1d")
+(setq org-deadline-warning-days 0
+      org-agenda-skip-scheduled-if-deadline-is-shown t)
 #+end_src
 
-It would be nice to also visualize when each task was completed.
+By default, closed tasks are shown on the date they were scheduled.
+I prefer that they are shown on the date they were done.
+First, I set ~org-agenda-skip-*-if-done~  to ~nil~ to hide done tasks from their scheduled date, then I use log-mode to show done tasks on the date they were done.
 
 #+begin_src emacs-lisp
-(setq
-    org-agenda-skip-deadline-prewarning-if-scheduled t
-    org-deadline-warning-days 0
-    ; Otherwise, marking a task as done gives it a timestamp without time
-    org-log-done "time"
-    ; "In Logbook mode, entries that were marked as done while logging was on
-    ; (see the variable org-log-done) are shown in the agenda, as are entries
-    ; that have been clocked on that day."
-    org-agenda-start-with-log-mode '(closed)
-    ; Without org-agenda-skip-* variables set to t, DONE entries will still
-    ; appear below the "Logbook" section of a day.
-    org-agenda-skip-scheduled-if-done t
-    org-agenda-skip-deadline-if-done t)
+(setq org-agenda-skip-scheduled-if-done t
+      org-agenda-skip-deadline-if-done t
+      org-agenda-start-with-log-mode '(closed))
 #+end_src
 
 * Research interactive helper functions
@@ -460,4 +453,3 @@ It would be nice to also visualize when each task was completed.
    (concat "https://scholar.google.com/scholar?&q="
            (url-hexify-string (buffer-substring start end)))))
 #+end_src
-
