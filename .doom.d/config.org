@@ -72,6 +72,12 @@ Browse https://github.com/hlissner/emacs-doom-themes for more.
 #+end_src
 
 * Minor configurations
+** Start the Emacs server
+
+#+begin_src emacs-lisp
+(server-start)
+#+end_src
+
 ** Enable downcase-region
 
 #+begin_src emacs-lisp
