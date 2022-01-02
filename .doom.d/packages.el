@@ -9,13 +9,14 @@
 ;(package! some-package)
 (package! org-download)
 (package! snakemake-mode)
-(package! org-noter)
-; org-roam-ui dependencies
+; org-roam-ui
 (package! websocket)
 (package! simple-httpd)
+(package! org-roam-ui :recipe (:host github :repo "org-roam/org-roam-ui" :files ("*.el" "out")))
 ; etc.
 (package! page-break-lines :recipe (:host github :repo "purcell/page-break-lines"))
 (package! org-transclusion :recipe (:host github :repo "nobiot/org-transclusion" :branch "main" :files ("*.el")))
+(package! conda)
 
 ;; To install a package directly from a remote git repo, you must specify a
 ;; `:recipe'. You'll find documentation on what `:recipe' accepts here:
@@ -60,5 +61,3 @@
 ;; ...Or *all* packages (NOT RECOMMENDED; will likely break things)
 ;(unpin! t)
 (unpin! org-roam)
-(package! websocket)
-(package! org-roam-ui :recipe (:host github :repo "org-roam/org-roam-ui" :files ("*.el" "out")))

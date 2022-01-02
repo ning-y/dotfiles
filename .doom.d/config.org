@@ -143,6 +143,14 @@ Don't auto-complete in org-mode.
 (setq company-global-modes (append company-global-modes '(org-mode)))
 #+end_src
 
+* Compatability with conda environments
+
+#+begin_src emacs-lisp
+(use-package! conda
+  :init
+  (setq conda-anaconda-home "~/miniconda3"))
+#+end_src
+
 * Note-taking with Org-roam
 :PROPERTIES:
 :ID:       52bc4886-496f-472c-a273-851511e0a3d4
