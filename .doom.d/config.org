@@ -119,7 +119,7 @@ RET uses xdg-open.
 
 (defun get-mimetype (filepath)
   (string-trim
-   (shell-command-to-string (concat "file -b --mime-type " filepath))))
+   (shell-command-to-string (concat "file -b --mime-type " (shell-quote-argument filepath)))))
 
 (defun dired-find-file-dwim ()
   (interactive)
