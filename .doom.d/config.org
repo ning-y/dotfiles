@@ -78,10 +78,11 @@ Browse https://github.com/hlissner/emacs-doom-themes for more.
 (server-start)
 #+end_src
 
-** Enable downcase-region
+** Enable up-/downcase-region
 
 #+begin_src emacs-lisp
 (put 'downcase-region 'disabled nil)
+(put 'upcase-region 'disabled nil)
 #+end_src
 
 ** For org-mode
