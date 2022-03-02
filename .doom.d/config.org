@@ -279,17 +279,18 @@ I had previously done this with rclone with Google Drive, but rclone cannot hand
   "Sync the ~/org directory to ssh:meowmeow. Returns the process."
   (interactive)
   ; Delimit different runs with a page break.
-  (with-current-buffer (get-buffer-create "*unison*")
-    (end-of-buffer)
-    (insert (concat "\n==" (current-time-string) "==\n"))
-    (page-break-lines-mode 1))
-  (make-process
-   :name "ning/sync"
-   :buffer "*unison*"
-   :command `("unison" "-batch" ,(expand-file-name "~/org") "ssh://meowmeow//org")
-   ; Unison breaks lines with carriage returns only, no matter the host OS.
-   :coding 'undecided-mac
-   :sentinel (ning/get-unison-sentinel t)))
+  (save-excursion
+    (with-current-buffer (get-buffer-create "*unison*")
+      (end-of-buffer)
+      (insert (concat "\n==" (current-time-string) "==\n"))
+      (page-break-lines-mode 1))
+    (make-process
+     :name "ning/sync"
+     :buffer "*unison*"
+     :command `("unison" "-batch" ,(expand-file-name "~/org") "ssh://meowmeow//org")
+     ; Unison breaks lines with carriage returns only, no matter the host OS.
+     :coding 'undecided-mac
+     :sentinel (ning/get-unison-sentinel t))))
 
 (defun ning/sync-synchronous ()
   "Sync the ~/org directory to ssh:meowmeow. Returns the process."
