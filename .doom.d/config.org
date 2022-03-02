@@ -197,10 +197,10 @@ Align and shrink tables on start-up.
 :ID:       5bfbb4f4-b7b8-43ef-82a2-c5eb85c4682e
 :END:
 
-I keep notes with tasks in a separate subdirectory to speed up ~Org-agenda~.
+I keep notes with active tasks in a separate subdirectory to speed up ~Org-agenda~.
 
 #+begin_src emacs-lisp
-(setq org-agenda-files '("~/org/roam/tasks"))
+(setq org-agenda-files '("~/org/roam/active-tasks"))
 #+end_src
 
 ** Todo keywords
@@ -302,21 +302,27 @@ Adapted from Jethro at GitHub:jethrokuan/dots.
     (org-roam-node-find nil nil '(lambda (node) (= (org-roam-node-level node) 0))))
   (map! :leader
         :prefix "r"
-        :desc "org-roam" "l" #'org-roam-buffer-toggle
         :desc "org-roam-node-insert" "i" #'org-roam-node-insert
         :desc "org-roam-file-find" "f" #'org-roam-file-find
-        :desc "org-roam-node-find" "F" #'org-roam-node-find
         :desc "org-roam-capture" "c" #'org-roam-capture
         :desc "org-roam-tag-add" "t" #'org-roam-tag-add
         :desc "org-roam-alias-add" "a" #'org-roam-alias-add
-        :desc "org-roam-node-random" "?" #'org-roam-node-random
         :desc "org-roam-dailies-goto-today" "." #'org-roam-dailies-goto-today
         :desc "org-roam-dailies-goto-next-note" "/" #'org-roam-dailies-goto-next-note
         :desc "org-roam-dailies-goto-previous-note" "," #'org-roam-dailies-goto-previous-note)
   (setq org-roam-directory (file-truename "~/org/roam")
         org-id-link-to-org-use-id t
         org-roam-v2-ack t
-        +org-roam-open-buffer-on-find-file nil)
+        +org-roam-open-buffer-on-find-file nil
+        org-roam-capture-templates '(("n" "note" plain "%?" :target
+                                      (file+head "notes/%<%Y%m%d%H%M%S>-${slug}.org" "#+title: ${title}\n")
+                                      :unnarrowed t :immediate-finish t :no-save t)
+                                     ("t" "task" plain "%?" :target
+                                      (file+head "active-tasks/%<%Y%m%d%H%M%S>-${slug}.org" "#+title: ${title}\n#+filetags: :task:")
+                                      :unnarrowed t :immediate-finish t :no-save t)
+                                     ("l" "lit" plain "%?" :target
+                                      (file+head "ref-notes/${citekey}.org" "#+title: ${author-abbrev} ${year} - ${title}\n")
+                                      :unnarrowed t :immediate-finish t :no-save t)))
   (add-to-list 'display-buffer-alist
                '(("\\*org-roam\\*"
                   (display-buffer-in-direction)
@@ -344,11 +350,36 @@ Adapted from Jethro at GitHub:jethrokuan/dots.
   (browse-url-xdg-open "http://127.0.0.1:35901/"))
 #+end_src
 
-* Configure tools/biblio
+* Configure org-roam-bibtex (incl. org-ref)
 
 #+begin_src emacs-lisp
-(setq! bibtex-completion-bibliography '((expand-file-name "~/org/files/references.bib")))
+(use-package! org-ref
+  :init (setq doi-utils-download-pdf nil
+              bibtex-autokey-year-title-separator nil
+              bibtex-autokey-titleword-separator "-")
+  :config (require 'bibtex))
+
+(use-package! ivy-bibtex
+  :init
+  (setq bibtex-completion-bibliography '("~/org/files/references.bib")
+        bibtex-completion-notes-path "~/org/roam/ref-notes/"
+        bibtex-completion-library-path "~/org/roam/ref-files/"
+        ivy-bibtex-default-action 'ivy-bibtex-edit-notes
+        ivy-bibtex-default-multi-action 'ivy-bibtex-insert-key))
+
+(use-package! org-roam-bibtex
+  :after org-roam
+  :init (setq orb-roam-ref-format 'org-ref-v3
+              orb-preformat-keywords '("citekey" "author-abbrev" "year" "title"))
+  :config
+  (org-roam-bibtex-mode)
+  (require 'org-ref))
 #+end_src
+
+Here, I use org-roam-bibtex to interface between org-roam notes and org-ref entries.
+I use org-ref-insert-link over orb-insert-link.
+
+*TODO:* I can't get org-ref-open-bibtex-notes to work.
 
 * Custom: sync notes with unison
 :PROPERTIES:

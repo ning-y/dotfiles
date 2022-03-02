@@ -9,11 +9,19 @@
 ;(package! some-package)
 (package! org-download)
 (package! snakemake-mode)
+
+; org-roam
+(unpin! org-roam)
 ; org-roam-ui
 (package! websocket)
 (package! simple-httpd)
 (package! org-roam-ui :recipe (:host github :repo "org-roam/org-roam-ui" :files ("*.el" "out")))
-; etc.
+; org-roam-bibtex
+(package! org-roam-bibtex
+  :recipe (:host github :repo "org-roam/org-roam-bibtex"))
+(unpin! bibtex-completion helm-bibtex ivy-bibtex)
+(package! org-ref)
+;etc.
 (package! page-break-lines :recipe (:host github :repo "purcell/page-break-lines"))
 (package! org-transclusion :recipe (:host github :repo "nobiot/org-transclusion" :branch "main" :files ("*.el")))
 (package! conda)
@@ -60,4 +68,3 @@
 ;(unpin! pinned-package another-pinned-package)
 ;; ...Or *all* packages (NOT RECOMMENDED; will likely break things)
 ;(unpin! t)
-(unpin! org-roam)
