@@ -5,7 +5,7 @@
 ;;; -*- lexical-binding: t; -*-
 #+end_src
 
-* Theme
+* Appearance
 :PROPERTIES:
 :ID:       c5e5d2ae-4e6e-4710-9855-d8eeebdca7df
 :END:
@@ -16,7 +16,102 @@
 
 Browse https://github.com/hlissner/emacs-doom-themes for more.
 
-* Dashboard
+* Configure vanilla emacs behavior
+** Start the Emacs server
+
+#+begin_src emacs-lisp
+(server-start)
+#+end_src
+
+** Enable up-/downcase-region
+
+#+begin_src emacs-lisp
+(put 'downcase-region 'disabled nil)
+(put 'upcase-region 'disabled nil)
+#+end_src
+
+** For dired
+:PROPERTIES:
+:ID:       e37a7ba9-5869-43c6-a134-12ec9e75cde2
+:END:
+
+RET uses xdg-open.
+
+#+begin_src emacs-lisp
+(defvar unsupported-mime-types
+  '("video/mp4"))
+
+(load "subr-x")
+
+(defun get-mimetype (filepath)
+  (string-trim
+   (shell-command-to-string (concat "file -b --mime-type " (shell-quote-argument filepath)))))
+
+(defun dired-find-file-dwim ()
+  (interactive)
+  (let ((file (dired-get-filename nil t)))
+    (if (member (get-mimetype file) unsupported-mime-types)
+      (call-process "xdg-open" nil 0 nil file)
+      (find-file file))))
+
+(with-eval-after-load 'dired
+  (define-key dired-mode-map (kbd "RET") #'dired-find-file-dwim))
+#+end_src
+
+* Configure company
+
+Don't auto-complete in org-mode.
+
+#+begin_src emacs-lisp
+(setq company-global-modes (append company-global-modes '(org-mode)))
+#+end_src
+
+* Configure conda
+
+#+begin_src emacs-lisp
+(use-package! conda
+  :init
+  (setq conda-anaconda-home "~/miniconda3"))
+#+end_src
+
+* Configure deft
+:PROPERTIES:
+:ID:       15a57748-c59d-4005-8629-c706337e4542
+:END:
+
+The default Deft buffer shows on the left-hand side the head of the file, and on the right the last modified time.
+However, the head of Org-roam files are not informative at all, because they hold the ~:PROPERTIES:~ tag.
+So, show the filename at the left-hand side instead.
+
+#+begin_src emacs-lisp
+(setq deft-directory "~/org/roam"
+      deft-recursive t)
+#+end_src
+
+Also add [[https://github.com/jrblevin/deft/issues/75#issuecomment-905031872][a fix from GitHub user codemac]] for deft to correctly parse titles from org-roam v2 files.
+
+#+begin_src emacs-lisp
+(defun cm/deft-parse-title (file contents)
+  "Parse the given FILE and CONTENTS and determine the title.
+  If `deft-use-filename-as-title' is nil, the title is taken to
+  be the first non-empty line of the FILE.  Else the base name of the FILE is
+  used as title."
+  (let ((begin (string-match "^#\\+[tT][iI][tT][lL][eE]: .*$" contents)))
+    (if begin
+        (string-trim (substring contents begin (match-end 0))
+                     "#\\+[tT][iI][tT][lL][eE]: *" "[\n\t ]+")
+      (deft-base-filename file))))
+
+(advice-add 'deft-parse-title :override #'cm/deft-parse-title)
+(setq deft-strip-summary-regexp
+      (concat "\\("
+              "[\n\t]" ;; blank
+              "\\|^#\\+[[:alpha:]_]+:.*$" ;; org-mode metadata
+              "\\|^:PROPERTIES:\n\\(.+\n\\)+:END:\n"
+              "\\)"))
+#+end_src
+
+* Configure doom-dashboard
 :PROPERTIES:
 :ID:       6ac43331-fa55-405e-8db4-2e682a27a11e
 :END:
@@ -71,21 +166,8 @@ Browse https://github.com/hlissner/emacs-doom-themes for more.
         doom-dashboard-widget-footer))
 #+end_src
 
-* Minor configurations
-** Start the Emacs server
-
-#+begin_src emacs-lisp
-(server-start)
-#+end_src
-
-** Enable up-/downcase-region
-
-#+begin_src emacs-lisp
-(put 'downcase-region 'disabled nil)
-(put 'upcase-region 'disabled nil)
-#+end_src
-
-** For org-mode
+* Configure org
+** Appearance
 :PROPERTIES:
 :ID:       ae2762e5-453b-4daf-b850-45ca6fe17675
 :END:
@@ -105,61 +187,112 @@ Align and shrink tables on start-up.
       org-startup-shrink-all-tables t)
 #+end_src
 
-** For dired
+* Configure org-agenda
 :PROPERTIES:
-:ID:       e37a7ba9-5869-43c6-a134-12ec9e75cde2
+:ID:       94a80c46-03e0-4f0d-a4c7-e6e8a55a00e0
 :END:
 
-RET uses xdg-open.
-
-#+begin_src emacs-lisp
-(defvar unsupported-mime-types
-  '("video/mp4"))
-
-(load "subr-x")
-
-(defun get-mimetype (filepath)
-  (string-trim
-   (shell-command-to-string (concat "file -b --mime-type " (shell-quote-argument filepath)))))
-
-(defun dired-find-file-dwim ()
-  (interactive)
-  (let ((file (dired-get-filename nil t)))
-    (if (member (get-mimetype file) unsupported-mime-types)
-      (call-process "xdg-open" nil 0 nil file)
-      (find-file file))))
-
-(with-eval-after-load 'dired
-  (define-key dired-mode-map (kbd "RET") #'dired-find-file-dwim))
-#+end_src
-
-** For company
+** Set Org-agenda to search Org-roam notes
 :PROPERTIES:
-:ID:       8b3f7042-bc33-4458-8621-a21b4fc3de42
+:ID:       5bfbb4f4-b7b8-43ef-82a2-c5eb85c4682e
 :END:
 
-Don't auto-complete in org-mode.
+I keep notes with tasks in a separate subdirectory to speed up ~Org-agenda~.
 
 #+begin_src emacs-lisp
-(setq company-global-modes (append company-global-modes '(org-mode)))
+(setq org-agenda-files '("~/org/roam/tasks"))
 #+end_src
 
-* Compatability with conda environments
+** Todo keywords
+:PROPERTIES:
+:ID:       d8e0acba-e9eb-4f34-8062-9faa907d0356
+:END:
+
+Doom Emacs defines a whole bunch of ~TODO~ states, many of which I do not use.
+Simplify the list:
 
 #+begin_src emacs-lisp
-(use-package! conda
-  :init
-  (setq conda-anaconda-home "~/miniconda3"))
+(setq org-todo-keywords
+      '((sequence "TODO(t)" "|" "CANCELLED(c)" "DONE(d)")))
 #+end_src
 
-* Note-taking with Org-roam
+When a task is done, mark it with a ~CLOSED~ timestamp.
+
+#+begin_src emacs-lisp
+(setq org-log-done "time")
+#+end_src
+
+** Agenda view
+
+The default prefix for org-agenda items includes their file names, but org-roam file names are incredibly verbose.
+So, prefix each agenda item with just an indentation.
+
+#+begin_src emacs-lisp
+(with-eval-after-load 'org-agenda
+    (add-to-list 'org-agenda-prefix-format '(agenda . "  ")))
+#+end_src
+
+Show tasks starting from yesterday, up to six days from today.
+
+#+begin_src emacs-lisp
+(setq org-agenda-start-day "-1d"
+      org-agenda-span 8)
+#+end_src
+
+Don't dim tasks blocked by subtasks: for me, subtasks represents steps to complete the parent task.
+I do not think of them as tasks by themselves.
+
+#+begin_src emacs-lisp
+(setq org-agenda-dim-blocked-tasks nil)
+#+end_src
+
+org-agenda warns about upcoming deadlines by showing them in today's agenda.
+That crowds the daily agenda, in my opinion.
+
+#+begin_src emacs-lisp
+(setq org-deadline-warning-days 0
+      org-agenda-skip-scheduled-if-deadline-is-shown t)
+#+end_src
+
+By default, closed tasks are shown on the date they were scheduled.
+I prefer that they are shown on the date they were done.
+First, I set ~org-agenda-skip-*-if-done~  to ~nil~ to hide done tasks from their scheduled date, then I use log-mode to show done tasks on the date they were done.
+
+#+begin_src emacs-lisp
+(setq org-agenda-skip-scheduled-if-done t
+      org-agenda-skip-deadline-if-done t
+      org-agenda-start-with-log-mode '(closed))
+#+end_src
+
+* Configure org-crypt
+
+See: https://orgmode.org/manual/Org-Crypt.html
+
+#+begin_src
+(require 'org-crypt')
+(org-crypt-use-before-save-magic)
+(setq org-tags-exclude-from-inheritance '("crypt"))
+(setq org-crypt-key nil)
+#+end_src
+
+* Configure org-download
+:PROPERTIES:
+:ID:       6dc51b5f-5bff-46a6-90ad-587b1f89749b
+:END:
+
+#+begin_src emacs-lisp
+(use-package! org-download
+  :config
+  (setq-default org-download-image-dir "~/org/files"
+                org-download-heading-lvl nil))
+#+end_src
+
+* Configure org-roam
 :PROPERTIES:
 :ID:       52bc4886-496f-472c-a273-851511e0a3d4
 :END:
 
-At the time of writing, Doom Emacs modules have not yet updated to Org-roam v2.
-So, I will have to do that plus the configuration myself.
-Thankfully, Jethro himself uses Doom Emacs at GitHub:jethrokuan/dots.
+Adapted from Jethro at GitHub:jethrokuan/dots.
 
 #+begin_src emacs-lisp
 (use-package! org-roam
@@ -194,44 +327,7 @@ Thankfully, Jethro himself uses Doom Emacs at GitHub:jethrokuan/dots.
   (org-roam-db-autosync-enable))
 #+end_src
 
-** Use Deft to search Org-roam notes
-:PROPERTIES:
-:ID:       15a57748-c59d-4005-8629-c706337e4542
-:END:
-
-The default Deft buffer shows on the left-hand side the head of the file, and on the right the last modified time.
-However, the head of Org-roam files are not informative at all, because they hold the ~:PROPERTIES:~ tag.
-So, show the filename at the left-hand side instead.
-
-#+begin_src emacs-lisp
-(setq deft-directory "~/org/roam"
-      deft-recursive t)
-#+end_src
-
-Also add [[https://github.com/jrblevin/deft/issues/75#issuecomment-905031872][a fix from GitHub user codemac]] for deft to correctly parse titles from org-roam v2 files.
-
-#+begin_src emacs-lisp
-(defun cm/deft-parse-title (file contents)
-  "Parse the given FILE and CONTENTS and determine the title.
-  If `deft-use-filename-as-title' is nil, the title is taken to
-  be the first non-empty line of the FILE.  Else the base name of the FILE is
-  used as title."
-  (let ((begin (string-match "^#\\+[tT][iI][tT][lL][eE]: .*$" contents)))
-    (if begin
-        (string-trim (substring contents begin (match-end 0))
-                     "#\\+[tT][iI][tT][lL][eE]: *" "[\n\t ]+")
-      (deft-base-filename file))))
-
-(advice-add 'deft-parse-title :override #'cm/deft-parse-title)
-(setq deft-strip-summary-regexp
-      (concat "\\("
-              "[\n\t]" ;; blank
-              "\\|^#\\+[[:alpha:]_]+:.*$" ;; org-mode metadata
-              "\\|^:PROPERTIES:\n\\(.+\n\\)+:END:\n"
-              "\\)"))
-#+end_src
-
-** Org-roam-ui
+** org-roam-ui
 :PROPERTIES:
 :ID:       1536a96b-f528-4e27-b2e7-ec640762e6e4
 :END:
@@ -248,7 +344,13 @@ Also add [[https://github.com/jrblevin/deft/issues/75#issuecomment-905031872][a 
   (browse-url-xdg-open "http://127.0.0.1:35901/"))
 #+end_src
 
-* Sync notes with unison
+* Configure tools/biblio
+
+#+begin_src emacs-lisp
+(setq! bibtex-completion-bibliography '((expand-file-name "~/org/files/references.bib")))
+#+end_src
+
+* Custom: sync notes with unison
 :PROPERTIES:
 :ID:       d7020545-f73b-44f3-b524-eb8bade4f062
 :END:
@@ -333,111 +435,7 @@ Sync on exit.
 (add-hook 'kill-emacs-hook (lambda () (ning/sync-synchronous) (sleep-for 1)))
 #+end_src
 
-* Encrypt with org-crypt
-
-See: https://orgmode.org/manual/Org-Crypt.html
-
-#+begin_src
-(require 'org-crypt')
-(org-crypt-use-before-save-magic)
-(setq org-tags-exclude-from-inheritance '("crypt"))
-(setq org-crypt-key nil)
-
-;; To turn it off only locally, you can insert this:
-;;
-;; # -*- buffer-auto-save-file-name: nil; -*-
-#+end_src
-
-* Easy image insertion with Org-download
-:PROPERTIES:
-:ID:       6dc51b5f-5bff-46a6-90ad-587b1f89749b
-:END:
-
-#+begin_src emacs-lisp
-(use-package! org-download
-  :config
-  (setq-default org-download-image-dir "~/org/files"
-                org-download-heading-lvl nil))
-#+end_src
-
-* Task management with Org-agenda
-:PROPERTIES:
-:ID:       94a80c46-03e0-4f0d-a4c7-e6e8a55a00e0
-:END:
-
-** Set Org-agenda to search Org-roam notes
-:PROPERTIES:
-:ID:       5bfbb4f4-b7b8-43ef-82a2-c5eb85c4682e
-:END:
-
-I keep notes with tasks in a separate subdirectory to speed up ~Org-agenda~.
-
-#+begin_src emacs-lisp
-(setq org-agenda-files '("~/org/roam/tasks"))
-#+end_src
-
-** Todo keywords
-:PROPERTIES:
-:ID:       d8e0acba-e9eb-4f34-8062-9faa907d0356
-:END:
-
-Doom Emacs defines a whole bunch of ~TODO~ states, many of which I do not use.
-Simplify the list:
-
-#+begin_src emacs-lisp
-(setq org-todo-keywords
-      '((sequence "TODO(t)" "|" "CANCELLED(c)" "DONE(d)")))
-#+end_src
-
-When a task is done, mark it with a ~CLOSED~ timestamp.
-
-#+begin_src emacs-lisp
-(setq org-log-done "time")
-#+end_src
-
-** Agenda view
-
-The default prefix for org-agenda items includes their file names, but org-roam file names are incredibly verbose.
-So, prefix each agenda item with just an indentation.
-
-#+begin_src emacs-lisp
-(with-eval-after-load 'org-agenda
-    (add-to-list 'org-agenda-prefix-format '(agenda . "  ")))
-#+end_src
-
-Show tasks starting from yesterday, up to six days from today.
-
-#+begin_src emacs-lisp
-(setq org-agenda-start-day "-1d"
-      org-agenda-span 8)
-#+end_src
-
-Don't dim tasks blocked by subtasks: for me, subtasks represents steps to complete the parent task.
-I do not think of them as tasks by themselves.
-
-#+begin_src emacs-lisp
-(setq org-agenda-dim-blocked-tasks nil)
-#+end_src
-
-org-agenda warns about upcoming deadlines by showing them in today's agenda.
-That crowds the daily agenda, in my opinion.
-
-#+begin_src emacs-lisp
-(setq org-deadline-warning-days 0
-      org-agenda-skip-scheduled-if-deadline-is-shown t)
-#+end_src
-
-By default, closed tasks are shown on the date they were scheduled.
-I prefer that they are shown on the date they were done.
-First, I set ~org-agenda-skip-*-if-done~  to ~nil~ to hide done tasks from their scheduled date, then I use log-mode to show done tasks on the date they were done.
-
-#+begin_src emacs-lisp
-(setq org-agenda-skip-scheduled-if-done t
-      org-agenda-skip-deadline-if-done t
-      org-agenda-start-with-log-mode '(closed))
-#+end_src
-
-* Research interactive helper functions
+* Custom: query online databases
 :PROPERTIES:
 :ID:       b18337f4-dd0f-4381-b35e-b970a36e4f09
 :END:
