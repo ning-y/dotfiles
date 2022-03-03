@@ -160,7 +160,7 @@ Simplify the list:
 ; Must be eval'd after org: https://github.com/hlissner/doom-emacs/issues/2913
 (after! org
   (setq org-todo-keywords
-        '((sequence "TODO(t)" "|" "CANCELLED(c)" "DONE(d)"))))
+        '((sequence "TODO(t)" "|" "CANCELED(c)" "DONE(d)"))))
 #+end_src
 
 When a task is done, mark it with a ~CLOSED~ timestamp.
