@@ -111,61 +111,6 @@ Also add [[https://github.com/jrblevin/deft/issues/75#issuecomment-905031872][a 
               "\\)"))
 #+end_src
 
-* Configure doom-dashboard
-:PROPERTIES:
-:ID:       6ac43331-fa55-405e-8db4-2e682a27a11e
-:END:
-
-#+begin_src emacs-lisp
-(defun +ning/dashboard-date-proportion-passed (start end)
-  (/
-   (float-time (time-subtract
-                (float-time) (org-read-date nil t start)))
-   (float-time (time-subtract
-                (org-read-date nil t end) (org-read-date nil t start)))))
-
-(defun +ning/dashboard-date-decorated-progress-bar (start end)
-  (let* ((prop-passed (+ning/dashboard-date-proportion-passed start end))
-         (pbar-width 50)
-         (pbar-pluses (min (floor (* prop-passed pbar-width)) pbar-width))
-         (pbar-dashes (- pbar-width pbar-pluses))
-         (prop-pretty
-          (if (> prop-passed 1)
-              "100%"
-            (format "%4.1f%%" (* 100 prop-passed)))))
-    (concat start " ["
-            (make-string pbar-pluses ?+)
-            (make-string pbar-dashes ?-)
-            "|" prop-pretty "] " end)))
-
-(defun ning/dashboard-widget-milestones ()
-  (let ((result "\n"))
-    (dolist (triplet ning/dashboard-milestones result)
-      (setq result (concat result "\n"
-                           (+doom-dashboard--center
-                            +doom-dashboard--width
-                            (car triplet))
-                           "\n"
-                           (+doom-dashboard--center
-                            +doom-dashboard--width
-                            (+ning/dashboard-date-decorated-progress-bar
-                             (nth 1 triplet) (nth 2 triplet)))
-                           "\n")))
-    (insert result)))
-
-(setq ning/dashboard-milestones
-      '(("Year 2021" "2021-01-01" "2021-12-31")))
-(if (file-exists-p "~/org/files/private-dashboard-milestones.el")
-    (load "~/org/files/private-dashboard-milestones.el")
-  nil)
-
-(setq +doom-dashboard-functions
-      '(doom-dashboard-widget-banner
-        ning/dashboard-widget-milestones
-        doom-dashboard-widget-loaded
-        doom-dashboard-widget-footer))
-#+end_src
-
 * Configure org
 ** Appearance
 :PROPERTIES:
@@ -357,6 +302,9 @@ Adapted from Jethro at GitHub:jethrokuan/dots.
   :init (setq doi-utils-download-pdf nil
               bibtex-autokey-year-title-separator nil
               bibtex-autokey-titleword-separator "-")
+        (map! :leader
+              :prefix "r"
+              :desc "org-ref-insert-link" "l" #'org-ref-insert-link)
   :config (require 'bibtex))
 
 (use-package! ivy-bibtex
@@ -365,7 +313,7 @@ Adapted from Jethro at GitHub:jethrokuan/dots.
         bibtex-completion-notes-path "~/org/roam/ref-notes/"
         bibtex-completion-library-path "~/org/roam/ref-files/"
         ivy-bibtex-default-action 'ivy-bibtex-edit-notes
-        ivy-bibtex-default-multi-action 'ivy-bibtex-insert-key))
+        ivy-bibtex-default-multi-action 'ivy-bibtex-insert-bibtex))
 
 (use-package! org-roam-bibtex
   :after org-roam
@@ -376,10 +324,73 @@ Adapted from Jethro at GitHub:jethrokuan/dots.
   (require 'org-ref))
 #+end_src
 
-Here, I use org-roam-bibtex to interface between org-roam notes and org-ref entries.
-I use org-ref-insert-link over orb-insert-link.
+To insert a link, use ~C-c r l~ (org-ref-insert-link).
+To navigate to a reference-associated note, use ~C-c n b~ (ivy-bibtex) and select a single item (runs ivy-bibtex-edit-notes).
+To insert a reference list into the current buffer, use use ~C-c n b~ (ivy-bibtex) and select one or more items (select using ~C <space>~, runs ivy-bibtex-insert-bibtex).
 
-*TODO:* I can't get org-ref-open-bibtex-notes to work.
+* Configure ui/doom-dashboard
+:PROPERTIES:
+:ID:       6ac43331-fa55-405e-8db4-2e682a27a11e
+:END:
+
+#+begin_src emacs-lisp
+(defun +ning/dashboard-date-proportion-passed (start end)
+  (/
+   (float-time (time-subtract
+                (float-time) (org-read-date nil t start)))
+   (float-time (time-subtract
+                (org-read-date nil t end) (org-read-date nil t start)))))
+
+(defun +ning/dashboard-date-decorated-progress-bar (start end)
+  (let* ((prop-passed (+ning/dashboard-date-proportion-passed start end))
+         (pbar-width 50)
+         (pbar-pluses (min (floor (* prop-passed pbar-width)) pbar-width))
+         (pbar-dashes (- pbar-width pbar-pluses))
+         (prop-pretty
+          (if (> prop-passed 1)
+              "100%"
+            (format "%4.1f%%" (* 100 prop-passed)))))
+    (concat start " ["
+            (make-string pbar-pluses ?+)
+            (make-string pbar-dashes ?-)
+            "|" prop-pretty "] " end)))
+
+(defun ning/dashboard-widget-milestones ()
+  (let ((result "\n"))
+    (dolist (triplet ning/dashboard-milestones result)
+      (setq result (concat result "\n"
+                           (+doom-dashboard--center
+                            +doom-dashboard--width
+                            (car triplet))
+                           "\n"
+                           (+doom-dashboard--center
+                            +doom-dashboard--width
+                            (+ning/dashboard-date-decorated-progress-bar
+                             (nth 1 triplet) (nth 2 triplet)))
+                           "\n")))
+    (insert result)))
+
+(setq ning/dashboard-milestones
+      '(("Year 2021" "2021-01-01" "2021-12-31")))
+(if (file-exists-p "~/org/files/private-dashboard-milestones.el")
+    (load "~/org/files/private-dashboard-milestones.el")
+  nil)
+
+(setq +doom-dashboard-functions
+      '(doom-dashboard-widget-banner
+        ning/dashboard-widget-milestones
+        doom-dashboard-widget-loaded
+        doom-dashboard-widget-footer))
+#+end_src
+
+* Configure ui/workspaces
+
+#+begin_src emacs-lisp
+(map! :leader
+        :prefix "w"
+        :desc "+workspace/swap-left" "<left>" #'+workspace/swap-left
+        :desc "+workspace/swap-right" "<right>" #'+workspace/swap-right)
+#+end_src
 
 * Custom: sync notes with unison
 :PROPERTIES:
