@@ -260,6 +260,7 @@ Adapted from Jethro at GitHub:jethrokuan/dots.
   (setq org-roam-directory (file-truename "~/org/roam")
         org-id-link-to-org-use-id t
         org-roam-v2-ack t
+        org-roam-node-display-template (concat "${title:*}" (propertize "${tags:10}" 'face 'org-tag))
         +org-roam-open-buffer-on-find-file nil
         org-roam-capture-templates '(("n" "note" plain "%?" :target
                                       (file+head "notes/%<%Y%m%d%H%M%S>-${slug}.org" "#+title: ${title}\n")
