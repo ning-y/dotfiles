@@ -264,13 +264,13 @@ Adapted from Jethro at GitHub:jethrokuan/dots.
         +org-roam-open-buffer-on-find-file nil
         org-roam-capture-templates '(("n" "note" plain "%?" :target
                                       (file+head "notes/%<%Y%m%d%H%M%S>-${slug}.org" "#+title: ${title}\n")
-                                      :unnarrowed t :immediate-finish t :no-save t)
+                                      :unnarrowed t :immediate-finish t)
                                      ("t" "task" plain "%?" :target
                                       (file+head "active-tasks/%<%Y%m%d%H%M%S>-${slug}.org" "#+title: ${title}\n#+filetags: :task:")
-                                      :unnarrowed t :immediate-finish t :no-save t)
+                                      :unnarrowed t :immediate-finish t)
                                      ("l" "lit" plain "%?" :target
                                       (file+head "ref-notes/${citekey}.org" "#+title: ${author-abbrev} ${year} - ${title}\n")
-                                      :unnarrowed t :immediate-finish t :no-save t)))
+                                      :unnarrowed t :immediate-finish t)))
   (add-to-list 'display-buffer-alist
                '(("\\*org-roam\\*"
                   (display-buffer-in-direction)
