@@ -314,7 +314,7 @@ Adapted from Jethro at GitHub:jethrokuan/dots.
   :init
   (setq bibtex-completion-bibliography '("~/org/files/references.bib")
         bibtex-completion-notes-path "~/org/roam/ref-notes/"
-        bibtex-completion-library-path "~/org/roam/ref-files/"
+        bibtex-completion-library-path "~/org/ref-files/"
         ivy-bibtex-default-action 'ivy-bibtex-edit-notes
         ivy-bibtex-default-multi-action 'ivy-bibtex-insert-bibtex))
 
