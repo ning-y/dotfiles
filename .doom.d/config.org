@@ -146,6 +146,16 @@ Export files to the Download directory, rather than the source file's directory 
 (advice-add 'org-export-output-file-name :around #'org-export-output-file-name-modified)
 #+end_src
 
+Custom structure templates:
+
+#+begin_src emacs-lisp
+(use-package! org-tempo
+  :config
+  (tempo-define-template "src-bash"
+                         '("#+begin_src bash :results output\n" p "\n#+end_src" >)
+                         "<S" "Insert a bash src block"))
+#+end_src
+
 * Configure org-agenda
 :PROPERTIES:
 :ID:       94a80c46-03e0-4f0d-a4c7-e6e8a55a00e0
