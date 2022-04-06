@@ -84,7 +84,7 @@ However, the head of Org-roam files are not informative at all, because they hol
 So, show the filename at the left-hand side instead.
 
 #+begin_src emacs-lisp
-(setq deft-directory "~/org/roam"
+(setq deft-directory "~/roamdb/notes"
       deft-recursive t)
 #+end_src
 
@@ -169,7 +169,7 @@ Custom structure templates:
 I keep notes with active tasks in a separate subdirectory to speed up ~Org-agenda~.
 
 #+begin_src emacs-lisp
-(setq org-agenda-files '("~/org/roam/active-tasks"))
+(setq org-agenda-files '("~/roamdb/notes/tasks"))
 #+end_src
 
 ** Todo keywords
@@ -254,7 +254,7 @@ See: https://orgmode.org/manual/Org-Crypt.html
 #+begin_src emacs-lisp
 (use-package! org-download
   :config
-  (setq-default org-download-image-dir "~/org/files"
+  (setq-default org-download-image-dir "~/roamdb/files"
                 org-download-heading-lvl nil))
 #+end_src
 
@@ -281,19 +281,19 @@ Adapted from Jethro at GitHub:jethrokuan/dots.
         :desc "org-roam-dailies-goto-today" "." #'org-roam-dailies-goto-today
         :desc "org-roam-dailies-goto-next-note" "/" #'org-roam-dailies-goto-next-note
         :desc "org-roam-dailies-goto-previous-note" "," #'org-roam-dailies-goto-previous-note)
-  (setq org-roam-directory (file-truename "~/org/roam")
+  (setq org-roam-directory (file-truename "~/roamdb/notes")
         org-id-link-to-org-use-id t
         org-roam-v2-ack t
         org-roam-node-display-template (concat "${title:*}" (propertize "${tags:10}" 'face 'org-tag))
         +org-roam-open-buffer-on-find-file nil
         org-roam-capture-templates '(("n" "note" plain "%?" :target
-                                      (file+head "notes/%<%Y%m%d%H%M%S>-${slug}.org" "#+title: ${title}\n")
+                                      (file+head "%<%Y%m%d%H%M%S>-${slug}.org" "#+title: ${title}\n")
                                       :unnarrowed t :immediate-finish t)
                                      ("t" "task" plain "%?" :target
-                                      (file+head "active-tasks/%<%Y%m%d%H%M%S>-${slug}.org" "#+title: ${title}\n#+filetags: :task:")
+                                      (file+head "tasks/%<%Y%m%d%H%M%S>-${slug}.org" "#+title: ${title}\n#+filetags: :task:")
                                       :unnarrowed t :immediate-finish t)
                                      ("l" "lit" plain "%?" :target
-                                      (file+head "ref-notes/${citekey}.org" "#+title: ${author-abbrev} ${year} - ${title}\n")
+                                      (file+head "notes-ref/${citekey}.org" "#+title: ${author-abbrev} ${year} - ${title}\n")
                                       :unnarrowed t :immediate-finish t)))
   (add-to-list 'display-buffer-alist
                '(("\\*org-roam\\*"
@@ -336,9 +336,9 @@ Adapted from Jethro at GitHub:jethrokuan/dots.
 
 (use-package! ivy-bibtex
   :init
-  (setq bibtex-completion-bibliography '("~/org/files/references.bib")
-        bibtex-completion-notes-path "~/org/roam/ref-notes/"
-        bibtex-completion-library-path "~/org/ref-files/"
+  (setq bibtex-completion-bibliography '("~/roamdb/files/references.bib")
+        bibtex-completion-notes-path "~/roamdb/notes/notes-ref/"
+        bibtex-completion-library-path "~/roamdb/files-ref/"
         ivy-bibtex-default-action 'ivy-bibtex-edit-notes
         ivy-bibtex-default-multi-action 'ivy-bibtex-insert-bibtex))
 
@@ -399,8 +399,8 @@ To insert a reference list into the current buffer, use use ~C-c n b~ (ivy-bibte
 
 (setq ning/dashboard-milestones
       '(("Year 2021" "2021-01-01" "2021-12-31")))
-(if (file-exists-p "~/org/files/private-dashboard-milestones.el")
-    (load "~/org/files/private-dashboard-milestones.el")
+(if (file-exists-p "~/roamdb/files/private-dashboard-milestones.el")
+    (load "~/roamdb/files/private-dashboard-milestones.el")
   nil)
 
 (setq +doom-dashboard-functions
@@ -447,7 +447,7 @@ I had previously done this with rclone with Google Drive, but rclone cannot hand
   (switch-to-buffer "*unison*"))
 
 (defun ning/sync ()
-  "Sync the ~/org directory to ssh:meowmeow. Returns the process."
+  "Sync the ~/org directory to ssh:roamdb-ctl. Returns the process."
   (interactive)
   ; Delimit different runs with a page break.
   (save-excursion
@@ -458,7 +458,7 @@ I had previously done this with rclone with Google Drive, but rclone cannot hand
     (make-process
      :name "ning/sync"
      :buffer "*unison*"
-     :command `("unison" "-batch" ,(expand-file-name "~/org") "ssh://meowmeow//org")
+     :command `("unison" "-batch" ,(expand-file-name "~/roamdb") "ssh://roamdb-ctl//mnt/roamdb")
      ; Unison breaks lines with carriage returns only, no matter the host OS.
      :coding 'undecided-mac
      :sentinel (ning/get-unison-sentinel t))))
@@ -472,7 +472,7 @@ I had previously done this with rclone with Google Drive, but rclone cannot hand
   (insert (concat "\n==" (current-time-string) "==\n"))
   (page-break-lines-mode 1)
   (let ((coding-system-for-read 'undecided-mac))
-    (call-process "unison" nil "*unison*" t "-batch" (expand-file-name "~/org") "ssh://meowmeow//org")))
+    (call-process "unison" nil "*unison*" t "-batch" (expand-file-name "~/roamdb") "ssh://roamdb-ctl//mnt/roamdb")))
 #+end_src
 
 Sync on start-up.
