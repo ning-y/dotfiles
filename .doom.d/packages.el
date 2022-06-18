@@ -41,6 +41,10 @@
 ;(package! this-package
 ;  :recipe (:host github :repo "username/repo"
 ;           :files ("some-file.el" "src/lisp/*.el")))
+(package! scad-mode
+  :pin "6aae796"
+  :recipe (:host github :repo "openscad/openscad"
+           :files ("contrib/scad-mode.el")))
 
 ;; If you'd like to disable a package included with Doom, you can do so here
 ;; with the `:disable' property:
