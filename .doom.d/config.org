@@ -111,6 +111,14 @@ Also add [[https://github.com/jrblevin/deft/issues/75#issuecomment-905031872][a 
               "\\)"))
 #+end_src
 
+* Configure ESS
+
+Don't indent "#" comments (https://stackoverflow.com/a/780929/6910451).
+
+#+begin_src emacs-lisp
+(setq ess-fancy-comments nil)
+#+end_src
+
 * Configure org
 ** Appearance
 :PROPERTIES:
