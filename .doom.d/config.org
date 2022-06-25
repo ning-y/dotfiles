@@ -251,7 +251,7 @@ See: https://orgmode.org/manual/Org-Crypt.html
 (require 'org-crypt')
 (org-crypt-use-before-save-magic)
 (setq org-tags-exclude-from-inheritance '("crypt"))
-(setq org-crypt-key nil)
+(setq org-crypt-key "ningyuan.sg@gmail.com")
 #+end_src
 
 * Configure org-download
