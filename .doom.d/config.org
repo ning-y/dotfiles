@@ -248,7 +248,7 @@ First, I set ~org-agenda-skip-*-if-done~  to ~nil~ to hide done tasks from their
 See: https://orgmode.org/manual/Org-Crypt.html
 
 #+begin_src
-(require 'org-crypt')
+(require 'org-crypt)
 (org-crypt-use-before-save-magic)
 (setq org-tags-exclude-from-inheritance '("crypt"))
 (setq org-crypt-key "ningyuan.sg@gmail.com")
