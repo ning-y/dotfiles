@@ -2,7 +2,7 @@
 :ID:       6b70dbe3-3ce5-4ae4-bee0-db218fbfa337
 :END:
 #+begin_src emacs-lisp
-;;; -*- lexical-binding: t; -*-
+;;; -*- lexical-binding: t -*-
 #+end_src
 
 * Appearance
@@ -276,17 +276,30 @@ Adapted from Jethro at GitHub:jethrokuan/dots.
 
 #+begin_src emacs-lisp
 (use-package! org-roam
-  :init
-  (defun org-roam-file-find ()
-    (interactive)
-    (org-roam-node-find nil nil '(lambda (node) (= (org-roam-node-level node) 0))))
+  :config
+  (defun ning/org-roam-file-find-given-filetag (tag)
+    (org-roam-node-find nil nil
+                        '(lambda (node)
+                           (and
+                            (eq (org-roam-node-level node) 0)
+                            (cl-member tag (org-roam-node-tags node) :test #'string=)))))
+  (defun ning/org-roam-review-find ()
+    (interactive) (ning/org-roam-file-find-given-filetag "review"))
+  (defun ning/org-roam-task-find ()
+    (interactive) (ning/org-roam-file-find-given-filetag "task"))
+  (defun ning/org-roam-file-find ()
+    (interactive) (ning/org-roam-file-find-given-filetag nil))
   (map! :leader
         :prefix "r"
+        ; Finder functions
+        :desc "org-roam-review-find" "r" #'ning/org-roam-review-find
+        :desc "org-roam-task-find" "t" #'ning/org-roam-task-find
+        :desc "org-roam-file-find" "f" #'ning/org-roam-file-find
+        :desc "org-roam-node-find" "F" #'org-roam-node-find
+        ; Other functions
         :desc "org-roam-node-insert" "i" #'org-roam-node-insert
-        :desc "org-roam-file-find" "f" #'org-roam-file-find
         :desc "org-roam-capture" "c" #'org-roam-capture
-        :desc "org-roam-tag-add" "t" #'org-roam-tag-add
-        :desc "org-roam-alias-add" "a" #'org-roam-alias-add
+        :desc "org-roam-tag-add" "a" #'org-roam-tag-add
         :desc "org-roam-dailies-goto-today" "." #'org-roam-dailies-goto-today
         :desc "org-roam-dailies-goto-next-note" "/" #'org-roam-dailies-goto-next-note
         :desc "org-roam-dailies-goto-previous-note" "," #'org-roam-dailies-goto-previous-note)
@@ -297,6 +310,9 @@ Adapted from Jethro at GitHub:jethrokuan/dots.
         +org-roam-open-buffer-on-find-file nil
         org-roam-capture-templates '(("n" "note" plain "%?" :target
                                       (file+head "%<%Y%m%d%H%M%S>-${slug}.org" "#+title: ${title}\n")
+                                      :unnarrowed t :immediate-finish t)
+                                     ("r" "review" plain "%?" :target
+                                      (file+head "%<%Y%m%d%H%M%S>-${slug}.org" "#+title: ${title}\n#+filetags: :review:")
                                       :unnarrowed t :immediate-finish t)
                                      ("t" "task" plain "%?" :target
                                       (file+head "tasks/%<%Y%m%d%H%M%S>-${slug}.org" "#+title: ${title}\n#+filetags: :task:")
@@ -310,11 +326,10 @@ Adapted from Jethro at GitHub:jethrokuan/dots.
                   (direction . right)
                   (window-width . 0.33)
                   (window-height . fit-window-to-buffer))))
-  :config
   (org-roam-db-autosync-enable))
 #+end_src
 
-** org-roam-ui
+* org-roam-ui
 :PROPERTIES:
 :ID:       1536a96b-f528-4e27-b2e7-ec640762e6e4
 :END:
