@@ -277,18 +277,23 @@ Adapted from Jethro at GitHub:jethrokuan/dots.
 #+begin_src emacs-lisp
 (use-package! org-roam
   :config
-  (defun ning/org-roam-file-find-given-filetag (tag)
+  (defun ning/org-roam-review-find ()
+    (interactive)
     (org-roam-node-find nil nil
                         '(lambda (node)
                            (and
                             (eq (org-roam-node-level node) 0)
-                            (cl-member tag (org-roam-node-tags node) :test #'string=)))))
-  (defun ning/org-roam-review-find ()
-    (interactive) (ning/org-roam-file-find-given-filetag "review"))
+                            (cl-member "review" (org-roam-node-tags node) :test #'string=)))))
   (defun ning/org-roam-task-find ()
-    (interactive) (ning/org-roam-file-find-given-filetag "task"))
+    (interactive)
+    (org-roam-node-find nil nil
+                        '(lambda (node)
+                           (and
+                            (eq (org-roam-node-level node) 0)
+                            (cl-member "task" (org-roam-node-tags node) :test #'string=)))))
   (defun ning/org-roam-file-find ()
-    (interactive) (ning/org-roam-file-find-given-filetag nil))
+    (interactive)
+    (org-roam-node-find nil nil '(lambda (node) (eq (org-roam-node-level node) 0))))
   (map! :leader
         :prefix "r"
         ; Finder functions
