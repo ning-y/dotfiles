@@ -277,23 +277,19 @@ Adapted from Jethro at GitHub:jethrokuan/dots.
 #+begin_src emacs-lisp
 (use-package! org-roam
   :config
+  (defun ning/org-roam-file-find-given-filetag (tag)
+    (org-roam-node-find nil nil
+                        (lambda (node)
+                           (and
+                            (eq (org-roam-node-level node) 0)
+                            (cl-member tag (org-roam-node-tags node) :test #'string=)))))
   (defun ning/org-roam-review-find ()
-    (interactive)
-    (org-roam-node-find nil nil
-                        '(lambda (node)
-                           (and
-                            (eq (org-roam-node-level node) 0)
-                            (cl-member "review" (org-roam-node-tags node) :test #'string=)))))
+    (interactive) (ning/org-roam-file-find-given-filetag "review"))
   (defun ning/org-roam-task-find ()
-    (interactive)
-    (org-roam-node-find nil nil
-                        '(lambda (node)
-                           (and
-                            (eq (org-roam-node-level node) 0)
-                            (cl-member "task" (org-roam-node-tags node) :test #'string=)))))
+    (interactive) (ning/org-roam-file-find-given-filetag "task"))
   (defun ning/org-roam-file-find ()
     (interactive)
-    (org-roam-node-find nil nil '(lambda (node) (eq (org-roam-node-level node) 0))))
+    (org-roam-node-find nil nil (lambda (node) (eq (org-roam-node-level node) 0))))
   (map! :leader
         :prefix "r"
         ; Finder functions
@@ -334,7 +330,7 @@ Adapted from Jethro at GitHub:jethrokuan/dots.
   (org-roam-db-autosync-enable))
 #+end_src
 
-* org-roam-ui
+* Configure org-roam-ui
 :PROPERTIES:
 :ID:       1536a96b-f528-4e27-b2e7-ec640762e6e4
 :END:
