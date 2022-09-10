@@ -25,6 +25,7 @@
 (package! page-break-lines :recipe (:host github :repo "purcell/page-break-lines"))
 (package! org-transclusion :recipe (:host github :repo "nobiot/org-transclusion" :branch "main" :files ("*.el")))
 (package! conda)
+(package! telega :recipe (:host github :repo "zevlg/telega.el"))
 
 ;; To install a package directly from a remote git repo, you must specify a
 ;; `:recipe'. You'll find documentation on what `:recipe' accepts here:

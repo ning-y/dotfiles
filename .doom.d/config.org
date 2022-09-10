@@ -380,6 +380,13 @@ To insert a link, use ~C-c r l~ (org-ref-insert-link).
 To navigate to a reference-associated note, use ~C-c n b~ (ivy-bibtex) and select a single item (runs ivy-bibtex-edit-notes).
 To insert a reference list into the current buffer, use use ~C-c n b~ (ivy-bibtex) and select one or more items (select using ~C <space>~, runs ivy-bibtex-insert-bibtex).
 
+* Configure telega
+
+#+begin_src emacs-lisp
+(use-package! telega
+  :config (setq telega-use-images nil))
+#+end_src
+
 * Configure ui/doom-dashboard
 :PROPERTIES:
 :ID:       6ac43331-fa55-405e-8db4-2e682a27a11e
