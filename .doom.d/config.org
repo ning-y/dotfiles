@@ -390,7 +390,9 @@ Adapted from Jethro at GitHub:jethrokuan/dots.
         bibtex-completion-notes-path "~/roamdb/notes/notes-ref/"
         bibtex-completion-library-path "~/roamdb/files-ref/"
         ivy-bibtex-default-action 'ivy-bibtex-edit-notes
-        ivy-bibtex-default-multi-action 'ivy-bibtex-insert-bibtex))
+        ivy-bibtex-default-multi-action 'ivy-bibtex-insert-bibtex)
+  ; Sort by last added entry first.
+  (advice-add 'bibtex-completion-candidates :filter-return 'reverse))
 
 (use-package! org-roam-bibtex
   :after org-roam
