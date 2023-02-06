@@ -119,6 +119,12 @@ Don't indent "#" comments (https://stackoverflow.com/a/780929/6910451).
 (setq ess-fancy-comments nil)
 #+end_src
 
+Enable the visual vertical ruler at 80 characters.
+
+#+begin_src emacs-lisp
+(add-hook 'ess-r-mode-hook 'display-fill-column-indicator-mode)
+#+end_src
+
 * Configure org
 ** Appearance
 :PROPERTIES:
@@ -391,7 +397,7 @@ Adapted from Jethro at GitHub:jethrokuan/dots.
         bibtex-completion-library-path "~/roamdb/files-ref/"
         ivy-bibtex-default-action 'ivy-bibtex-edit-notes
         ivy-bibtex-default-multi-action 'ivy-bibtex-insert-bibtex)
-  ; Sort by last added entry first.
+  ; Sort by last added entry first. Default sort is first added entry first.
   (advice-add 'bibtex-completion-candidates :filter-return 'reverse))
 
 (use-package! org-roam-bibtex
@@ -406,6 +412,12 @@ Adapted from Jethro at GitHub:jethrokuan/dots.
 To insert a link, use ~C-c r l~ (org-ref-insert-link).
 To navigate to a reference-associated note, use ~C-c n b~ (ivy-bibtex) and select a single item (runs ivy-bibtex-edit-notes).
 To insert a reference list into the current buffer, use use ~C-c n b~ (ivy-bibtex) and select one or more items (select using ~C <space>~, runs ivy-bibtex-insert-bibtex).
+
+* Configure snakemake-mode
+
+#+begin_src emacs-lisp
+(add-hook 'snakemake-mode-hook 'display-fill-column-indicator-mode)
+#+end_src
 
 * Configure telega
 
