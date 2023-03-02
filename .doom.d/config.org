@@ -314,19 +314,21 @@ Adapted from Jethro at GitHub:jethrokuan/dots.
                            (and
                             (eq (org-roam-node-level node) 0)
                             (cl-member tag (org-roam-node-tags node) :test #'string=)))))
-  (defun ning/org-roam-review-find ()
-    (interactive) (ning/org-roam-file-find-given-filetag "review"))
-  (defun ning/org-roam-task-find ()
-    (interactive) (ning/org-roam-file-find-given-filetag "task"))
+  (defun ning/org-roam-file-find-given-not-filetag (tag)
+    (org-roam-node-find nil nil
+                        (lambda (node)
+                           (and
+                            (eq (org-roam-node-level node) 0)
+                            (not (cl-member tag (org-roam-node-tags node) :test #'string=))))))
+  (defun ning/org-roam-not-lit-find ()
+    (interactive) (ning/org-roam-file-find-given-not-filetag "lit"))
   (defun ning/org-roam-file-find ()
     (interactive)
     (org-roam-node-find nil nil (lambda (node) (eq (org-roam-node-level node) 0))))
   (map! :leader
         :prefix "r"
         ; Finder functions
-        :desc "org-roam-review-find" "r" #'ning/org-roam-review-find
-        :desc "org-roam-task-find" "t" #'ning/org-roam-task-find
-        :desc "org-roam-file-find" "f" #'ning/org-roam-file-find
+        :desc "org-roam-not-lit-find" "f" #'ning/org-roam-not-lit-find
         :desc "org-roam-node-find" "F" #'org-roam-node-find
         ; Other functions
         :desc "org-roam-node-insert" "i" #'org-roam-node-insert
@@ -350,7 +352,7 @@ Adapted from Jethro at GitHub:jethrokuan/dots.
                                       (file+head "tasks/%<%Y%m%d%H%M%S>-${slug}.org" "#+title: ${title}\n#+filetags: :task:")
                                       :unnarrowed t :immediate-finish t)
                                      ("l" "lit" plain "%?" :target
-                                      (file+head "notes-ref/${citekey}.org" "#+title: ${author-abbrev} ${year} - ${title}\n")
+                                      (file+head "notes-ref/${citekey}.org" "#+title: ${author-abbrev} ${year} - ${title}\n#+filetags: :lit:")
                                       :unnarrowed t :immediate-finish t)))
   (add-to-list 'display-buffer-alist
                '(("\\*org-roam\\*"
