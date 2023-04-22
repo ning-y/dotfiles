@@ -66,14 +66,6 @@ Don't auto-complete in org-mode.
 (setq company-global-modes (append company-global-modes '(org-mode)))
 #+end_src
 
-* Configure conda
-
-#+begin_src emacs-lisp
-(use-package! conda
-  :init
-  (setq conda-anaconda-home "~/miniconda3"))
-#+end_src
-
 * Configure deft
 :PROPERTIES:
 :ID:       15a57748-c59d-4005-8629-c706337e4542
