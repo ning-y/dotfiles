@@ -549,16 +549,22 @@ I had previously done this with rclone with Google Drive, but rclone cannot hand
     (call-process "unison" nil "*unison*" t "-batch" (expand-file-name "~/roamdb") "ssh://meowmeow//home/admin/roamdb")))
 #+end_src
 
-Sync on start-up.
+Sync on start-up, unless on Termux.
+On Termux, unison must be run without locks, because otherwise it always thinks that a lock is always present and thus refuses to continue.
+Since there are no locks on Termux, I prefer to always sync manually.
+This applies also to the sync on idle timers, etc.
 
 #+begin_src emacs-lisp
-(after! org-roam (ning/sync))
+(defun ning/on-termux-p ()
+  (if (string-match-p "com.termux" (getenv "PREFIX")) t nil))
+
+(if (not (ning/on-termux-p)) (after! org-roam (ning/sync)))
 #+end_src
 
 Sync on idle.
 
 #+begin_src emacs-lisp
-(run-with-idle-timer 60 t 'ning/sync)
+(if (not (ning/on-termux-p)) (run-with-idle-timer 60 t 'ning/sync))
 #+end_src
 
 Sync on return from idle.
@@ -566,16 +572,18 @@ Sync on return from idle.
 #+begin_src emacs-lisp
 (defvar ning/has-idled-past-sync-threshold nil)
 (run-with-idle-timer 300 t (lambda () (setq ning/has-idled-past-sync-threshold t)))
-(add-hook 'post-command-hook
-          (lambda () (when ning/has-idled-past-sync-threshold
-                       (ning/sync)
-                       (setq ning/has-idled-past-sync-threshold nil))))
+(if (not (ning/on-termux-p))
+    (add-hook 'post-command-hook
+              (lambda () (when ning/has-idled-past-sync-threshold
+                           (ning/sync)
+                           (setq ning/has-idled-past-sync-threshold nil)))))
 #+end_src
 
 Sync on exit.
 
 #+begin_src emacs-lisp
-(add-hook 'kill-emacs-hook (lambda () (ning/sync-synchronous) (sleep-for 1)))
+(if (not (ning/on-termux-p))
+    (add-hook 'kill-emacs-hook (lambda () (ning/sync-synchronous) (sleep-for 1))))
 #+end_src
 
 * Custom: query online databases
