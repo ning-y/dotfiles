@@ -17,12 +17,6 @@
 Browse https://github.com/hlissner/emacs-doom-themes for more.
 
 * Configure vanilla emacs behavior
-** Start the Emacs server
-
-#+begin_src emacs-lisp
-(server-start)
-#+end_src
-
 ** Enable up-/downcase-region
 
 #+begin_src emacs-lisp
