@@ -52,6 +52,13 @@ RET uses xdg-open.
   (define-key dired-mode-map (kbd "RET") #'dired-find-file-dwim))
 #+end_src
 
+** Set the scratch buffer's major mode to org-mode
+
+#+begin_src emacs-lisp
+(setq initial-major-mode 'org-mode)
+(setq initial-scratch-message nil)
+#+end_src
+
 * Configure company
 
 Don't auto-complete in org-mode.
