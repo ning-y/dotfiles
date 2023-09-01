@@ -59,6 +59,12 @@ RET uses xdg-open.
 (setq initial-scratch-message nil)
 #+end_src
 
+** ~C-p~ switches to pop-up
+
+#+begin_src emacs-lisp
+(map! "C-x p" 'other-popup)
+#+end_src
+
 * Configure company
 
 Don't auto-complete in org-mode.
