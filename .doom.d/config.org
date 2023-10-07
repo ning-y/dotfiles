@@ -168,7 +168,7 @@ Export files to the Download directory, rather than the source file's directory 
                          '("#+begin_src bash :results output\n" p "\n#+end_src" >)
                          "<S" "Insert a bash src block")
   (tempo-define-template "from-pubmed"
-                         '("Discovered via PubMed search alert for ~(Duke-NUS[Affiliation]) ~.")
+                         '("Discovered via PubMed search alert for ~(Duke-NUS[Affiliation])~.")
                          "<p" "Describe discovery via PubMed search alert"))
 #+end_src
 
