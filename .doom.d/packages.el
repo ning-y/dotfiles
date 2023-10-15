@@ -10,8 +10,6 @@
 (package! org-download)
 (package! snakemake-mode)
 
-; org-roam
-(unpin! org-roam)
 ; org-roam-ui
 (package! websocket)
 (package! simple-httpd)
@@ -64,7 +62,6 @@
 
 ;; Use `:pin' to specify a particular commit to install.
 ;(package! builtin-package :pin "1a2b3c4d5e")
-(package! org-mode :pin "7387593")  ; pin at 9.5
 
 ;; Doom's packages are pinned to a specific commit and updated from release to
 ;; release. The `unpin!' macro allows you to unpin single packages...
