@@ -168,8 +168,11 @@ Export files to the Download directory, rather than the source file's directory 
                          '("#+begin_src bash :results output\n" p "\n#+end_src" >)
                          "<S" "Insert a bash src block")
   (tempo-define-template "from-pubmed"
-                         '("Discovered via PubMed search alert for ~(Duke-NUS[Affiliation])~.")
-                         "<p" "Describe discovery via PubMed search alert"))
+                         '("Discovered via PubMed search alert for ~(Duke-NUS[Affiliation]) AND ((Emerging Infectious Diseases[Affiliation]) OR (Cancer and Stem Cell Biology[Affiliation]) OR (Cardiovascular and Metabolic Disorders[Affiliation]) OR (Centre for Computational Biology[Affiliation]))~.")
+                         "<lp" "Describe discovery via PubMed search alert")
+  (tempo-define-template "from-science"
+                         '("Discovered via the Science Table of Contents email subscription service.")
+                         "<ls" "Describe discovery via Science email alert"))
 #+end_src
 
 * Configure org-agenda
