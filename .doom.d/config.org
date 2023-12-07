@@ -124,6 +124,15 @@ Enable the visual vertical ruler at 80 characters.
 (add-hook 'ess-r-mode-hook 'display-fill-column-indicator-mode)
 #+end_src
 
+Fix tibbles printed with dark font on dark background (https://github.com/emacs-ess/ESS/issues/1193#issuecomment-1144182009).
+
+#+begin_src emacs-lisp
+(defun my-inferior-ess-init ()
+  (setq-local ansi-color-for-comint-mode 'filter)
+  (smartparens-mode 1))
+(add-hook 'inferior-ess-mode-hook 'my-inferior-ess-init)
+#+end_src
+
 * Configure org
 ** Appearance
 :PROPERTIES:
