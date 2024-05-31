@@ -292,6 +292,21 @@ See: https://orgmode.org/manual/Org-Crypt.html
 Copied from https://stackoverflow.com/a/37132338/6910451.
 
 #+begin_src emacs-lisp
+(setq org-export-with-author nil)
+
+; Processes in-text cite links to author-year, even for non org-ref HTML exports
+(add-hook 'org-export-before-parsing-hook 'org-ref-csl-preprocess-buffer)
+; https://emacs.stackexchange.com/a/72094
+(add-hook 'org-export-before-parsing-hook 'org-roam-update-org-id-locations)
+
+; WIP: this appears to add the right bibliography link, but it results in an empty
+; bibliography section. If added manually though, it works well. Probably something
+; is wrong with when the hook adds the text?
+; (defun my-add-bibliography-section-hook (exporter)
+;   (end-of-buffer)
+;   (insert "* References\n\n[[bibliography:~/roamdb/files/references.bib]]"))
+; (add-hook 'org-export-before-parsing-hook 'my-add-bibliography-section-hook)
+
 (defun my-org-inline-css-hook (exporter)
   "Insert custom inline css"
   (when (eq exporter 'html)
@@ -308,7 +323,6 @@ Copied from https://stackoverflow.com/a/37132338/6910451.
                              (buffer-string))
                            "/*]]>*/-->\n"
                            "</style>\n")))))
-
 (add-hook 'org-export-before-processing-hook 'my-org-inline-css-hook)
 #+end_src
 
