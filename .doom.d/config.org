@@ -17,6 +17,12 @@
 Browse https://github.com/hlissner/emacs-doom-themes for more.
 
 * Configure vanilla emacs behavior
+** Put spellcheck file in roamdb
+
+#+begin_src emacs-lisp
+(setq ispell-personal-dictionary "~/roamdb/files/pws")
+#+end_src
+
 ** Enable up-/downcase-region
 
 #+begin_src emacs-lisp
