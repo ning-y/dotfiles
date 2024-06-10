@@ -194,7 +194,6 @@ Export files to the Download directory, rather than the source file's directory 
 :PROPERTIES:
 :ID:       94a80c46-03e0-4f0d-a4c7-e6e8a55a00e0
 :END:
-
 ** Set Org-agenda to search Org-roam notes
 :PROPERTIES:
 :ID:       5bfbb4f4-b7b8-43ef-82a2-c5eb85c4682e
@@ -267,6 +266,12 @@ First, I set ~org-agenda-skip-*-if-done~  to ~nil~ to hide done tasks from their
 (setq org-agenda-skip-scheduled-if-done t
       org-agenda-skip-deadline-if-done t
       org-agenda-start-with-log-mode '(closed))
+#+end_src
+
+** Don't show holidays
+
+#+begin_src emacs-lisp
+(setq diary-show-holidays-flag nil)
 #+end_src
 
 * Configure org-crypt
