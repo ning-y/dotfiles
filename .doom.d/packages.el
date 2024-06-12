@@ -23,6 +23,7 @@
 (package! page-break-lines :recipe (:host github :repo "purcell/page-break-lines"))
 (package! org-transclusion :recipe (:host github :repo "nobiot/org-transclusion" :branch "main" :files ("*.el")))
 (package! conda)
+(package! plantuml-mode)
 (package! telega :recipe (:host github :repo "zevlg/telega.el"))
 
 ;; To install a package directly from a remote git repo, you must specify a
@@ -40,10 +41,6 @@
 ;(package! this-package
 ;  :recipe (:host github :repo "username/repo"
 ;           :files ("some-file.el" "src/lisp/*.el")))
-(package! scad-mode
-  :pin "6aae796"
-  :recipe (:host github :repo "openscad/openscad"
-           :files ("contrib/scad-mode.el")))
 
 ;; If you'd like to disable a package included with Doom, you can do so here
 ;; with the `:disable' property:

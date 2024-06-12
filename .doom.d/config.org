@@ -454,6 +454,14 @@ To insert a link, use ~C-c r l~ (org-ref-insert-link).
 To navigate to a reference-associated note, use ~C-c n b~ (ivy-bibtex) and select a single item (runs ivy-bibtex-edit-notes).
 To insert a reference list into the current buffer, use use ~C-c n b~ (ivy-bibtex) and select one or more items (select using ~C <space>~, runs ivy-bibtex-insert-bibtex).
 
+* Configure plantuml-mode
+
+#+begin_src emacs-lisp
+(setq org-plantuml-jar-path (expand-file-name "~/roamdb/files/plantuml-1.2024.5.jar"))
+(add-to-list 'org-src-lang-modes '("plantuml" . plantuml))
+(org-babel-do-load-languages 'org-babel-load-languages '((plantuml . t)))
+#+end_src
+
 * Configure snakemake-mode
 
 #+begin_src emacs-lisp
