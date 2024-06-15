@@ -160,7 +160,7 @@ Align and shrink tables on start-up.
       org-startup-shrink-all-tables t)
 #+end_src
 
-** Behavior
+** org-export
 
 Export files to the Download directory, rather than the source file's directory ([[https://stackoverflow.com/a/47850858/6910451][copied from StackExchange]]):
 
@@ -172,6 +172,12 @@ Export files to the Download directory, rather than the source file's directory 
       (make-directory pub-dir)))
   (apply orig-fun extension subtreep pub-dir nil))
 (advice-add 'org-export-output-file-name :around #'org-export-output-file-name-modified)
+#+end_src
+
+When exporting, default the scope to subtree instead of whole buffer.
+
+#+begin_src emacs-lisp
+(setq org-export-initial-scope 'subtree)
 #+end_src
 
 ** Custom structure templates:
