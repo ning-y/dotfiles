@@ -651,7 +651,6 @@ Sync on exit.
 :PROPERTIES:
 :ID:       b18337f4-dd0f-4381-b35e-b970a36e4f09
 :END:
-
 ** Search RefSNP for word at point
 :PROPERTIES:
 :ID:       d28262ec-ede7-43fd-a45e-bde7e6a9157f
@@ -678,4 +677,20 @@ Sync on exit.
   (browse-url-xdg-open
    (concat "https://scholar.google.com/scholar?&q="
            (url-hexify-string (buffer-substring start end)))))
+#+end_src
+
+* Custom: a "presenter" mode
+
+Open two frames, both pointing to the same PDFView buffer.
+Increment the "presenter-view" frame by one.
+Then, use the following to advance.
+
+#+begin_src emacs-lisp
+(defun ning/advance-in-presenter-view ()
+  (interactive)
+  (pdf-view-scroll-up-or-next-page)
+  (other-frame 1)
+  (pdf-view-scroll-up-or-next-page)
+  (other-frame -1))
+(map! (:map pdf-view-mode-map "C-SPC" #'ning/advance-in-presenter-view))
 #+end_src
