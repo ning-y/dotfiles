@@ -545,15 +545,6 @@ To insert a reference list into the current buffer, use use ~C-c n b~ (ivy-bibte
         :desc "+workspace/swap-right" "<right>" #'+workspace/swap-right)
 #+end_src
 
-* Custom: <C-c f s> switches to the scratch buffer
-
-#+begin_src emacs-lisp
-(map!
- (:leader
-  (:prefix "f"
-   :desc "Open *scratch*" "s" #'(lambda () (interactive) (switch-to-buffer "*scratch*")))))
-#+end_src
-
 * Custom: sync notes with unison
 :PROPERTIES:
 :ID:       d7020545-f73b-44f3-b524-eb8bade4f062
