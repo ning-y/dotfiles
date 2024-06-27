@@ -474,13 +474,6 @@ To insert a reference list into the current buffer, use use ~C-c n b~ (ivy-bibte
 (add-hook 'snakemake-mode-hook 'display-fill-column-indicator-mode)
 #+end_src
 
-* Configure telega
-
-#+begin_src emacs-lisp
-(use-package! telega
-  :config (setq telega-use-images nil))
-#+end_src
-
 * Configure ui/doom-dashboard
 :PROPERTIES:
 :ID:       6ac43331-fa55-405e-8db4-2e682a27a11e
