@@ -280,6 +280,19 @@ First, I set ~org-agenda-skip-*-if-done~  to ~nil~ to hide done tasks from their
 (setq diary-show-holidays-flag nil)
 #+end_src
 
+* Configure org-capture
+:PROPERTIES:
+:ID:       25b79971-3b51-4008-8ee8-a927b6da842a
+:END:
+
+#+begin_src emacs-lisp
+(setq
+ org-capture-templates
+ '(("g" "General" entry
+   (file "~/roamdb/notes/20240815145234-capture.org")
+   "* %U %?\n%i\n%a")))
+#+end_src
+
 * Configure org-crypt
 
 See: https://orgmode.org/manual/Org-Crypt.html
