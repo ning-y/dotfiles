@@ -191,7 +191,8 @@ When exporting, default the scope to subtree instead of whole buffer.
                          '((concat
                             "#+begin_src bash\n"
                             "echo '\n"
-                            (ning/today-as-yyyy-mm-dd) " ")
+                            (ning/today-as-yyyy-mm-dd) " " (org-entry-get nil "ITEM")
+                            "\n  ")
                            p
                            (concat
                             "\n' > ~/roamdb/files/ledger-" (ning/today-as-yyyy-mm-dd)
