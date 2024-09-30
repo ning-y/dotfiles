@@ -122,6 +122,16 @@ Also add [[https://github.com/jrblevin/deft/issues/75#issuecomment-905031872][a 
 (setq
  rmh-elfeed-org-files '("~/roamdb/files/elfeed.org")
  elfeed-db-directory "~/roamdb/elfeed-db")
+
+(map!
+ :map elfeed-search-mode-map
+ "q" #'elfeed-kill-buffer
+ "g" #'elfeed-update)
+(map!
+ :map elfeed-show-mode-map
+ "n" #'elfeed-show-next
+ "p" #'elfeed-show-prev
+ "u" #'elfeed-show-visit)
 #+end_src
 
 * Configure ESS
