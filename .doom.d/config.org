@@ -116,6 +116,14 @@ Also add [[https://github.com/jrblevin/deft/issues/75#issuecomment-905031872][a 
               "\\)"))
 #+end_src
 
+* Configure elfeed
+
+#+begin_src emacs-lisp
+(setq
+ rmh-elfeed-org-files '("~/roamdb/files/elfeed.org")
+ elfeed-db-directory "~/roamdb/elfeed-db")
+#+end_src
+
 * Configure ESS
 
 Don't indent "#" comments (https://stackoverflow.com/a/780929/6910451).
