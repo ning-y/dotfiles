@@ -120,12 +120,13 @@ Also add [[https://github.com/jrblevin/deft/issues/75#issuecomment-905031872][a 
 
 #+begin_src emacs-lisp
 (setq
- rmh-elfeed-org-files '("~/roamdb/files/elfeed.org")
- elfeed-db-directory "~/roamdb/elfeed-db")
+ elfeed-db-directory "~/roamdb/elfeed-db"
+ elfeed-show-refresh-function #'elfeed-show-refresh--mail-style
+ rmh-elfeed-org-files '("~/roamdb/files/elfeed.org"))
 
 (map!
  :map elfeed-search-mode-map
- "q" #'elfeed-kill-buffer
+ "q" (lambda () (interactive) (elfeed-kill-buffer) (elfeed-db-save))
  "g" #'elfeed-update)
 (map!
  :map elfeed-show-mode-map
