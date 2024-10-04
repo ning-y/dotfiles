@@ -123,11 +123,12 @@ Also add [[https://github.com/jrblevin/deft/issues/75#issuecomment-905031872][a 
  elfeed-db-directory "~/roamdb/elfeed-db"
  rmh-elfeed-org-files '("~/roamdb/files/elfeed.org"))
 (after! elfeed
-  (setq elfeed-show-refresh-function #'elfeed-show-refresh--mail-style))
+  (setq elfeed-show-refresh-function #'elfeed-show-refresh--mail-style
+        elfeed-search-filter "+unread"))
 
 (map!
  :map elfeed-search-mode-map
- "q" (lambda () (interactive) (elfeed-db-compact) (elfeed-kill-buffer))
+ "q" #'elfeed-kill-buffer
  "g" #'elfeed-update)
 (map!
  :map elfeed-show-mode-map
