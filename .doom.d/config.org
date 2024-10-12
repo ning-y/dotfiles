@@ -223,6 +223,19 @@ When exporting, default the scope to subtree instead of whole buffer.
                          "Insert source block creating ledger entry for wet lab inventory"))
 #+end_src
 
+** Open URLs on Android browser
+
+#+begin_src emacs-lisp
+(defun ning/on-termux-p ()
+  (and (getenv "PREFIX") (string-match-p "com.termux" (getenv "PREFIX"))))
+(if
+    (ning/on-termux-p)
+    (setq
+     browse-url-browser-function
+     (lambda (url &rest args)
+       (make-process :name "termux-open-url" :command (list "termux-open-url" url)))))
+#+end_src
+
 * Configure org-agenda
 :PROPERTIES:
 :ID:       94a80c46-03e0-4f0d-a4c7-e6e8a55a00e0
@@ -640,9 +653,6 @@ Since there are no locks on Termux, I prefer to always sync manually.
 This applies also to the sync on idle timers, etc.
 
 #+begin_src emacs-lisp
-(defun ning/on-termux-p ()
-  (and (getenv "PREFIX") (string-match-p "com.termux" (getenv "PREFIX"))))
-
 (if (not (ning/on-termux-p)) (after! org-roam (ning/sync)))
 #+end_src
 
