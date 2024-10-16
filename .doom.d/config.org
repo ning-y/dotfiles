@@ -713,18 +713,32 @@ Sync on exit.
            (url-hexify-string (buffer-substring start end)))))
 #+end_src
 
-* Custom: a "presenter" mode
+* Custom: presentation mode with notes
 
-Open two frames, both pointing to the same PDFView buffer.
-Increment the "presenter-view" frame by one.
-Then, use the following to advance.
+~ning/make-presentation-frame~ makes a frame which opens via ~org-link-open-from-string~ the ~ning/presentation-link~ property value of the current org entry.
 
 #+begin_src emacs-lisp
-(defun ning/advance-in-presenter-view ()
+(defvar *ning/presentation-frame* nil)
+(defun ning/make-presentation-frame ()
+  "Get the frame used for my custom presentation mode. If it does not yet exist, create it."
   (interactive)
-  (pdf-view-scroll-up-or-next-page)
-  (other-frame 1)
-  (pdf-view-scroll-up-or-next-page)
-  (other-frame -1))
-(map! (:map pdf-view-mode-map "C-SPC" #'ning/advance-in-presenter-view))
+  (setq *ning/presentation-frame*
+        (if *ning/presentation-frame* *ning/presentation-frame* (make-frame '((name . "PRESENTATION") (minibuffer . nil))))))
+
+(defun ning/delete-presentation-frame ()
+  "Delete the presentation frame."
+  (interactive)
+  (setq *ning/presentation-frame* (if *ning/presentation-frame* (delete-frame *ning/presentation-frame*))))
+
+(defun ning/update-presentation-frame-maybe ()
+  "If *ning/presentation-frame* and cursor is at org-mode subtree with non-empty ning/presentation-link property, update."
+  (interactive)
+  (if (and (eq major-mode 'org-mode) *ning/presentation-frame* (org-entry-get (point) "ning/presentation-link"))
+      (let ((current-frame (selected-frame))
+            (target-link (org-entry-get (point) "ning/presentation-link")))
+        (select-frame *ning/presentation-frame*)
+        (org-link-open-from-string target-link)
+        (select-frame current-frame))))
+
+(add-hook! 'post-command-hook #'ning/update-presentation-frame-maybe)
 #+end_src
