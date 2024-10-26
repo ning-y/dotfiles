@@ -132,6 +132,7 @@ Also add [[https://github.com/jrblevin/deft/issues/75#issuecomment-905031872][a 
  "g" #'elfeed-update)
 (map!
  :map elfeed-show-mode-map
+ "TAB" #'elfeed-show-next
  "n" #'elfeed-show-next
  "p" #'elfeed-show-prev
  "u" #'elfeed-show-visit)
