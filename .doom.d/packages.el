@@ -24,6 +24,7 @@
 (package! org-transclusion :recipe (:host github :repo "nobiot/org-transclusion" :branch "main" :files ("*.el")))
 (package! conda)
 (package! plantuml-mode)
+(package! notdeft :recipe (:host github :repo "hasu/notdeft"))
 
 ;; To install a package directly from a remote git repo, you must specify a
 ;; `:recipe'. You'll find documentation on what `:recipe' accepts here:

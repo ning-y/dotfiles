@@ -79,41 +79,14 @@ Don't auto-complete in org-mode.
 (setq company-global-modes (append company-global-modes '(org-mode)))
 #+end_src
 
-* Configure deft
-:PROPERTIES:
-:ID:       15a57748-c59d-4005-8629-c706337e4542
-:END:
-
-The default Deft buffer shows on the left-hand side the head of the file, and on the right the last modified time.
-However, the head of Org-roam files are not informative at all, because they hold the ~:PROPERTIES:~ tag.
-So, show the filename at the left-hand side instead.
+* Configure NotDeft
 
 #+begin_src emacs-lisp
-(setq deft-directory "~/roamdb/notes"
-      deft-recursive t)
-#+end_src
-
-Also add [[https://github.com/jrblevin/deft/issues/75#issuecomment-905031872][a fix from GitHub user codemac]] for deft to correctly parse titles from org-roam v2 files.
-
-#+begin_src emacs-lisp
-(defun cm/deft-parse-title (file contents)
-  "Parse the given FILE and CONTENTS and determine the title.
-  If `deft-use-filename-as-title' is nil, the title is taken to
-  be the first non-empty line of the FILE.  Else the base name of the FILE is
-  used as title."
-  (let ((begin (string-match "^#\\+[tT][iI][tT][lL][eE]: .*$" contents)))
-    (if begin
-        (string-trim (substring contents begin (match-end 0))
-                     "#\\+[tT][iI][tT][lL][eE]: *" "[\n\t ]+")
-      (deft-base-filename file))))
-
-(advice-add 'deft-parse-title :override #'cm/deft-parse-title)
-(setq deft-strip-summary-regexp
-      (concat "\\("
-              "[\n\t]" ;; blank
-              "\\|^#\\+[[:alpha:]_]+:.*$" ;; org-mode metadata
-              "\\|^:PROPERTIES:\n\\(.+\n\\)+:END:\n"
-              "\\)"))
+(use-package! notdeft
+  :config
+  (setq notdeft-extension "org"
+        notdeft-directories '("~/roamdb/notes")
+        notdeft-xapian-program (expand-file-name "~/opt/notdeft/xapian/notdeft-xapian")))
 #+end_src
 
 * Configure elfeed
