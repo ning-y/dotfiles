@@ -124,7 +124,7 @@ Also add [[https://github.com/jrblevin/deft/issues/75#issuecomment-905031872][a 
  rmh-elfeed-org-files '("~/roamdb/files/elfeed.org"))
 (after! elfeed
   (setq elfeed-show-refresh-function #'elfeed-show-refresh--mail-style
-        elfeed-search-filter "+unread"))
+        elfeed-search-filter "+unread =PubMed/Duke-NUS =PubMed/Acomys =PubMed/Chirop"))
 
 (map!
  :map elfeed-search-mode-map
