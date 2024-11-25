@@ -1,6 +1,12 @@
 ;; -*- no-byte-compile: t; -*-
 ;;; $DOOMDIR/packages.el
 
+;; Patches
+; https://github.com/org-roam/org-roam/issues/2485
+(package! emacsql :pin "491105a")
+; https://github.com/doomemacs/doomemacs/issues/7899#issuecomment-2432543505
+(package! org :pin "8ef6205")
+
 ;; To install a package with Doom you must declare them here and run 'doom sync'
 ;; on the command line, then restart Emacs for the changes to take effect -- or
 ;; use 'M-x doom/reload'.
