@@ -411,14 +411,10 @@ Adapted from Jethro at GitHub:jethrokuan/dots.
         :desc "org-roam-dailies-goto-previous-note" "," #'org-roam-dailies-goto-previous-note)
   (setq org-roam-directory (file-truename "~/roamdb/notes")
         org-id-link-to-org-use-id t
-        org-roam-v2-ack t
         org-roam-node-display-template (concat "${title:*}" (propertize "${tags:10}" 'face 'org-tag))
         +org-roam-open-buffer-on-find-file nil
         org-roam-capture-templates '(("n" "note" plain "%?" :target
                                       (file+head "%<%Y%m%d%H%M%S>-${slug}.org" "#+title: ${title}\n")
-                                      :unnarrowed t :immediate-finish t)
-                                     ("r" "review" plain "%?" :target
-                                      (file+head "%<%Y%m%d%H%M%S>-${slug}.org" "#+title: ${title}\n#+filetags: :review:")
                                       :unnarrowed t :immediate-finish t)
                                      ("t" "task" plain "%?" :target
                                       (file+head "tasks/%<%Y%m%d%H%M%S>-${slug}.org" "#+title: ${title}\n#+filetags: :task:")
@@ -431,8 +427,7 @@ Adapted from Jethro at GitHub:jethrokuan/dots.
                   (display-buffer-in-direction)
                   (direction . right)
                   (window-width . 0.33)
-                  (window-height . fit-window-to-buffer))))
-  (org-roam-db-autosync-enable))
+                  (window-height . fit-window-to-buffer)))))
 #+end_src
 
 * Configure org-roam-ui

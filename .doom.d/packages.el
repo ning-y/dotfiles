@@ -2,10 +2,8 @@
 ;;; $DOOMDIR/packages.el
 
 ;; Patches
-; https://github.com/org-roam/org-roam/issues/2485
-(package! emacsql :pin "491105a")
 ; https://github.com/doomemacs/doomemacs/issues/7899#issuecomment-2432543505
-(package! org :pin "8ef6205")
+; (package! org :pin "8ef6205")
 
 ;; To install a package with Doom you must declare them here and run 'doom sync'
 ;; on the command line, then restart Emacs for the changes to take effect -- or
@@ -37,9 +35,6 @@
 ;; https://github.com/raxod502/straight.el#the-recipe-format
 ;(package! another-package
 ;  :recipe (:host github :repo "username/repo"))
-
-; (package! org-roam
-;   :recipe (:host github :repo "org-roam/org-roam"))
 
 ;; If the package you are trying to install does not contain a PACKAGENAME.el
 ;; file, or is located in a subdirectory of the repo, you'll need to specify
