@@ -21,7 +21,6 @@
 ; org-roam-bibtex
 (package! org-roam-bibtex
   :recipe (:host github :repo "org-roam/org-roam-bibtex"))
-(unpin! bibtex-completion helm-bibtex ivy-bibtex)
 (package! org-ref)
 ;etc.
 (package! page-break-lines :recipe (:host github :repo "purcell/page-break-lines"))
