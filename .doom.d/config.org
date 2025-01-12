@@ -711,3 +711,22 @@ Sync on exit.
 
 (add-hook! 'post-command-hook #'ning/update-presentation-frame-maybe)
 #+end_src
+
+* Custom: look-up word at point with Wiktionary
+
+Adapted from https://old.reddit.com/r/emacs/comments/3yjzmu/comment/cye8lwu/.
+
+#+begin_src emacs-lisp
+(defun ning/lookup-word (start end)
+  (interactive "r")
+  (if (use-region-p)
+      (browse-url (format
+                   "http://en.wiktionary.org/wiki/%s"
+                   (buffer-substring (mark) (point))))
+      (browse-url (format
+                   "http://en.wiktionary.org/wiki/%s"
+                   (word-at-point)))))
+#+end_src
+
+#+RESULTS:
+: ning/lookup-word
