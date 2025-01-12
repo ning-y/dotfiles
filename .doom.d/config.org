@@ -650,38 +650,6 @@ Sync on exit.
     (add-hook 'kill-emacs-hook (lambda () (ning/sync-synchronous) (sleep-for 1))))
 #+end_src
 
-* Custom: query online databases
-:PROPERTIES:
-:ID:       b18337f4-dd0f-4381-b35e-b970a36e4f09
-:END:
-** Search RefSNP for word at point
-:PROPERTIES:
-:ID:       d28262ec-ede7-43fd-a45e-bde7e6a9157f
-:END:
-
-#+begin_src emacs-lisp
-(defun ning/refsnp-word-at-point ()
-  "Open the NCBI RefSNP page for the word at point (which hopefully, is a RefSNP number)"
-  (interactive)
-  (browse-url-xdg-open
-   (concat "https://www.ncbi.nlm.nih.gov/snp/"
-           (thing-at-point 'word 'no-properties))))
-#+end_src
-
-** Google-scholar for text in region
-:PROPERTIES:
-:ID:       d94a0f04-ac3d-4028-b7cb-21e46d9aaa65
-:END:
-
-#+begin_src emacs-lisp
-(defun ning/gscholar-text-in-region (start end)
-  "Search Google Scholar for the text of the selected region"
-  (interactive "r")
-  (browse-url-xdg-open
-   (concat "https://scholar.google.com/scholar?&q="
-           (url-hexify-string (buffer-substring start end)))))
-#+end_src
-
 * Custom: presentation mode with notes
 
 ~ning/make-presentation-frame~ makes a frame which opens via ~org-link-open-from-string~ the ~ning/presentation-link~ property value of the current org entry.
@@ -718,6 +686,7 @@ Adapted from https://old.reddit.com/r/emacs/comments/3yjzmu/comment/cye8lwu/.
 
 #+begin_src emacs-lisp
 (defun ning/lookup-word (start end)
+  "Look-up the region or word-at-point in Wiktionary"
   (interactive "r")
   (if (use-region-p)
       (browse-url (format
