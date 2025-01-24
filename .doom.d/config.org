@@ -685,7 +685,7 @@ Sync on exit.
 Adapted from https://old.reddit.com/r/emacs/comments/3yjzmu/comment/cye8lwu/.
 
 #+begin_src emacs-lisp
-(defun ning/lookup-word (start end)
+(defun ning/wiktionary-word (start end)
   "Look-up the region or word-at-point in Wiktionary"
   (interactive "r")
   (if (use-region-p)
@@ -697,5 +697,3 @@ Adapted from https://old.reddit.com/r/emacs/comments/3yjzmu/comment/cye8lwu/.
                    (word-at-point)))))
 #+end_src
 
-#+RESULTS:
-: ning/lookup-word
