@@ -23,6 +23,7 @@
   :recipe (:host github :repo "org-roam/org-roam-bibtex"))
 (package! org-ref)
 ;etc.
+(package! org-inline-pdf)
 (package! page-break-lines :recipe (:host github :repo "purcell/page-break-lines"))
 (package! org-transclusion :recipe (:host github :repo "nobiot/org-transclusion" :branch "main" :files ("*.el")))
 (package! conda)

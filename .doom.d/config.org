@@ -156,6 +156,12 @@ Align and shrink tables on start-up.
       org-startup-shrink-all-tables t)
 #+end_src
 
+Enable inline PDF previews
+
+#+begin_src emacs-lisp
+(add-hook 'org-mode-hook #'org-inline-pdf-mode)
+#+end_src
+
 ** org-export
 
 Export files to the Download directory, rather than the source file's directory ([[https://stackoverflow.com/a/47850858/6910451][copied from StackExchange]]):
