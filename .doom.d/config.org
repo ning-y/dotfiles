@@ -146,7 +146,8 @@ Both variables need to be set ([[https://web.archive.org/web/20210912005440/http
 #+begin_src emacs-lisp
 (setq org-hide-block-startup t
       org-startup-folded 'nofold
-      org-startup-with-inline-images t)
+      org-startup-with-inline-images t
+      image-file-name-extensions (remove "svg" image-file-name-extensions))
 #+end_src
 
 Align and shrink tables on start-up.
