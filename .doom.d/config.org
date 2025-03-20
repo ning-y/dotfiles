@@ -637,33 +637,81 @@ Sync on exit.
 #+end_src
 
 * Custom: presentation mode with notes
-
-~ning/make-presentation-frame~ makes a frame which opens via ~org-link-open-from-string~ the ~ning/presentation-link~ property value of the current org entry.
+:PROPERTIES:
+:ning/projector-link: [[~/roamdb/files/references.bib]]
+:END:
 
 #+begin_src emacs-lisp
-(defvar *ning/presentation-frame* nil)
-(defun ning/make-presentation-frame ()
-  "Get the frame used for my custom presentation mode. If it does not yet exist, create it."
-  (interactive)
-  (setq *ning/presentation-frame*
-        (if *ning/presentation-frame* *ning/presentation-frame* (make-frame '((name . "PRESENTATION") (minibuffer . nil))))))
+(defun get-frame-name (&optional frame)
+  "Return the string that names FRAME (a frame).  Default is selected frame.
+Copied from (C) 1996-2018, Drew Adams, all rights reserved.
+https://www.emacswiki.org/emacs/frame-fns.el"
+  (unless frame (setq frame  (selected-frame)))
+  (if (framep frame)
+      (cdr (assq 'name (frame-parameters frame)))
+    (error "Function `get-frame-name': Argument not a frame: `%s'" frame)))
 
-(defun ning/delete-presentation-frame ()
-  "Delete the presentation frame."
-  (interactive)
-  (setq *ning/presentation-frame* (if *ning/presentation-frame* (delete-frame *ning/presentation-frame*))))
+(defun get-a-frame (frame)
+  "Return a frame, if any, named FRAME (a frame or a string).
+If none, return nil.
+If FRAME is a frame, it is returned.
+Copied from (C) 1996-2018, Drew Adams, all rights reserved.
+https://www.emacswiki.org/emacs/frame-fns.el"
+  (cond ((framep frame) frame)
+        ((stringp frame)
+         (catch 'get-a-frame-found
+           (dolist (fr (frame-list))
+             (when (string= frame (get-frame-name fr))
+               (throw 'get-a-frame-found fr)))
+           nil))
+        (t (error
+            "Function `get-frame-name': Arg neither a string nor a frame: `%s'"
+            frame))))
 
-(defun ning/update-presentation-frame-maybe ()
-  "If *ning/presentation-frame* and cursor is at org-mode subtree with non-empty ning/presentation-link property, update."
+(let ((current-frame (selected-frame)))
+  (with-selected-frame (get-a-frame "*PROJECTOR*") (find-file "~/references.bib"))
+  (select-frame-by-name current-frame))
+
+(defun ning/make-projector-frame ()
+  "Get the frame used for my custom projector mode. If it does not yet exist, create it."
   (interactive)
-  (if (and (eq major-mode 'org-mode) *ning/presentation-frame* (org-entry-get (point) "ning/presentation-link"))
+  (if (not (get-a-frame "*PROJECTOR*"))
+      (let ((current-frame (selected-frame)))
+        (make-frame '((name . "*PROJECTOR*")))
+        (select-frame-set-input-focus current-frame))))
+
+(defun ning/delete-projector-frame ()
+  "Delete the projector frame."
+  (interactive)
+  (condition-case nil
+    (delete-frame (select-frame-by-name "*PROJECTOR*"))
+  (error nil)))
+
+(defun ning/update-projector-frame-maybe ()
+  "If frame *PROJECTOR* exists and cursor is at org-mode subtree with non-empty ning/projector-link property, update."
+  (interactive)
+  (if (and (eq major-mode 'org-mode) (get-a-frame "*PROJECTOR*") (org-entry-get (point) "ning/projector-link"))
       (let ((current-frame (selected-frame))
-            (target-link (org-entry-get (point) "ning/presentation-link")))
-        (select-frame *ning/presentation-frame*)
+            (target-link (org-entry-get (point) "ning/projector-link")))
+        (select-frame-set-input-focus (get-a-frame "*PROJECTOR*"))
         (org-link-open-from-string target-link)
-        (select-frame current-frame))))
+        (select-frame-set-input-focus current-frame))))
 
-(add-hook! 'post-command-hook #'ning/update-presentation-frame-maybe)
+(defun ning/next-heading-for-projector ()
+  (interactive)
+  (org-next-visible-heading 1)
+  (recenter-top-bottom 0)
+  (ning/update-projector-frame-maybe))
+
+(defun ning/prev-heading-for-projector ()
+  (interactive)
+  (org-previous-visible-heading 1)
+  (recenter-top-bottom 0)
+  (ning/update-projector-frame-maybe))
+
+; Run these to map. TODO: make this an interactive function (read-key-sequence?)
+; (map! :map 'override "<wheel-down>" #'ning/next-heading-for-projector)
+; (map! :map 'override "<wheel-up>" #'ning/prev-heading-for-projector)
 #+end_src
 
 * Custom: look-up word at point with Wiktionary
