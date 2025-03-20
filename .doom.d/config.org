@@ -668,16 +668,16 @@ https://www.emacswiki.org/emacs/frame-fns.el"
             "Function `get-frame-name': Arg neither a string nor a frame: `%s'"
             frame))))
 
-(let ((current-frame (selected-frame)))
-  (with-selected-frame (get-a-frame "*PROJECTOR*") (find-file "~/references.bib"))
-  (select-frame-by-name current-frame))
-
 (defun ning/make-projector-frame ()
   "Get the frame used for my custom projector mode. If it does not yet exist, create it."
   (interactive)
   (if (not (get-a-frame "*PROJECTOR*"))
       (let ((current-frame (selected-frame)))
-        (make-frame '((name . "*PROJECTOR*")))
+        (make-frame '(
+                      (name . "*PROJECTOR*")
+                      (minibuffer . nil)
+                      (tool-bar-lines . 0)
+                      (undecorated . t)))
         (select-frame-set-input-focus current-frame))))
 
 (defun ning/delete-projector-frame ()
@@ -695,6 +695,7 @@ https://www.emacswiki.org/emacs/frame-fns.el"
             (target-link (org-entry-get (point) "ning/projector-link")))
         (select-frame-set-input-focus (get-a-frame "*PROJECTOR*"))
         (org-link-open-from-string target-link)
+        (turn-on-hide-mode-line-mode)
         (select-frame-set-input-focus current-frame))))
 
 (defun ning/next-heading-for-projector ()
