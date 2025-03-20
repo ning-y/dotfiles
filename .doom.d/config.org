@@ -678,6 +678,10 @@ https://www.emacswiki.org/emacs/frame-fns.el"
                       (minibuffer . nil)
                       (tool-bar-lines . 0)
                       (undecorated . t)))
+        (select-frame-set-input-focus current-frame)))
+  (if (not (get-a-frame "*PREVIEW*"))
+      (let ((current-frame (selected-frame)))
+        (make-frame '((name . "*PREVIEW*")))
         (select-frame-set-input-focus current-frame))))
 
 (defun ning/delete-projector-frame ()
@@ -685,6 +689,9 @@ https://www.emacswiki.org/emacs/frame-fns.el"
   (interactive)
   (condition-case nil
     (delete-frame (select-frame-by-name "*PROJECTOR*"))
+  (error nil))
+  (condition-case nil
+    (delete-frame (select-frame-by-name "*PREVIEW*"))
   (error nil)))
 
 (defun ning/update-projector-frame-maybe ()
@@ -696,6 +703,12 @@ https://www.emacswiki.org/emacs/frame-fns.el"
         (select-frame-set-input-focus (get-a-frame "*PROJECTOR*"))
         (org-link-open-from-string target-link)
         (turn-on-hide-mode-line-mode)
+        (select-frame-set-input-focus current-frame)))
+  (if (and (eq major-mode 'org-mode) (get-a-frame "*PREVIEW*") (org-entry-get (point) "ning/preview-link"))
+      (let ((current-frame (selected-frame))
+            (target-link (org-entry-get (point) "ning/preview-link")))
+        (select-frame-set-input-focus (get-a-frame "*PREVIEW*"))
+        (org-link-open-from-string target-link)
         (select-frame-set-input-focus current-frame))))
 
 (defun ning/next-heading-for-projector ()
