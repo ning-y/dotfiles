@@ -585,7 +585,7 @@ I had previously done this with rclone with Google Drive, but rclone cannot hand
     (make-process
      :name "ning/sync"
      :buffer "*unison*"
-     :command `("unison" "-batch" ,(expand-file-name "~/roamdb") "ssh://meowmeow//home/admin/roamdb")
+     :command `("unison" "-batch" "-ignore" "Name {.notdeft-db,elfeed-db}" ,(expand-file-name "~/roamdb") "ssh://meowmeow//home/admin/roamdb")
      ; Unison breaks lines with carriage returns only, no matter the host OS.
      :coding 'undecided-mac
      :sentinel (ning/get-unison-sentinel t))))
@@ -599,7 +599,7 @@ I had previously done this with rclone with Google Drive, but rclone cannot hand
   (insert (concat "\n==" (current-time-string) "==\n"))
   (page-break-lines-mode 1)
   (let ((coding-system-for-read 'undecided-mac))
-    (call-process "unison" nil "*unison*" t "-batch" (expand-file-name "~/roamdb") "ssh://meowmeow//home/admin/roamdb")))
+    (call-process "unison" nil "*unison*" t "-ignore" "Name {.notdeft-db,elfeed-db}" "-batch" (expand-file-name "~/roamdb") "ssh://meowmeow//home/admin/roamdb")))
 #+end_src
 
 Sync on start-up, unless on Termux.
