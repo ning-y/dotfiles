@@ -724,8 +724,8 @@ https://www.emacswiki.org/emacs/frame-fns.el"
   (ning/update-projector-frame-maybe))
 
 ; Run these to map. TODO: make this an interactive function (read-key-sequence?)
-; (map! :map 'override "<wheel-down>" #'ning/next-heading-for-projector)
-; (map! :map 'override "<wheel-up>" #'ning/prev-heading-for-projector)
+(map! :map 'override "<next>" #'ning/next-heading-for-projector)
+(map! :map 'override "<prior>" #'ning/prev-heading-for-projector)
 #+end_src
 
 * Custom: look-up word at point with Wiktionary
