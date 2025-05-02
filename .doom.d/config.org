@@ -218,6 +218,17 @@ When exporting, default the scope to subtree instead of whole buffer.
        (make-process :name "termux-open-url" :command (list "termux-open-url" url)))))
 #+end_src
 
+** org-file-apps
+
+#+begin_src emacs-lisp
+(if (ning/on-termux-p)
+    (setq org-file-apps
+          (append org-file-apps
+                  '(("\\.jpeg\\'" . "xdg-open %s")
+                    ("\\.png\\'" . "xdg-open %s")
+                    ("\\.pdf\\'" . "xdg-open %s")))))
+#+end_src
+
 * Configure org-agenda
 :PROPERTIES:
 :ID:       94a80c46-03e0-4f0d-a4c7-e6e8a55a00e0
