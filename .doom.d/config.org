@@ -1,7 +1,7 @@
 :PROPERTIES:
 :ID:       6b70dbe3-3ce5-4ae4-bee0-db218fbfa337
 :END:
-#+begin_src emacs-lisp
+#+begin_src emacs-lisp :tangle config.el
 ;;; -*- lexical-binding: t -*-
 #+end_src
 
@@ -10,7 +10,7 @@
 :ID:       c5e5d2ae-4e6e-4710-9855-d8eeebdca7df
 :END:
 
-#+begin_src emacs-lisp
+#+begin_src emacs-lisp :tangle config.el
 (setq doom-theme 'doom-tomorrow-night)
 #+end_src
 
@@ -19,13 +19,13 @@ Browse https://github.com/hlissner/emacs-doom-themes for more.
 * Configure vanilla emacs behavior
 ** Put spellcheck file in roamdb
 
-#+begin_src emacs-lisp
+#+begin_src emacs-lisp :tangle config.el
 (setq ispell-personal-dictionary "~/roamdb/files/pws")
 #+end_src
 
 ** Enable up-/downcase-region
 
-#+begin_src emacs-lisp
+#+begin_src emacs-lisp :tangle config.el
 (put 'downcase-region 'disabled nil)
 (put 'upcase-region 'disabled nil)
 #+end_src
@@ -37,7 +37,7 @@ Browse https://github.com/hlissner/emacs-doom-themes for more.
 
 RET uses xdg-open.
 
-#+begin_src emacs-lisp
+#+begin_src emacs-lisp :tangle config.el
 (defvar unsupported-mime-types
   '("video/mp4"))
 
@@ -60,14 +60,14 @@ RET uses xdg-open.
 
 ** Set the scratch buffer's major mode to org-mode
 
-#+begin_src emacs-lisp
+#+begin_src emacs-lisp :tangle config.el
 (setq initial-major-mode 'org-mode)
 (setq initial-scratch-message nil)
 #+end_src
 
 ** ~C-p~ switches to pop-up
 
-#+begin_src emacs-lisp
+#+begin_src emacs-lisp :tangle config.el
 (map! "C-x p" 'other-popup)
 #+end_src
 
@@ -75,13 +75,13 @@ RET uses xdg-open.
 
 Don't auto-complete in org-mode.
 
-#+begin_src emacs-lisp
+#+begin_src emacs-lisp :tangle config.el
 (setq company-global-modes (append company-global-modes '(org-mode)))
 #+end_src
 
 * Configure NotDeft
 
-#+begin_src emacs-lisp
+#+begin_src emacs-lisp :tangle config.el
 (use-package! notdeft
   :config
   (setq notdeft-extension "org"
@@ -91,7 +91,7 @@ Don't auto-complete in org-mode.
 
 * Configure elfeed
 
-#+begin_src emacs-lisp
+#+begin_src emacs-lisp :tangle config.el
 (setq
  elfeed-db-directory "~/roamdb/elfeed-db"
  rmh-elfeed-org-files '("~/roamdb/files/elfeed.org"))
@@ -115,19 +115,19 @@ Don't auto-complete in org-mode.
 
 Don't indent "#" comments (https://stackoverflow.com/a/780929/6910451).
 
-#+begin_src emacs-lisp
+#+begin_src emacs-lisp :tangle config.el
 (setq ess-fancy-comments nil)
 #+end_src
 
 Enable the visual vertical ruler at 80 characters.
 
-#+begin_src emacs-lisp
+#+begin_src emacs-lisp :tangle config.el
 (add-hook 'ess-r-mode-hook 'display-fill-column-indicator-mode)
 #+end_src
 
 Fix tibbles printed with dark font on dark background (https://github.com/emacs-ess/ESS/issues/1193#issuecomment-1144182009).
 
-#+begin_src emacs-lisp
+#+begin_src emacs-lisp :tangle config.el
 (defun my-inferior-ess-init ()
   (setq-local ansi-color-for-comint-mode 'filter)
   (smartparens-mode 1))
@@ -143,7 +143,7 @@ Fix tibbles printed with dark font on dark background (https://github.com/emacs-
 Collapse code chunks by default.
 Both variables need to be set ([[https://web.archive.org/web/20210912005440/https://orgmode.org/list/87wntgaz5u.fsf@kyleam.com/]["Re: "#+STARTUP: hideblocks" has no effect?"]])
 
-#+begin_src emacs-lisp
+#+begin_src emacs-lisp :tangle config.el
 (setq org-hide-block-startup t
       org-startup-folded 'nofold
       org-startup-with-inline-images t
@@ -152,14 +152,14 @@ Both variables need to be set ([[https://web.archive.org/web/20210912005440/http
 
 Align and shrink tables on start-up.
 
-#+begin_src emacs-lisp
+#+begin_src emacs-lisp :tangle config.el
 (setq org-startup-align-all-tables t
       org-startup-shrink-all-tables t)
 #+end_src
 
 Enable inline PDF previews
 
-#+begin_src emacs-lisp
+#+begin_src emacs-lisp :tangle config.el
 (add-hook 'org-mode-hook #'org-inline-pdf-mode)
 #+end_src
 
@@ -167,7 +167,7 @@ Enable inline PDF previews
 
 Export files to the Download directory, rather than the source file's directory ([[https://stackoverflow.com/a/47850858/6910451][copied from StackExchange]]):
 
-#+begin_src emacs-lisp
+#+begin_src emacs-lisp :tangle config.el
 (defun org-export-output-file-name-modified (orig-fun extension &optional subtreep pub-dir)
   (unless pub-dir
     (setq pub-dir "~/Downloads")
@@ -179,13 +179,13 @@ Export files to the Download directory, rather than the source file's directory 
 
 When exporting, default the scope to subtree instead of whole buffer.
 
-#+begin_src emacs-lisp
+#+begin_src emacs-lisp :tangle config.el
 (setq org-export-initial-scope 'subtree)
 #+end_src
 
 ** Custom structure templates:
 
-#+begin_src emacs-lisp
+#+begin_src emacs-lisp :tangle config.el
 (defun ning/today-as-yyyy-mm-dd ()
   (format-time-string "%Y-%m-%d" (current-time)))
 (use-package! org-tempo
@@ -207,7 +207,7 @@ When exporting, default the scope to subtree instead of whole buffer.
 
 ** Open URLs on Android browser
 
-#+begin_src emacs-lisp
+#+begin_src emacs-lisp :tangle config.el
 (defun ning/on-termux-p ()
   (and (getenv "PREFIX") (string-match-p "com.termux" (getenv "PREFIX"))))
 (if
@@ -240,7 +240,7 @@ When exporting, default the scope to subtree instead of whole buffer.
 
 I keep notes with active tasks in a separate subdirectory to speed up ~Org-agenda~.
 
-#+begin_src emacs-lisp
+#+begin_src emacs-lisp :tangle config.el
 (setq org-agenda-files '("~/roamdb/notes/tasks"))
 #+end_src
 
@@ -252,7 +252,7 @@ I keep notes with active tasks in a separate subdirectory to speed up ~Org-agend
 Doom Emacs defines a whole bunch of ~TODO~ states, many of which I do not use.
 Simplify the list:
 
-#+begin_src emacs-lisp
+#+begin_src emacs-lisp :tangle config.el
 ; Must be eval'd after org: https://github.com/hlissner/doom-emacs/issues/2913
 (after! org
   (setq org-todo-keywords
@@ -261,7 +261,7 @@ Simplify the list:
 
 When a task is done, mark it with a ~CLOSED~ timestamp.
 
-#+begin_src emacs-lisp
+#+begin_src emacs-lisp :tangle config.el
 (setq org-log-done "time")
 #+end_src
 
@@ -270,14 +270,14 @@ When a task is done, mark it with a ~CLOSED~ timestamp.
 The default prefix for org-agenda items includes their file names, but org-roam file names are incredibly verbose.
 So, prefix each agenda item with just an indentation.
 
-#+begin_src emacs-lisp
+#+begin_src emacs-lisp :tangle config.el
 (with-eval-after-load 'org-agenda
     (add-to-list 'org-agenda-prefix-format '(agenda . "  ")))
 #+end_src
 
 Show tasks starting from yesterday, up to six days from today.
 
-#+begin_src emacs-lisp
+#+begin_src emacs-lisp :tangle config.el
 (setq org-agenda-start-day "-1d"
       org-agenda-span 8)
 #+end_src
@@ -285,14 +285,14 @@ Show tasks starting from yesterday, up to six days from today.
 Don't dim tasks blocked by subtasks: for me, subtasks represents steps to complete the parent task.
 I do not think of them as tasks by themselves.
 
-#+begin_src emacs-lisp
+#+begin_src emacs-lisp :tangle config.el
 (setq org-agenda-dim-blocked-tasks nil)
 #+end_src
 
 org-agenda warns about upcoming deadlines by showing them in today's agenda.
 That crowds the daily agenda, in my opinion.
 
-#+begin_src emacs-lisp
+#+begin_src emacs-lisp :tangle config.el
 (setq org-deadline-warning-days 0
       org-agenda-skip-scheduled-if-deadline-is-shown t)
 #+end_src
@@ -301,7 +301,7 @@ By default, closed tasks are shown on the date they were scheduled.
 I prefer that they are shown on the date they were done.
 First, I set ~org-agenda-skip-*-if-done~  to ~nil~ to hide done tasks from their scheduled date, then I use log-mode to show done tasks on the date they were done.
 
-#+begin_src emacs-lisp
+#+begin_src emacs-lisp :tangle config.el
 (setq org-agenda-skip-scheduled-if-done t
       org-agenda-skip-deadline-if-done t
       org-agenda-start-with-log-mode '(closed))
@@ -309,7 +309,7 @@ First, I set ~org-agenda-skip-*-if-done~  to ~nil~ to hide done tasks from their
 
 ** Don't show holidays
 
-#+begin_src emacs-lisp
+#+begin_src emacs-lisp :tangle config.el
 (setq diary-show-holidays-flag nil)
 #+end_src
 
@@ -318,7 +318,7 @@ First, I set ~org-agenda-skip-*-if-done~  to ~nil~ to hide done tasks from their
 :ID:       25b79971-3b51-4008-8ee8-a927b6da842a
 :END:
 
-#+begin_src emacs-lisp
+#+begin_src emacs-lisp :tangle config.el
 (setq
  org-capture-templates
  '(("n" "Note" entry
@@ -330,7 +330,7 @@ First, I set ~org-agenda-skip-*-if-done~  to ~nil~ to hide done tasks from their
 
 See: https://orgmode.org/manual/Org-Crypt.html
 
-#+begin_src emacs-lisp
+#+begin_src emacs-lisp :tangle config.el
 (use-package! org-crypt
   :config
   (org-crypt-use-before-save-magic)
@@ -343,7 +343,7 @@ See: https://orgmode.org/manual/Org-Crypt.html
 :ID:       6dc51b5f-5bff-46a6-90ad-587b1f89749b
 :END:
 
-#+begin_src emacs-lisp
+#+begin_src emacs-lisp :tangle config.el
 (use-package! org-download
   :config
   (setq-default org-download-image-dir "~/roamdb/files"
@@ -354,7 +354,7 @@ See: https://orgmode.org/manual/Org-Crypt.html
 
 Copied from https://stackoverflow.com/a/37132338/6910451.
 
-#+begin_src emacs-lisp
+#+begin_src emacs-lisp :tangle config.el
 (setq org-export-with-author nil)
 
 ; Processes in-text cite links to author-year, even for non org-ref HTML exports
@@ -396,7 +396,7 @@ Copied from https://stackoverflow.com/a/37132338/6910451.
 
 Adapted from Jethro at GitHub:jethrokuan/dots.
 
-#+begin_src emacs-lisp
+#+begin_src emacs-lisp :tangle config.el
 (use-package! org-roam
   :config
   (defun ning/org-roam-file-find-given-filetag (tag)
@@ -454,7 +454,7 @@ Adapted from Jethro at GitHub:jethrokuan/dots.
 :ID:       1536a96b-f528-4e27-b2e7-ec640762e6e4
 :END:
 
-#+begin_src emacs-lisp
+#+begin_src emacs-lisp :tangle config.el
 (use-package! websocket
     :after org-roam)
 (use-package! org-roam-ui
@@ -468,7 +468,7 @@ Adapted from Jethro at GitHub:jethrokuan/dots.
 
 * Configure org-roam-bibtex (incl. org-ref)
 
-#+begin_src emacs-lisp
+#+begin_src emacs-lisp :tangle config.el
 (use-package! org-ref
   :init (setq doi-utils-download-pdf nil
               bibtex-autokey-year-title-separator nil
@@ -503,7 +503,7 @@ To insert a reference list into the current buffer, use use ~C-c n b~ (ivy-bibte
 
 * Configure plantuml-mode
 
-#+begin_src emacs-lisp
+#+begin_src emacs-lisp :tangle config.el
 (setq org-plantuml-jar-path (expand-file-name "~/roamdb/files/plantuml-1.2024.5.jar"))
 (add-to-list 'org-src-lang-modes '("plantuml" . plantuml))
 (org-babel-do-load-languages 'org-babel-load-languages '((plantuml . t)))
@@ -511,7 +511,7 @@ To insert a reference list into the current buffer, use use ~C-c n b~ (ivy-bibte
 
 * Configure snakemake-mode
 
-#+begin_src emacs-lisp
+#+begin_src emacs-lisp :tangle config.el
 (add-hook 'snakemake-mode-hook 'display-fill-column-indicator-mode)
 #+end_src
 
@@ -520,7 +520,7 @@ To insert a reference list into the current buffer, use use ~C-c n b~ (ivy-bibte
 :ID:       6ac43331-fa55-405e-8db4-2e682a27a11e
 :END:
 
-#+begin_src emacs-lisp
+#+begin_src emacs-lisp :tangle config.el
 ; To search for icons: https://www.nerdfonts.com/cheat-sheet
 (setq +doom-dashboard-menu-sections
       '(("Open daily org-roam note" :icon
@@ -550,7 +550,7 @@ To insert a reference list into the current buffer, use use ~C-c n b~ (ivy-bibte
 
 * Configure ui/workspaces
 
-#+begin_src emacs-lisp
+#+begin_src emacs-lisp :tangle config.el
 (map! :leader
         :prefix "w"
         :desc "+workspace/swap-left" "<left>" #'+workspace/swap-left
@@ -564,7 +564,7 @@ To insert a reference list into the current buffer, use use ~C-c n b~ (ivy-bibte
 
 I had previously done this with rclone with Google Drive, but rclone cannot handle conflicts well --- out of the box, it only syncs whole directories at a time, always overwriting changes.
 
-#+begin_src emacs-lisp
+#+begin_src emacs-lisp :tangle config.el
 (defun ning/get-time-string ()
   "Get a string, trimmed for white-spaces, like 1.43pm."
   (downcase (string-trim (format-time-string "%l.%M%p"))))
@@ -618,19 +618,19 @@ On Termux, unison must be run without locks, because otherwise it always thinks 
 Since there are no locks on Termux, I prefer to always sync manually.
 This applies also to the sync on idle timers, etc.
 
-#+begin_src emacs-lisp
+#+begin_src emacs-lisp :tangle config.el
 (if (not (ning/on-termux-p)) (after! org-roam (ning/sync)))
 #+end_src
 
 Sync on idle.
 
-#+begin_src emacs-lisp
+#+begin_src emacs-lisp :tangle config.el
 (if (not (ning/on-termux-p)) (run-with-idle-timer 60 t 'ning/sync))
 #+end_src
 
 Sync on return from idle.
 
-#+begin_src emacs-lisp
+#+begin_src emacs-lisp :tangle config.el
 (defvar ning/has-idled-past-sync-threshold nil)
 (run-with-idle-timer 300 t (lambda () (setq ning/has-idled-past-sync-threshold t)))
 (if (not (ning/on-termux-p))
@@ -642,7 +642,7 @@ Sync on return from idle.
 
 Sync on exit.
 
-#+begin_src emacs-lisp
+#+begin_src emacs-lisp :tangle config.el
 (if (not (ning/on-termux-p))
     (add-hook 'kill-emacs-hook (lambda () (ning/sync-synchronous) (sleep-for 1))))
 #+end_src
@@ -652,7 +652,7 @@ Sync on exit.
 :ning/projector-link: [[~/roamdb/files/references.bib]]
 :END:
 
-#+begin_src emacs-lisp
+#+begin_src emacs-lisp :tangle config.el
 (defun get-frame-name (&optional frame)
   "Return the string that names FRAME (a frame).  Default is selected frame.
 Copied from (C) 1996-2018, Drew Adams, all rights reserved.
@@ -743,7 +743,7 @@ https://www.emacswiki.org/emacs/frame-fns.el"
 
 Adapted from https://old.reddit.com/r/emacs/comments/3yjzmu/comment/cye8lwu/.
 
-#+begin_src emacs-lisp
+#+begin_src emacs-lisp :tangle config.el
 (defun ning/wiktionary-word (start end)
   "Look-up the region or word-at-point in Wiktionary"
   (interactive "r")
